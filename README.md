@@ -43,16 +43,4 @@ For the full commit history of the repository, and examples of use, please visit
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)
 
 
-<br>
-<img src="./img/berkeley.jpg" height="20px"> &nbsp
-<img src="./img/UCD.jpg" height="20px"> &nbsp
-<img src="./img/UCI.png" height="20px"> &nbsp
-<img src="./img/UCLA.png" height="20px"> &nbsp
-<img src="./img/UCR.jpg" height="20px"> &nbsp
-<img src="./img/UCSD.png" height="20px"> &nbsp
-<img src="./img/JPL.png" height="20px"> &nbsp
-<img src="./img/DARPA.jpg" height="20px"> &nbsp
-<img src="./img/IGI.png" height="20px"> &nbsp
-<img src="./img/nvidia.jpg" height="20px"> &nbsp
-<img src="./img/UCIMI.png" height="20px"> &nbsp
-<br><br><br>
+<img src="./img/berkeley.jpg" height="20px">  <img src="./img/UCD.jpg" height="20px">  <img src="./img/UCI.png" height="20px">  <img src="./img/UCLA.png" height="20px">  <img src="./img/UCR.jpg" height="20px">  <img src="./img/UCSD.png" height="20px">  <img src="./img/JPL.png" height="20px">  <img src="./img/DARPA.jpg" height="20px">  <img src="./img/IGI.png" height="20px">  <img src="./img/nvidia.jpg" height="20px">  <img src="./img/UCIMI.png" height="20px">

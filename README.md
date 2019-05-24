@@ -7,8 +7,6 @@ It is also meant to serve as a platform to ensure the reproducibility of results
 
 <img src="./img/flow.jpg" width="100%">
 
-<hr>
-
 ##  Installation
 
 To install the package from the [pypi version](https://pypi.org/project/MoNeT-MGDrivE/), run:
@@ -23,7 +21,6 @@ It is also recommended to install the **conda** environment included in this rep
 conda env create -f MoNeT.yml -n MoNeT
 ```
 
-<hr>
 
 ##  Important Information
 
@@ -32,7 +29,6 @@ For the full commit history of the repository, and examples of use, please visit
 <img src="./img/banner.png" width="100%">
 
 
-<hr>
 
 ##  Authors
 

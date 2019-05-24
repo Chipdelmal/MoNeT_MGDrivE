@@ -8,7 +8,7 @@ It is also meant to serve as a platform to ensure the reproducibility of results
 To install the package from the [pypi version](https://pypi.org/project/MoNeT-MGDrivE/), run:
 
 ```bash
-https://pypi.org/project/MoNeT-MGDrivE/
+pip install MoNeT_MGDrivE
 ```
 
 <hr>

@@ -4,6 +4,13 @@ This module was created to accompany the [MGDrivE](https://marshalllab.github.io
 
 It is also meant to serve as a platform to ensure the reproducibility of results of the publications from our [research group at UC, Berkeley](https://www.marshalllab.com/), as part of [DARPA's: Safe Genes program](https://www.darpa.mil/program/safe-genes) and [UCI Malaria  Initiative](http://malaria.bio.uci.edu/).
 
+
+To install the package from the [pypi version](https://pypi.org/project/MoNeT-MGDrivE/), run:
+
+```bash
+https://pypi.org/project/MoNeT-MGDrivE/
+```
+
 <hr>
 
 ##  Important Information

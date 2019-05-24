@@ -84,15 +84,15 @@ def loadNodeData(
             delimiter=",",
             invalid_raise=False
         )
-        if dataM.shape[0]>dataF.shape[0]:
+        if dataM.shape[0] > dataF.shape[0]:
             returnDictionary = {
                 "genotypes": genotypes,
-                "population": (np.resize(dataM,dataF.shape) + dataF)[:, skipColumns:]
+                "population": (np.resize(dataM, dataF.shape) + dataF)[:, skipColumns:]
             }
         else:
             returnDictionary = {
                 "genotypes": genotypes,
-                "population": (dataM + np.resize(dataF,dataM.shape))[:, skipColumns:]
+                "population": (dataM + np.resize(dataF, dataM.shape))[:, skipColumns:]
             }
         return returnDictionary
     elif femaleFilename is not None:
@@ -227,7 +227,7 @@ def sumLandscapePopulationsFromFiles(
                 dataType=dataType,
                 skipHeader=skipHeader,
                 skipColumns=skipColumns
-            )["population"],tempAggregation.shape)
+            )["population"], tempAggregation.shape)
         returnDictionary = {
             "genotypes": genotypes,
             "population": tempAggregation
@@ -478,7 +478,10 @@ def getGenotypeFromLandscape(
     geneArray = np.empty([nodesNumb, time])
     for i in range(0, nodesNumb):
         probe = landscapeData["landscape"][i]
-        geneArray[i] = np.resize([row[genotypeIndex] for row in probe], geneArray[i].shape)
+        geneArray[i] = np.resize(
+            [row[genotypeIndex] for row in probe],
+            geneArray[i].shape
+        )
     return geneArray
 
 
@@ -506,3 +509,55 @@ def getGenotypeArraysFromLandscape(
         "geneLandscape": genesSpatialList
     }
     return geospatialDict
+
+
+def rescaleGeneSpatiotemporals(geneSpatiotemporals):
+    """
+    Description:
+        * Rescales the gene spatiotemporal arrays to run from 0 to 1 for each
+            of the rows of the array (each node of the simulation). This
+            function should be used to plot heterogeneously-sized mosquito
+            populations.
+    In:
+        * geneSpatiotemporals: arrays calculated with
+            getGenotypeArraysFromLandscape
+    Out:
+        * rescaledGST: arrays normalized node-wise to their own max population
+            size
+    Notes:
+        * NA
+    """
+    rescaledGST = geneSpatiotemporals.copy()
+    genotypes = rescaledGST['geneLandscape']
+    node_maximums = [0]*len(genotypes[0])
+    for g in genotypes:
+        for i in range(len(g)):
+            node_max = max(g[i])
+            if node_max > node_maximums[i]:
+                node_maximums[i] = node_max
+    normalized = []
+    for g in genotypes:
+        genotype_matrix = []
+        for i in range(len(g)):
+            genotype_matrix.append(g[i]/node_maximums[i])
+        normalized.append(np.array(genotype_matrix))
+    rescaledGST['geneLandscape'] = normalized
+    return rescaledGST
+
+
+def calculateMaxPopInLandscapeReps(landscapeReps):
+    """
+    Description:
+        * Returns the max population size at any point in the simulation
+    In:
+        * landscapeReps:
+    Out:
+        * max: numeric with the max pop found
+    Notes:
+        * NA
+    """
+    landscapes = landscapeReps["landscapes"]
+    list = [None] * len(landscapeReps["landscapes"][0])
+    for i in range(len(landscapeReps["landscapes"][0])):
+            list[i] = sum(landscapes[0][i][0])
+    return max(list)

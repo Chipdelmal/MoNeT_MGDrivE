@@ -5,11 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='MoNeT_MGDrivE',
-    version='0.4.5.6',
-    url='https://chipdelmal.github.io/MoNeT/',
+    version='0.4.5.9',
+    url='https://github.com/Chipdelmal/MoNeT_MGDrivE',
     author='Hector M. Sanchez C.',
     author_email='sanchez.hmsc@berkeley.edu',
-    description="MoNeT python package",
+    description="MoNeT python package for MGDrivE data analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),

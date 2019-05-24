@@ -44,6 +44,6 @@ Make sure to have the following dependencies installed:
 ##  Authors
 
 * __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/).
-* __Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang
+* __Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
 * __Former Dev__: Sabrina Wong
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)

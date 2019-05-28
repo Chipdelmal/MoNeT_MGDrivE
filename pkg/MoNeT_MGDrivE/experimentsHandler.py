@@ -9,9 +9,9 @@ def getFileExperimentList(path, identifier):
             glob.glob(
                 experimentPath + "/" +
                 identifier + "*.csv"
+                )
             )
         return []
-    )
 
 
 def readExperimentFilenames(

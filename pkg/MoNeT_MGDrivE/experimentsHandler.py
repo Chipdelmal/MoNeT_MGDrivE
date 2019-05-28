@@ -7,7 +7,7 @@ def getFileExperimentList(path, identifier):
         if identifier:
             return sorted(
             glob.glob(
-                experimentPath + "/" +
+                path + "/" +
                 identifier + "*.csv"
                 )
             )

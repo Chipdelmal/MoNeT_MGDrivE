@@ -3,6 +3,16 @@ import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
+def getFileExperimentList(path, identifier):
+        if identifier:
+            return sorted(
+            glob.glob(
+                experimentPath + "/" +
+                identifier + "*.csv"
+            )
+        return []
+    )
+
 
 def readExperimentFilenames(
     experimentPath,
@@ -28,20 +38,27 @@ def readExperimentFilenames(
             the same lexicographical sorting for processing in further
             functions on the pipeline.
     """
+    defaultIdentifiers = {"male": ["M_","ADM"], "female": ["F_","AF1"]}
 
-    maleFiles = sorted(
-        glob.glob(
-            experimentPath + "/" +
-            sexFilenameIdentifiers["male"] + "*.csv"
-        )
-    ) if "male" in sexFilenameIdentifiers else []
+    maleFiles = []
+    if 'male' in sexFilenameIdentifiers:
+        maleFiles = getFileExperimentList(experimentPath, sexFilenameIdentifiers['male'])
+        if not maleFiles:
+            for i in defaultIdentifiers['male']:
+                fileList  = getFileExperimentList(experimentPath,i)
+                if fileList:
+                    maleFiles = fileList
+                    break:
 
-    femaleFiles = sorted(
-        glob.glob(
-            experimentPath + "/" +
-            sexFilenameIdentifiers["female"] + "*.csv"
-        )
-    ) if "female" in sexFilenameIdentifiers else []
+    femaleFiles = []
+    if 'female' in sexFilenameIdentifiers:
+        femaleFiles = getFileExperimentList(experimentPath, sexFilenameIdentifiers['female'])
+        if not femaleFiles:
+            for i in defaultIdentifiers['female']:
+                fileList  = getFileExperimentList(experimentPath,i)
+                if fileList:
+                    femaleFiles = fileList
+                    break:
 
     return {"male": maleFiles, "female": femaleFiles}
 

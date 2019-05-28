@@ -48,7 +48,7 @@ def readExperimentFilenames(
                 fileList  = getFileExperimentList(experimentPath,i)
                 if fileList:
                     maleFiles = fileList
-                    break:
+                    break;
 
     femaleFiles = []
     if 'female' in sexFilenameIdentifiers:
@@ -58,7 +58,7 @@ def readExperimentFilenames(
                 fileList  = getFileExperimentList(experimentPath,i)
                 if fileList:
                     femaleFiles = fileList
-                    break:
+                    break;
 
     return {"male": maleFiles, "female": femaleFiles}
 

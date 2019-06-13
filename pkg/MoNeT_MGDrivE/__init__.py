@@ -6,3 +6,4 @@ from .factorialSensitivity import *
 from .plots import *
 from .summaryStatistics import *
 from .tracesHandler import *
+from .spatialVideos import *

@@ -14,7 +14,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
     install_requires=[
-        'numpy', 'scipy', 'matplotlib', 'ipython', 'jupyter', 'pandas', 'sympy'
+        'numpy', 'scipy', 'matplotlib', 'ipython',
+        'jupyter', 'pandas', 'sympy', 'vincenty'
     ],
     license='MIT',
     classifiers=[

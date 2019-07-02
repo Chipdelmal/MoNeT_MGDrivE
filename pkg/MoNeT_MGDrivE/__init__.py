@@ -7,3 +7,4 @@ from .plots import *
 from .summaryStatistics import *
 from .tracesHandler import *
 from .spatialVideos import *
+from .spatial import *

@@ -1,9 +1,23 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 import os
 import csv
+import math
 import numpy as np
+
+
+def testMarkovMatrix(mat):
+    '''
+    Tests that the matrix behaves according to Markov properties (all
+        rows sum to 1).
+    '''
+    rowMkvSums = list(map(sum, mat))
+    check = [math.isclose(i, 1) for i in rowMkvSums]
+    if check.count(True) == len(mat):
+        return True
+    return False
 
 
 def maxAlleleInLandscape(geneLandscape):

@@ -86,13 +86,14 @@ def truncatedExponential(distance, params=AEDES_EXP_PARAMS):
     scale = 1.0/params[0]
     gA = stats.expon.cdf(params[1], scale=scale)
     gB = stats.expon.cdf(params[2], scale=scale)
-    if np.isclose(gA, gB, 0.000001):
+    if np.isclose(gA, gB):
         return None
 
     densNum = stats.expon.pdf(distance, scale=scale)
     densDen = gB - gA
 
     return densNum/densDen
+
 
 def zeroInflatedExponentialMigrationKernel(
             distMat,

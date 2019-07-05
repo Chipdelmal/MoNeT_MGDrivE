@@ -3,6 +3,10 @@ import numpy as np
 import scipy.stats as stats
 #import vincenty as vn
 
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Constants
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+AEDES_EXP_PARAMS = [0.01848777, 1.0e-10, math.inf]
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
@@ -30,7 +34,7 @@ def calculateDistanceMatrix(landscape, distFun=euclideanDistance):
 
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Kernels
+# Kernel Functions
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def inverseLinearStep(distance, params=[.75, 1]):
@@ -46,7 +50,7 @@ def inverseLinearStep(distance, params=[.75, 1]):
     return True
 
 
-def zeroInflatedExponential(distance, params=[0.01848777, 1.0e-10, math.inf]):
+def truncatedExponential(distance, params=AEDES_EXP_PARAMS):
     '''
     Calculates the zero-inflated exponential for the mosquito movement kernel
         (default parameters set to Aedes aegypti calibrations).
@@ -65,10 +69,17 @@ def zeroInflatedExponential(distance, params=[0.01848777, 1.0e-10, math.inf]):
     densNum = stats.expon.pdf(distance, scale=scale)
     densDen = gB - gA
 
-    return round(densNum/densDen, 10)
+    return densNum/densDen
 
 
-def migrationKernel(distMat, params=[.75, 1], kernelFun=inverseLinearStep):
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Migration Kernels
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def zeroInflatedLinearMigrationKernel(
+            distMat,
+            params=[.75, 1]
+        ):
     '''
     Takes in the distances matrix, zero inflated value (step) and two extra
         parameters to determine the change from distances into distance-based
@@ -78,7 +89,25 @@ def migrationKernel(distMat, params=[.75, 1], kernelFun=inverseLinearStep):
     migrMat = np.empty((coordsNum, coordsNum))
     for (i, row) in enumerate(distMat):
         for (j, dst) in enumerate(row):
-            migrMat[i][j] = kernelFun(dst, params=params)
+            migrMat[i][j] = inverseLinearStep(dst, params=params)
         # Normalize rows to sum 1
         migrMat[i] = migrMat[i] / sum(migrMat[i])
+    return migrMat
+
+
+def zeroInflatedExponentialMigrationKernel(
+            distMat,
+            params=AEDES_EXP_PARAMS,
+            zeroInflation=.75
+        ):
+    coordsNum = len(distMat)
+    migrMat = np.empty((coordsNum, coordsNum))
+    for (i, row) in enumerate(distMat):
+        for (j, dst) in enumerate(row):
+            if(i == j):
+                migrMat[i][j] = 0
+            else:
+                migrMat[i][j] = truncatedExponential(dst, params=params)
+        migrMat[i] = migrMat[i] / np.sum(migrMat[i]) * (1 - zeroInflation)
+    np.fill_diagonal(migrMat, zeroInflation)
     return migrMat

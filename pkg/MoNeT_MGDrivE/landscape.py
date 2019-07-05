@@ -34,7 +34,7 @@ def calculateDistanceMatrix(landscape, distFun=euclideanDistance):
 
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Kernel Functions
+#  Linear Kernel Functions
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def inverseLinearStep(distance, params=[.75, 1]):
@@ -49,6 +49,29 @@ def inverseLinearStep(distance, params=[.75, 1]):
         return (1 / (distance * params[1]))
     return True
 
+
+def zeroInflatedLinearMigrationKernel(
+            distMat,
+            params=[.75, 1]
+        ):
+    '''
+    Takes in the distances matrix, zero inflated value (step) and two extra
+        parameters to determine the change from distances into distance-based
+        migration probabilities (based on the kernel function provided).
+    '''
+    coordsNum = len(distMat)
+    migrMat = np.empty((coordsNum, coordsNum))
+    for (i, row) in enumerate(distMat):
+        for (j, dst) in enumerate(row):
+            migrMat[i][j] = inverseLinearStep(dst, params=params)
+        # Normalize rows to sum 1
+        migrMat[i] = migrMat[i] / sum(migrMat[i])
+    return migrMat
+
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Exponential Migration Kernels
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def truncatedExponential(distance, params=AEDES_EXP_PARAMS):
     '''
@@ -70,30 +93,6 @@ def truncatedExponential(distance, params=AEDES_EXP_PARAMS):
     densDen = gB - gA
 
     return densNum/densDen
-
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Migration Kernels
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-def zeroInflatedLinearMigrationKernel(
-            distMat,
-            params=[.75, 1]
-        ):
-    '''
-    Takes in the distances matrix, zero inflated value (step) and two extra
-        parameters to determine the change from distances into distance-based
-        migration probabilities (based on the kernel function provided).
-    '''
-    coordsNum = len(distMat)
-    migrMat = np.empty((coordsNum, coordsNum))
-    for (i, row) in enumerate(distMat):
-        for (j, dst) in enumerate(row):
-            migrMat[i][j] = inverseLinearStep(dst, params=params)
-        # Normalize rows to sum 1
-        migrMat[i] = migrMat[i] / sum(migrMat[i])
-    return migrMat
-
 
 def zeroInflatedExponentialMigrationKernel(
             distMat,

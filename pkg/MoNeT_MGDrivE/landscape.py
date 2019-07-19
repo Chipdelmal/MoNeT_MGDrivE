@@ -111,3 +111,25 @@ def zeroInflatedExponentialMigrationKernel(
         migrMat[i] = migrMat[i] / np.sum(migrMat[i]) * (1 - zeroInflation)
     np.fill_diagonal(migrMat, zeroInflation)
     return migrMat
+
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Kernel Aggregation
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def aggregateLandscape(migrationMatrix, clusters):
+    num_clusters = len(set(clusters))
+    aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
+    aggr_latlongs = [[] for x in range(num_clusters)]
+    for idx, label in enumerate(clusters):
+        aggr_latlongs[label].append(idx)
+    for row in range(num_clusters):
+        row_ids = aggr_latlongs[row]
+        for colum in range(num_clusters):
+            colum_ids = aggr_latlongs[colum]
+            res = 0
+            for rid in row_ids:
+                for cid in colum_ids:
+                    res += migrationMatrix[rid][cid]
+            aggr_matrix[row][colum] = res/len(row_ids)
+    return aggr_matrix

@@ -39,7 +39,7 @@ def calculateDistanceMatrix(landscape, distFun=euclideanDistance):
 
 def inverseLinearStep(distance, params=[.75, 1]):
     '''
-    This function returns a migration estimate based on the inverse of the
+    Returns a migration estimate based on the inverse of the
         distance. NOTE: This is a terrible way to do it, but it's a first
         approximation. Should be replaced with the zero-inflated exponential.
     '''
@@ -100,6 +100,11 @@ def zeroInflatedExponentialMigrationKernel(
             params=AEDES_EXP_PARAMS,
             zeroInflation=.75
         ):
+    '''
+    Calculates the migration matrix using a zero-inflated exponential function
+        taking as arguments the species-specific lifespan parameters, and the
+        kernel constants (along with the lifelong stay probability).
+    '''
     coordsNum = len(distMat)
     migrMat = np.empty((coordsNum, coordsNum))
     for (i, row) in enumerate(distMat):
@@ -117,14 +122,22 @@ def zeroInflatedExponentialMigrationKernel(
 # Kernel Aggregation
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def aggregateLandscape(migrationMatrix, clusters, type=0):
-    if type == 0:
-        return aggregateLandscapeBase(migrationMatrix, clusters)
-    else:
-        return aggregateLandscapeAlt(migrationMatrix, clusters)
+# def aggregateLandscape(migrationMatrix, clusters, type=0):
+#     '''
+#     Takes the migration matrix, and the clusters list and performs the Markov
+#         aggregation of the landscape.
+#     '''
+#     if type == 0:
+#         return aggregateLandscapeBase(migrationMatrix, clusters)
+#     else:
+#         return aggregateLandscapeAlt(migrationMatrix, clusters)
 
 
-def aggregateLandscapeBase(migrationMatrix, clusters):
+def aggregateLandscape(migrationMatrix, clusters):
+    '''
+    Takes the migration matrix, and the clusters list and performs the Markov
+        aggregation of the landscape.
+    '''
     num_clusters = len(set(clusters))
     aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
     aggr_latlongs = [[] for x in range(num_clusters)]
@@ -142,21 +155,20 @@ def aggregateLandscapeBase(migrationMatrix, clusters):
     return aggr_matrix
 
 
-def aggregateLandscapeAlt(migrationMatrix, clusters):
-    num_clusters = len(set(clusters))
-    aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
-    aggr_latlongs = [[] for x in range(num_clusters)]
-    # get all the patches that fall under each label
-    [aggr_latlongs[label].append(idx) for idx, label in enumerate(clusters)]
-    # get the number of patches in each label for normalization later
-    normVal = dict()
-    for idx, label in enumerate(clusters):
-        normVal[label] = len(aggr_latlongs[label])
-
-    for row in range(num_clusters):
-        row_ids = aggr_latlongs[row]
-        for column in range(num_clusters):
-            colum_ids = aggr_latlongs[colum]
-            all_comb = [migrationMatrix[x][y] for x, y in [itertools.product([row_ids, colum_ids])]]
-            aggr_matrix[row][column] = sum(all_comb)/len(row_ids)
-    return aggr_matrix
+# def aggregateLandscapeAlt(migrationMatrix, clusters):
+#     num_clusters = len(set(clusters))
+#     aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
+#     aggr_latlongs = [[] for x in range(num_clusters)]
+#     # get all the patches that fall under each label
+#     [aggr_latlongs[label].append(idx) for idx, label in enumerate(clusters)]
+#     # get the number of patches in each label for normalization later
+#     normVal = dict()
+#     for idx, label in enumerate(clusters):
+#         normVal[label] = len(aggr_latlongs[label])
+#     for row in range(num_clusters):
+#         row_ids = aggr_latlongs[row]
+#         for column in range(num_clusters):
+#             colum_ids = aggr_latlongs[colum]
+#             all_comb = [migrationMatrix[x][y] for x, y in [itertools.product([row_ids, colum_ids])]]
+#             aggr_matrix[row][column] = sum(all_comb)/len(row_ids)
+#     return aggr_matrix

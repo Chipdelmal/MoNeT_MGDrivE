@@ -117,7 +117,14 @@ def zeroInflatedExponentialMigrationKernel(
 # Kernel Aggregation
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def aggregateLandscape(migrationMatrix, clusters):
+def aggregateLandscape(migrationMatrix, clusters, type=0):
+    if type == 0:
+        return aggregateLandscapeBase(migrationMatrix, clusters)
+    else:
+        return aggregateLandscapeAlt(migrationMatrix, clusters)
+
+
+def aggregateLandscapeBase(migrationMatrix, clusters):
     num_clusters = len(set(clusters))
     aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
     aggr_latlongs = [[] for x in range(num_clusters)]
@@ -132,4 +139,24 @@ def aggregateLandscape(migrationMatrix, clusters):
                 for cid in colum_ids:
                     res += migrationMatrix[rid][cid]
             aggr_matrix[row][colum] = res/len(row_ids)
+    return aggr_matrix
+
+
+def aggregateLandscapeAlt(migrationMatrix, clusters):
+    num_clusters = len(set(clusters))
+    aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)
+    aggr_latlongs = [[] for x in range(num_clusters)]
+    # get all the patches that fall under each label
+    [aggr_latlongs[label].append(idx) for idx, label in enumerate(clusters)]
+    # get the number of patches in each label for normalization later
+    normVal = dict()
+    for idx, label in enumerate(clusters):
+        normVal[label] = len(aggr_latlongs[label])
+
+    for row in range(num_clusters):
+        row_ids = aggr_latlongs[row]
+        for column in range(num_clusters):
+            colum_ids = aggr_latlongs[colum]
+            all_comb = [migrationMatrix[x][y] for x, y in [itertools.product([row_ids, colum_ids])]]
+            aggr_matrix[row][column] = sum(all_comb)/len(row_ids)
     return aggr_matrix

@@ -1,7 +1,8 @@
 import math
 import numpy as np
 import scipy.stats as stats
-#import vincenty as vn
+import itertools
+# import vincenty as vn
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Constants
@@ -11,6 +12,7 @@ AEDES_EXP_PARAMS = [0.01848777, 1.0e-10, math.inf]
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 def euclideanDistance(a, b):
     '''
@@ -166,7 +168,7 @@ def aggregateLandscapeAltVic(migrationMatrix, clusters):
     aggr_number = [0]*num_clusters
     for row in range(matrix_size):
         cRow = clusters[row]
-        aggr_number[cRow] +=1
+        aggr_number[cRow] += 1
         for col in range(matrix_size):
             cCol = clusters[col]
             aggr_matrix[cRow][cCol] += migrationMatrix[row][col]
@@ -190,7 +192,9 @@ def aggregateLandscapeAltGill(migrationMatrix, clusters):
     for row in range(num_clusters):
         row_ids = aggr_latlongs[row]
         for column in range(num_clusters):
-            colum_ids = aggr_latlongs[colum]
-            all_comb = [migrationMatrix[x][y] for x, y in [itertools.product([row_ids, colum_ids])]]
+            colum_ids = aggr_latlongs[column]
+            all_comb = [
+                migrationMatrix[x][y] for (x, y) in [itertools.product([row_ids, colum_ids])]
+            ]
             aggr_matrix[row][column] = sum(all_comb)/len(row_ids)
     return aggr_matrix

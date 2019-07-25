@@ -29,7 +29,7 @@ def populateClusters(clusterNum, cFileName, pFileLocation, pFilePattern={}):
         for line in coordFile:
             patchCluster.append(int(line.split(',')[2].strip()))
     else:
-        patchCluster=range(cluster)
+        patchCluster=range(clusterNum)
 
     if 'male' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))

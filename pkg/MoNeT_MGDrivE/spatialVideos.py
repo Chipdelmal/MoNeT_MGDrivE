@@ -23,10 +23,13 @@ def populateClusters(clusterNum, cFileName, pFileLocation, pFilePattern={}):
     for i in range(clusterNum):
         clusters.append({'male': [], 'female': []})
     patchCluster = []
-    coordFile = open(cFileName, 'r')
 
-    for line in coordFile:
-        patchCluster.append(int(line.split(',')[2].strip()))
+    if cFileName:
+        coordFile = open(cFileName, 'r')
+        for line in coordFile:
+            patchCluster.append(int(line.split(',')[2].strip()))
+    else:
+        patchCluster=range(cluster)
 
     if 'male' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
@@ -111,7 +114,7 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
     # start = 0.0
     for idx, value in enumerate(alphas):
         m.scatter([long], [lat], latlon=True, marker=(6, 0), s=max(
-            9, 0.15*size), facecolor=colorList[idx], alpha=value)
+            6, 0.11*size), facecolor=colorList[idx], alpha=value)
 
 
 def generateClusterGraphs(aggList, coordinates, destination, colorList):
@@ -149,5 +152,4 @@ def generateVideo(name, background, imageLocation, imagePattern):
             '[0:v][1:v]overlay=0:0[bg]; [bg]pad=ceil(iw/2)*2:ceil(ih/2)*2, '
             + 'format=yuv420p[outv]', '-map', '[outv]', name]
         )
-    print(video.pid)
     return video

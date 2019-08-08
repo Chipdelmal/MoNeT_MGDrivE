@@ -102,7 +102,7 @@ def createFig(coordinates, padding):
             resolution='i', ax=ax
         )
     m.drawcounties(linewidth=0.3)
-    m.drawcoaslines(linewidth=0.3)
+    m.drawcoastlines(linewidth=0.3)
     m.drawcountries(linewidth=0.3)
     return (fig, ax, m)
 
@@ -142,7 +142,7 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, padding,
                         bbox_inches='tight', pad_inches=0.05, frameon=None)
             plt.close(fig)
             plt.close('all')
-            fig, ax, m = createFig(coordinates)
+            fig, ax, m = createFig(coordinates,padding)
     return
 
 

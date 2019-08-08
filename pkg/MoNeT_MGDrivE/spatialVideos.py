@@ -77,7 +77,7 @@ def getGenotypes(fileName):
     return header
 
 
-def createFig(coordinates):
+def createFig(coordinates, padding):
     fig = None
     ax = None
     m = None
@@ -97,11 +97,13 @@ def createFig(coordinates):
             labelleft=False
         )
     m = Basemap(
-            projection='merc', llcrnrlat=minLat-0.001, urcrnrlat=maxLat+0.001,
-            llcrnrlon=minLong-0.001, urcrnrlon=maxLong+0.001, lat_ts=20,
+            projection='merc', llcrnrlat=minLat-padding, urcrnrlat=maxLat+padding,
+            llcrnrlon=minLong-padding, urcrnrlon=maxLong+padding, lat_ts=20,
             resolution='i', ax=ax
         )
     m.drawcounties(linewidth=0.3)
+    m.drawcoaslines(linewidth=0.3)
+    m.drawcountries(linewidth=0.3)
     return (fig, ax, m)
 
 
@@ -117,9 +119,9 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
             6, 0.11*size), facecolor=colorList[idx], alpha=value)
 
 
-def generateClusterGraphs(aggList, coordinates, destination, colorList):
+def generateClusterGraphs(aggList, coordinates, destination, colorList, padding, dpi):
     time = len(aggList[0])
-    fig, ax, m = createFig(coordinates)
+    fig, ax, m = createFig(coordinates, padding)
     for tick in range(time):
         for idx, cData in enumerate(aggList):
             pops = []
@@ -135,7 +137,7 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList):
                 return e
         else:
             fig.savefig(destination+'/c_'+str(tick).zfill(6)+".png",
-                        dpi=512, orientation='portrait', papertype=None,
+                        dpi=dpi, orientation='portrait', papertype=None,
                         transparent=True, format="png",
                         bbox_inches='tight', pad_inches=0.05, frameon=None)
             plt.close(fig)

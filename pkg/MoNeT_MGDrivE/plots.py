@@ -297,7 +297,7 @@ def quickSaveFigure(
         * NA
     """
     fig.savefig(
-        path, dpi=dpi, facecolor='w',
+        path, dpi=dpi, facecolor=None,
         edgecolor='w', orientation='portrait', papertype=None,
         format=format, transparent=True, bbox_inches='tight',
         pad_inches=0, frameon=None

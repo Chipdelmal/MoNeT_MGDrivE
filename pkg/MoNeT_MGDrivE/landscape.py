@@ -9,6 +9,31 @@ import itertools
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 AEDES_EXP_PARAMS = [0.01848777, 1.0e-10, math.inf]
 
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Sortings
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def sortByDistanceToPOI(poi, landscape, distFun=euclideanDistance):
+    '''
+    Returns a numpy array of sorted coordinates according to the distance
+        to an arbitrary point of interest (POI).
+    NOTE: Make sure the landscape & POI are in latlong form! The output is
+        returned in longlat format.
+    '''
+    # Compute distances to POI
+    latlongs = np.asarray(landscape)
+    distances = [distFun(poi, (row[1], row[0])) for row in latlongs]
+    # Get the sorting of the distances and concatenate to longlats
+    sorting = np.asarray(distances).argsort()
+    distArray = np.asarray([distances])
+    longlatDist = np.concatenate((latlongs, distArray.T), axis=1)
+    # Apply the sorting and return the array
+    longlatDistSort = longlatDist[sorting]
+    return longlatDistSort
+
+
+
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

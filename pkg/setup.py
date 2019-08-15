@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='MoNeT_MGDrivE',
-    version='0.5.5.1',
+    version='0.5.5.2',
     url='https://github.com/Chipdelmal/MoNeT_MGDrivE',
     author='Hector M. Sanchez C.',
     author_email='sanchez.hmsc@berkeley.edu',
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'numpy', 'scipy', 'matplotlib', 'ipython',
-        'jupyter', 'pandas', 'sympy', 'vincenty'
+        'jupyter', 'pandas', 'sympy'
     ],
     license='MIT',
     classifiers=[

@@ -474,6 +474,28 @@ def loadAndAggregateLandscapeDataRepetitions(
     return returnDict
 
 
+def sumAggregatedLandscapeDataRepetitions(landscapeReps):
+    """
+    Description:
+        * Sums the landscape repetitions into one population (effectively
+            one node)
+    In:
+        * landscapeReps: output from loadAndAggregateLandscapeDataRepetitions
+    Out:
+        * returnDict: Dictionary with genotypes and the loaded landscapes
+            for each one of the repetitions.
+    Notes:
+        * This function is meant to work with the traces plot, by compressing
+            landscape repetitions nodes into one population (reducing the
+            nodes' dimension)
+    """
+    repetitions = len(landscapeReps["landscapes"])
+    res = []
+    for rep in range(repetitions):
+        res.append([np.sum(landscapeReps["landscapes"][rep], axis=0)])
+    return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
+
+
 def getGenotypeFromLandscape(
     landscapeData,
     genotypeIndex

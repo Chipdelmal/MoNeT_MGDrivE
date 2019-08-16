@@ -300,5 +300,5 @@ def quickSaveFigure(
         path, dpi=dpi, facecolor=None,
         edgecolor='w', orientation='portrait', papertype=None,
         format=format, transparent=True, bbox_inches='tight',
-        pad_inches=0, frameon=None
+        pad_inches=0
     )

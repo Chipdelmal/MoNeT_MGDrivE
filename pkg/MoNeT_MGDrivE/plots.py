@@ -5,6 +5,50 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE.colors as monetPlots
 
 
+
+def plotNodeTracesOnFigure(
+    landscapeReps,
+    style,
+    figure
+):
+    """
+    Description:
+        * Generates the individual "traces" plot for a whole landscape
+            iteratively.
+    In:
+        * landscapeReps: landscape repetitions data generated with
+            loadAndAggregateLandscapeDataRepetitions.
+        * style: styling options for the plot.
+        * fig: figure to plot on top of.
+    Out:
+        * fig: a matplotlib traces figure with all of the information on the landscapeReps.
+    Notes:
+        * NA
+    """
+    repetitions = len(landscapeReps["landscapes"])
+    nodesNumb = len(landscapeReps["landscapes"][0])
+    genesNumber = len(landscapeReps["landscapes"][0][0][0])
+
+    if not figure:
+        fig, ax = plt.subplots()
+    else:
+        fig = figure
+        ax = figure.get_axes()[0]
+
+    for rep in landscapeReps["landscapes"]:
+        for node in rep:
+            transposed = node.T
+            for gene in range(0, genesNumber):
+                ax.plot(
+                    transposed[gene],
+                    linewidth=style["width"],
+                    color=style["colors"][gene],
+                    alpha=style["alpha"]
+                )
+
+    return fig
+
+
 def plotMeanGenotypeTrace(aggData, style):
     """
     Description:

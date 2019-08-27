@@ -313,7 +313,7 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
         res[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
     returnDict = {
         "genotypes": aggregationDictionary["genotypes"],
-        "landscapes": reps
+        "landscapes": res
     }
 
     return returnDict

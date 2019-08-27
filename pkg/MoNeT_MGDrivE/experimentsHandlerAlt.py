@@ -303,14 +303,14 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
     """
 
     repetitions = len(paths)
-    res = [None] * repetitions
+    reps = [None] * repetitions
     for i in range(repetitions):
         filenames = expHand.readExperimentFilenames(paths[i])
         loadedLandscape = loadAndAggregateLandscapeDataAlt(
             filenames, aggregationDictionary,
             male=male, female=female, dataType=dataType
         )
-        res[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
+        reps[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
     returnDict = {
         "genotypes": aggregationDictionary["genotypes"],
         "landscapes": reps

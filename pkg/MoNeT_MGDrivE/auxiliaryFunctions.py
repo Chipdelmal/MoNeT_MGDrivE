@@ -177,8 +177,8 @@ def readGenotypes(filename, skipColumns=1):
     Notes:
         * NA
     '''
-    reader = csv.reader(open(filename))
-    return next(reader)[skipColumns:]
+    reader = open(filename, 'r')
+    return next(reader).split(',')[skipColumns:]
 
 
 def splitExperimentString(experimentString):

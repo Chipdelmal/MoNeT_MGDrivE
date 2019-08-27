@@ -77,7 +77,7 @@ def getGenotypes(fileName):
     return header
 
 
-def createFig(coordinates, padding):
+def createFig(coordinates, padding, countries):
     fig = None
     ax = None
     m = None
@@ -102,8 +102,9 @@ def createFig(coordinates, padding):
             resolution='i', ax=ax
         )
     m.drawcounties(linewidth=0.3)
-    m.drawcoastlines(linewidth=0.3)
-    m.drawcountries(linewidth=0.3)
+    if countries:
+        m.drawcoastlines(linewidth=0.3)
+        m.drawcountries(linewidth=0.3)
     return (fig, ax, m)
 
 
@@ -119,9 +120,13 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
             6, 0.11*size), facecolor=colorList[idx], alpha=value)
 
 
-def generateClusterGraphs(aggList, coordinates, destination, colorList, padding, dpi):
+def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries = False):
     time = len(aggList[0])
-    fig, ax, m = createFig(coordinates, padding)
+    if original_corners:
+        fig, ax, m = createFig(original_corners, padding, countries)
+    else:
+        fig, ax, m = createFig(coordinates, padding, countries)
+
     for tick in range(time):
         for idx, cData in enumerate(aggList):
             pops = []
@@ -142,7 +147,11 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, padding,
                         bbox_inches='tight', pad_inches=0.05, frameon=None)
             plt.close(fig)
             plt.close('all')
-            fig, ax, m = createFig(coordinates,padding)
+            if original_corners:
+                fig, ax, m = createFig(original_corners, padding, countries)
+            else:
+                fig, ax, m = createFig(coordinates, padding, countries)
+
     return
 
 

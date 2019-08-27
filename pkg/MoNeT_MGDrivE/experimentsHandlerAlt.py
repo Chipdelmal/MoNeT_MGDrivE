@@ -1,9 +1,9 @@
 import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
-import MoNeT_MGDrivE.auxiliaryFunctions as expHand
+import MoNeT_MGDrivE.experimentsHandler as expHand
 
-def fileReader(fileName, dataType=float, skipHeader=1, skipColumns=1):
+def fileReader(fileName, dtype=float, skipHeader=1, skipColumns=1):
     """
     Description:
         * Loads the data for a single node in the file
@@ -34,7 +34,7 @@ def fileReader(fileName, dataType=float, skipHeader=1, skipColumns=1):
         headerLen = len(tokens)
         if headerLen <= skipColumns:
             return np.zeros(1)
-        rows.append(np.array(tokens[skipColumns:], dtype=dataType))
+        rows.append(np.array(tokens[skipColumns:], dtype=dtype))
 
     rowLen = headerLen - skipColumns
 
@@ -44,7 +44,7 @@ def fileReader(fileName, dataType=float, skipHeader=1, skipColumns=1):
             rows.append(np.zeros(rowLen))
             continue
 
-        rows.append(np.array(tokens[skipColumns:], dtype=dataType))
+        rows.append(np.array(tokens[skipColumns:], dtype=dtype))
 
     return np.stack(rows)
 
@@ -56,34 +56,34 @@ def loadNodeDataAlt(
     skipHeader=1,
     skipColumns=1
 ):
-"""
-Description:
-    * Loads the data for a single node in the files. If male and female
-        filenames are provided, it sums them as a matrix operation.
-        Avoids the use of np.readfromtxt, to avoid the overhead
-In:
-    * maleFilename: Path to the male CSV file to process.
-    * femaleFilename: Path to the female CSV file to process.
-    * dataType: To save memory/processing time if possible (int/float).
-Out:
-    * Dictionary containing:
-        "genotypes" [list -> strings]
-        "population" [numpyArray]
-Notes:
-    * Timing information is dropped.
-"""
+    """
+    Description:
+        * Loads the data for a single node in the files. If male and female
+            filenames are provided, it sums them as a matrix operation.
+            Avoids the use of np.readfromtxt, to avoid the overhead
+    In:
+        * maleFilename: Path to the male CSV file to process.
+        * femaleFilename: Path to the female CSV file to process.
+        * dataType: To save memory/processing time if possible (int/float).
+    Out:
+        * Dictionary containing:
+            "genotypes" [list -> strings]
+            "population" [numpyArray]
+    Notes:
+        * Timing information is dropped.
+    """
     if (maleFilename is not None) and (femaleFilename is not None):
         genotypes = auxFun.readGenotypes(maleFilename)
         dataM = fileReader(
             maleFilename,
             dtype=dataType,
-            skip_header=skipHeader,
+            skipHeader=skipHeader,
             skipColumns=skipColumns
         )
         dataF = fileReader(
             femaleFilename,
             dtype=dataType,
-            skip_header=skipHeader,
+            skipHeader=skipHeader,
             skipColumns=skipColumns
         )
         if dataM.shape[0] > dataF.shape[0]:
@@ -102,7 +102,7 @@ Notes:
         dataF = fileReader(
             femaleFilename,
             dtype=dataType,
-            skip_header=skipHeader,
+            skipHeader=skipHeader,
             skipColumns=skipColumns
         )
         returnDictionary = {
@@ -115,7 +115,7 @@ Notes:
         dataM = fileReader(
             maleFilename,
             dtype=dataType,
-            skip_header=skipHeader,
+            skipHeader=skipHeader,
             skipColumns=skipColumns
         )
         returnDictionary = {
@@ -205,7 +205,7 @@ def loadLandscapeDataAlt(filenames, male=True, female=True, dataType=float):
         return None
 
 
-def loadAndAggregateLandscapeData(
+def loadAndAggregateLandscapeDataAlt(
     filenames,
     aggregationDictionary,
     male=True,
@@ -277,4 +277,43 @@ def loadAndAggregateLandscapeDataRepetitionsAlt(
         "genotypes": aggregationDictionary["genotypes"],
         "landscapes": landscapes
     }
+    return returnDict
+
+
+def sumAggregatedLandscapeDataRepetitionsAlt(
+    paths,
+    aggregationDictionary,
+    male=True,
+    female=True,
+    dataType=float
+):
+    """
+    Description:
+        * Sums the landscape repetitions into one population (effectively
+            one node)
+    In:
+        * landscapeReps: output from loadAndAggregateLandscapeDataRepetitions
+    Out:
+        * returnDict: Dictionary with genotypes and the loaded landscapes
+            for each one of the repetitions.
+    Notes:
+        * This function is meant to work with the traces plot, by compressing
+            landscape repetitions nodes into one population (reducing the
+            nodes' dimension)
+    """
+
+    repetitions = len(paths)
+    res = [None] * repetitions
+    for i in range(repetitions):
+        filenames = expHand.readExperimentFilenames(paths[i])
+        loadedLandscape = loadAndAggregateLandscapeDataAlt(
+            filenames, aggregationDictionary,
+            male=male, female=female, dataType=dataType
+        )
+        res[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
+    returnDict = {
+        "genotypes": aggregationDictionary["genotypes"],
+        "landscapes": reps
+    }
+
     return returnDict

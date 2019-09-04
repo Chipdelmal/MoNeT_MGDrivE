@@ -38,13 +38,18 @@ def fileReader(fileName, dtype=float, skipHeader=1, skipColumns=1):
 
     rowLen = headerLen - skipColumns
 
+
+
+    previous = [0]*headerLen
     for line in dataFile:
         tokens = line.split(',')
         if len(tokens) != headerLen:
-            rows.append(np.zeros(rowLen))
-            continue
+            res = np.array(previous[skipColumns:], dtype=dtype)
+        else:
+            res = np.array(tokens[skipColumns:], dtype=dtype)
+            previous = tokens
 
-        rows.append(np.array(tokens[skipColumns:], dtype=dtype))
+        rows.append(res)
 
     return np.stack(rows)
 

@@ -1,3 +1,4 @@
+from operator import itemgetter
 import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
@@ -315,7 +316,9 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
             filenames, aggregationDictionary,
             male=male, female=female, dataType=dataType
         )
-        reps[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
+        minShape = min([x.shape for x in loadedLandscape["landscape"]], key=itemgetter(0,1))
+        newSize = [np.resize(x,minShape) for x in loadedLandscape["landscape"]]
+        reps[i] = [np.sum(newSize, axis=0)]
     returnDict = {
         "genotypes": aggregationDictionary["genotypes"],
         "landscapes": reps

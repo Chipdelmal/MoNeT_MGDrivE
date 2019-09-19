@@ -34,7 +34,7 @@ def writeFactorialAnalysisCSV(
     simDays = len(pop)
     numeratorList = ratiosDictionary["numerator"]
     denominatorList = ratiosDictionary["denominator"]
-    with open(path+experimentString+".csv", 'wb') as csvfile:
+    with open(path+experimentString+".csv", 'w') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(["ReleasesNumber", "Coverage", "Day", "Ratio"])
         for i in range(0, simDays):
@@ -111,7 +111,7 @@ def compileFactorialCSVFromFiles(path, outFilename):
     #     path + name for name in files if fnmatch.fnmatch(name, 'E_*.csv')
     # ]
     filenames = glob.glob(path+'E_*.csv')
-    f = open(path+outFilename, 'wb')
+    f = open("/".join(path.split("/")[:-2]) + "/" + outFilename, 'wb')
     for file in filenames:
         fileData = np.genfromtxt(file, skip_header=1, delimiter=",")
         np.savetxt(f, fileData, fmt='%2.5f', delimiter=",")

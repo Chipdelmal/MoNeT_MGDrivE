@@ -37,8 +37,9 @@ def reachedSteadtStateAtDay(
 
         boolsUp = testFrame < toleranceUp
         boolsDown = testFrame > toleranceDown
+        zeros = testFrame < 1
 
-        if all(boolsUp) and all(boolsDown):
+        if (all(boolsUp) and all(boolsDown)) or all(zeros):
             steadyStateReach = i
             break
 

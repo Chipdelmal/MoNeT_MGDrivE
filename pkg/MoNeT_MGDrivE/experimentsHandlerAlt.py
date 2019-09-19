@@ -301,7 +301,6 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
             landscape repetitions nodes into one population (reducing the
             nodes' dimension)
     """
-
     repetitions = len(paths)
     reps = [None] * repetitions
     for i in range(repetitions):

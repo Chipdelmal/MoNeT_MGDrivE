@@ -1,3 +1,4 @@
+from operator import itemgetter
 import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
@@ -38,13 +39,18 @@ def fileReader(fileName, dtype=float, skipHeader=1, skipColumns=1):
 
     rowLen = headerLen - skipColumns
 
+
+
+    previous = [0]*headerLen
     for line in dataFile:
         tokens = line.split(',')
         if len(tokens) != headerLen:
-            rows.append(np.zeros(rowLen))
-            continue
+            res = np.array(previous[skipColumns:], dtype=dtype)
+        else:
+            res = np.array(tokens[skipColumns:], dtype=dtype)
+            previous = tokens
 
-        rows.append(np.array(tokens[skipColumns:], dtype=dtype))
+        rows.append(res)
 
     return np.stack(rows)
 
@@ -309,7 +315,9 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
             filenames, aggregationDictionary,
             male=male, female=female, dataType=dataType
         )
-        reps[i] = [np.sum(loadedLandscape["landscape"], axis=0)]
+        minShape = min([x.shape for x in loadedLandscape["landscape"]], key=itemgetter(0,1))
+        newSize = [np.resize(x,minShape) for x in loadedLandscape["landscape"]]
+        reps[i] = [np.sum(newSize, axis=0)]
     returnDict = {
         "genotypes": aggregationDictionary["genotypes"],
         "landscapes": reps

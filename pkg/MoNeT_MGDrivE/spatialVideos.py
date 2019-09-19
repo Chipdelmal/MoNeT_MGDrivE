@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import MoNeT_MGDrivE as monet
 from mpl_toolkits.basemap import Basemap
 import numpy as np
+import os
 import subprocess
 
 
@@ -120,7 +121,7 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
             6, 0.11*size), facecolor=colorList[idx], alpha=value)
 
 
-def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries = False):
+def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries = False, skip = False):
     time = len(aggList[0])
     if original_corners:
         fig, ax, m = createFig(original_corners, padding, countries)
@@ -128,6 +129,10 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, original
         fig, ax, m = createFig(coordinates, padding, countries)
 
     for tick in range(time):
+        imgFileName = destination+'/c_'+str(tick).zfill(6)+".png"
+        if skip and os.path.isfile(imgFileName):
+            continue
+        
         for idx, cData in enumerate(aggList):
             pops = []
             try:
@@ -141,7 +146,7 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, original
             except Exception as e:
                 return e
         else:
-            fig.savefig(destination+'/c_'+str(tick).zfill(6)+".png",
+            fig.savefig(imgFileName,
                         dpi=dpi, orientation='portrait', papertype=None,
                         transparent=True, format="png",
                         bbox_inches='tight', pad_inches=0.05, frameon=None)

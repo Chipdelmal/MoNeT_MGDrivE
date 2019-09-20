@@ -44,3 +44,29 @@ def reachedSteadtStateAtDay(
             break
 
     return steadyStateReach
+
+
+
+def getTimeToMin(
+        aggData,
+        safety=.01
+    ):
+    """
+    Description:
+        * Calculates the point at which the total population reaches
+            its minimum.
+    In:
+        * aggData: Genotypes aggregated data.
+        * safety: Envelope of values around the steady state that are
+            considered "stable" (as a proportion of the final total allele
+            composition).
+    Out:
+        * time: Point in time at which the minimum is reached
+        * popMin: Population size at its minimum
+    """
+    pop = [sum(row) for row in aggData['population']]
+    for time in range(len(pop)):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=safety):
+            break
+    return (time, popMin)

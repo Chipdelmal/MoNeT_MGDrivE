@@ -134,7 +134,7 @@ def plotMeanGenotypeStack(
             [vLinesCoords[i], vLinesCoords[i]],
             [style["yRange"][0], style["yRange"][1]],
             'k--',
-            lw=.5
+            lw=.25
         )
     plt.ylabel("")
     plt.xlabel("")
@@ -346,3 +346,21 @@ def quickSaveFigure(
         format=format, transparent=True, bbox_inches='tight',
         pad_inches=0
     )
+
+
+def scaleAspect(aspect, style):
+    """
+    Description:
+        * Helper function to override the aspect ratio value on the ranges
+            in a more meaningful way.
+    In:
+        * aspect: float parameter to scale the x/y ratio on the plots
+        * style: dictionary with style components for the plot
+    Out:
+        * float: Scaling factor for the plot
+    Notes:
+        * Example: style['aspect'] = scaleAspect(.2, style)
+    """
+    xDiff = (style['xRange'][1] - style['xRange'][0])
+    yDiff = (style['yRange'][1] - style['yRange'][0])
+    return aspect * (xDiff / yDiff)

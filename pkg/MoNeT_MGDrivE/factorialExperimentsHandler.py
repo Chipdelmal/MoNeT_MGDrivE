@@ -72,10 +72,10 @@ def loadFolderAndWriteFactorialCSV(
     filenames = exPar.readExperimentFilenames(path+experimentString)
     landscapeSumData = exPar.sumLandscapePopulationsFromFiles(
         filenames,
-        male=True,
-        female=True,
+        male=male,
+        female=female,
         dataType=dataType
-        )
+    )
     aggregateData = exPar.aggregateGenotypesInNode(
         landscapeSumData,
         aggregationDictionary

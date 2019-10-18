@@ -44,6 +44,93 @@ def writeFactorialAnalysisCSV(
             writer.writerow([releasesNumber, coverage, i, ratio])
 
 
+def writeFactorialAnalysisCSVFixedPopSize(
+    releasesNumber,
+    coverage,
+    path,
+    experimentString,
+    aggregateData,
+    ratiosDictionary,
+    popSizeIx=-1
+):
+    """
+    Description:
+        * Intermediate-level function to write the factorial analysis of the
+            factorial experiments to drive.
+    In:
+        * releasesNumber:
+        * coverage:
+        * path:
+        * experimentString:
+        * aggregateData:
+        * ratiosDictionary:
+    Out:
+        * NA
+    Notes:
+        * NA
+    """
+    # Getting common data for easier readability
+    pop = aggregateData["population"]
+    simDays = len(pop)
+    numeratorList = ratiosDictionary["numerator"]
+    denominatorList = ratiosDictionary["denominator"]
+    with open(path+experimentString+".csv", 'w') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(["ReleasesNumber", "Coverage", "Day", "Ratio"])
+        for i in range(0, simDays):
+            num = np.sum(pop[i, [numeratorList]])
+            #denom = np.sum(pop[i, [denominatorList]])
+            ratio = num/sum(pop[popSizeIx])
+            writer.writerow([releasesNumber, coverage, i, ratio])
+
+
+def loadFolderAndWriteFactorialCSVFixedPopSize(
+    experimentString,
+    path,
+    aggregationDictionary,
+    ratiosDictionary,
+    male=True,
+    female=True,
+    dataType=float
+):
+    """
+    Description:
+        * Wrapper function to perform the whole factorial parsing analysis on a
+            folder and write the resulting CSV to drive.
+    In:
+        * experimentString:
+        * path: Directory where the experiment is stored.
+        * aggregationDictionary: Dictionary containing the keys to aggregate
+            the genotypes (created with "generateAggregationDictionary")
+        * ratiosDictionary: "numerator", and "denominator" lists dictionary
+            containing the columns to use in each section of the ratio.
+    Out:
+        * NA
+    Notes:
+        * NA
+    """
+    filenames = exPar.readExperimentFilenames(path+experimentString)
+    landscapeSumData = exPar.sumLandscapePopulationsFromFiles(
+        filenames,
+        male=male, female=female,
+        dataType=dataType
+    )
+    aggregateData = exPar.aggregateGenotypesInNode(
+        landscapeSumData,
+        aggregationDictionary
+    )
+    split = auxFun.splitExperimentString(experimentString)
+    writeFactorialAnalysisCSVFixedPopSize(
+        split["releasesNumber"],
+        int(split["coverage"])/1000.0,
+        path,
+        experimentString,
+        aggregateData,
+        ratiosDictionary
+    )
+    return None
+
+
 def loadFolderAndWriteFactorialCSV(
     experimentString,
     path,
@@ -72,8 +159,7 @@ def loadFolderAndWriteFactorialCSV(
     filenames = exPar.readExperimentFilenames(path+experimentString)
     landscapeSumData = exPar.sumLandscapePopulationsFromFiles(
         filenames,
-        male=male,
-        female=female,
+        male=male, female=female,
         dataType=dataType
     )
     aggregateData = exPar.aggregateGenotypesInNode(

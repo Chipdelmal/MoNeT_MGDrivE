@@ -5,7 +5,6 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE.colors as monetPlots
 
 
-
 def plotNodeTracesOnFigure(
     landscapeReps,
     style,

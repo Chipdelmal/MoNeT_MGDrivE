@@ -11,6 +11,20 @@ AEDES_EXP_PARAMS = [0.01848777, 1.0e-10, math.inf]
 
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Kernels
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+def normalizeKernel(kernelIn):
+    '''
+    Takes a numpy array in, and returns a row-wise normalized copy.
+    '''
+    kernelOut = np.empty(kernelIn.shape)
+    for (i, row) in enumerate(kernel):
+        kernelOut[i] = row/np.sum(row)
+    return kernelOut
+
+
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

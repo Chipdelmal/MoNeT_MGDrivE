@@ -269,9 +269,10 @@ def quickSaveRepsAggData(
     if not os.path.exists(foldername):
         try:
             os.mkdir(foldername)
-        except:
-            raise OSError("Can't create destination directory (%s)!" %
-                          (foldername))
+        except OSError:
+            raise OSError(
+                    "Can't create destination directory (%s)!" % (foldername)
+                )
 
     repsNumber = len(landscapeReps["landscapes"])
     for i in range(0, repsNumber):
@@ -287,3 +288,24 @@ def quickSaveRepsAggData(
                 "_R" + str(i).rjust(padNumb, "0") + ".csv",
                 fmt=fmt
             )
+
+
+def makeFolder(path):
+    """Crates a folder in the specified directory.
+
+    Parameters
+    ----------
+    path : string
+        Path of the folder than needs to be created.
+
+    Returns
+    -------
+    NA
+    """
+    if not os.path.exists(path):
+        try:
+            os.mkdir(path)
+        except OSError:
+            raise OSError(
+                    "Can't create destination directory (%s)!" % (path)
+                )

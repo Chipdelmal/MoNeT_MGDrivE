@@ -20,12 +20,13 @@ def plotNodeTracesOnFigure(
         * style: styling options for the plot.
         * fig: figure to plot on top of.
     Out:
-        * fig: a matplotlib traces figure with all of the information on the landscapeReps.
+        * fig: a matplotlib traces figure with all of the information on the
+            landscapeReps.
     Notes:
         * NA
     """
-    repetitions = len(landscapeReps["landscapes"])
-    nodesNumb = len(landscapeReps["landscapes"][0])
+    # repetitions = len(landscapeReps["landscapes"])
+    # nodesNumb = len(landscapeReps["landscapes"][0])
     genesNumber = len(landscapeReps["landscapes"][0][0][0])
 
     if not figure:
@@ -297,12 +298,13 @@ def plotAllTraces(
             loadAndAggregateLandscapeDataRepetitions.
         * style: styling options for the plot.
     Out:
-        * fig: a matplotlib traces figure with all of the information on the landscapeReps.
+        * fig: a matplotlib traces figure with all of the information on the
+            landscapeReps.
     Notes:
         * NA
     """
-    repetitions = len(landscapeReps["landscapes"])
-    nodesNumb = len(landscapeReps["landscapes"][0])
+    # repetitions = len(landscapeReps["landscapes"])
+    # nodesNumb = len(landscapeReps["landscapes"][0])
     genesNumber = len(landscapeReps["landscapes"][0][0][0])
     fig, ax = plt.subplots()
     ax.set_aspect(aspect=style["aspect"])
@@ -363,3 +365,56 @@ def scaleAspect(aspect, style):
     xDiff = (style['xRange'][1] - style['xRange'][0])
     yDiff = (style['yRange'][1] - style['yRange'][0])
     return aspect * (xDiff / yDiff)
+
+
+def exportLegend(legend, filename="legend.png", dpi=500):
+    """Helper function to draw a palette legend independent from the plot.
+
+    Parameters
+    ----------
+    legend : plt
+        Plt object of handles and labels.
+    filename : str
+        Path to store the legend file in.
+    dpi : int
+        Resolution of the legend.
+
+    Returns
+    -------
+    type
+        NA
+
+    """
+    fig = legend.figure
+    fig.canvas.draw()
+    bbox = legend.get_window_extent().transformed(
+            fig.dpi_scale_trans.inverted()
+        )
+    fig.savefig(filename, dpi=dpi, bbox_inches=bbox)
+
+
+def exportGeneLegend(labels, colors, filename, dpi):
+    """Generates a gene-labels legend to a file.
+
+    Parameters
+    ----------
+    labels : strings list
+        List of strings to use as legend names (genes).
+    colors : colors list
+        List of colors for the swatch.
+    filename : string path
+        Path to store the legend file in.
+    dpi : integer
+        Resolution of the legend
+
+    Returns
+    -------
+    type
+        NA
+
+    """
+    def f(m, c): return plt.plot([], [], marker=m, color=c, ls="none")[0]
+    handles = [f("s", colors[i]) for i in range(len(labels))]
+    legend = plt.legend(handles, labels, loc=3, framealpha=1, frameon=False)
+    exportLegend(legend, filename=filename, dpi=dpi)
+    plt.close('all')

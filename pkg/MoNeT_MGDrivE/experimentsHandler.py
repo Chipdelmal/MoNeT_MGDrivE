@@ -593,14 +593,15 @@ def calculateMaxPopInLandscapeReps(landscapeReps):
     landscapes = landscapeReps["landscapes"]
     list = [None] * len(landscapeReps["landscapes"][0])
     for i in range(len(landscapeReps["landscapes"][0])):
-            list[i] = sum(landscapes[0][i][0])
+        list[i] = sum(landscapes[0][i][0])
     return max(list)
 
 
 def normalizePopulationInNode(node, totalPopIx=-1, lociiScaler=1):
     """Auxiliary function that takes the population in a node and normalizes it
     to the total population (stored somewhere in the same pop-array, which is,
-    ideally, the last column).
+    ideally, the last column). Note that this function removes the 'totalPop'
+    column as it is not relevant for analyses.
 
     Parameters
     ----------
@@ -618,14 +619,23 @@ def normalizePopulationInNode(node, totalPopIx=-1, lociiScaler=1):
         node
 
     """
-    popSize = node[:,-1]
-    normalizedNode = np.empty(node.shape)
+    popSize = node[:, totalPopIx]
+    normalizedNode = np.empty((node.shape[0], node.shape[1]-1))
+    rangeElements = list(range(0, len(node[0])))
+    rangeElements.pop(totalPopIx)
     for i in range(0, len(node), 1):
-        normalizedNode[i] = lociiScaler * (node[i] / popSize[i])
+        with np.errstate(divide='ignore', invalid='ignore'):
+            c = np.true_divide(node[i], popSize[i])
+            c[~np.isfinite(c)] = 0
+        normalizedNode[i] = lociiScaler * np.take(c, rangeElements)
     return normalizedNode
 
 
-def normalizeLandscapeDataRepetitions(landscapeReps, totalPopIx=-1, lociiScaler=1):
+def normalizeLandscapeDataRepetitions(
+            landscapeReps,
+            totalPopIx=-1,
+            lociiScaler=1
+        ):
     """Normalizes the allele frequencies of landscape repetitions data to the
     total allele population (stored somewhere in the same pop-array, which is,
     ideally, the last column).

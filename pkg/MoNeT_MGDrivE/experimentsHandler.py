@@ -493,7 +493,7 @@ def sumAggregatedLandscapeDataRepetitions(landscapeReps):
     res = []
     for rep in range(repetitions):
         res.append([np.sum(landscapeReps["landscapes"][rep], axis=0)])
-    return {"genotypes":landscapeReps["genotypes"], "landscapes":res}
+    return {"genotypes": landscapeReps["genotypes"], "landscapes": res}
 
 
 def getGenotypeFromLandscape(landscapeData, genotypeIndex):

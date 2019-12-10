@@ -1,16 +1,18 @@
+import numpy as np
+import operator as op
 
 
 def reachedSteadtStateAtDay(
-    aggData,
-    safety=.01,
-    finalFrame=-1
-):
+            aggData,
+            safety=.01,
+            finalFrame=-1
+        ):
     """
     Description:
         * Calculates the point at which the aggregated alleles reach their
             steady state (defined by the final frame of the simulation).
+            * aggData: Genotypes aggregated data.
     In:
-        * aggData: Genotypes aggregated data.
         * safety: Envelope of values around the steady state that are
             considered "stable" (as a proportion of the final total allele
             composition).
@@ -46,11 +48,10 @@ def reachedSteadtStateAtDay(
     return steadyStateReach
 
 
-
 def getTimeToMin(
-        aggData,
-        safety=.01
-    ):
+            aggData,
+            safety=.01
+        ):
     """
     Description:
         * Calculates the point at which the total population reaches
@@ -70,3 +71,43 @@ def getTimeToMin(
         if np.isclose(pop[time], popMin, atol=safety):
             break
     return (time, popMin)
+
+
+def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt):
+    """Calculates if the genotypes at a desired index meet the condition
+        passed as fractions of the total population. This function was created
+        to calculate where the population goes below a given threshold for
+        times of suppression.
+
+    Parameters
+    ----------
+    pop : numpy array
+        Genotypes numpy array of a signle population.
+    gIx : int
+        Index of the genotype of interest.
+    tIx : list of integers
+        List of the genotypes for the 'total population' calculation (for
+            fractions to be computed).
+    thrs : list of floats (0 to 1)
+        List of the thresholds to compare the population fraction against.
+    cmprOp : operator
+        Comparsion to be perfomed between pop and thrs
+            (https://docs.python.org/3/library/operator.html).
+
+    Returns
+    -------
+    type
+        Numpy array of bools flagging conditions being met. Each column
+            represents one of the thresholds passed in tIx for the whole
+            duration (time) of the sim (pop array's length).
+    """
+    flagsArray = np.empty((len(pop), len(thrs)), dtype=bool)
+    for (i, dayData) in enumerate(pop):
+        totalPop = sum(dayData[tIx])
+        if (totalPop > 0):
+            fraction = (dayData[gIx] / totalPop)
+        else:
+            fraction = dayData[gIx]
+        closeFlags = [cmprOp(fraction, i) for i in thrs]
+        flagsArray[i] = closeFlags
+    return flagsArray

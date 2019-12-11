@@ -73,7 +73,9 @@ def getTimeToMin(
     return (time, popMin)
 
 
-def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt):
+def comparePopToThresholds(
+            pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0, safety=0
+        ):
     """Calculates if the genotypes at a desired index meet the condition
         passed as fractions of the total population. This function was created
         to calculate where the population goes below a given threshold for
@@ -96,18 +98,67 @@ def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt):
 
     Returns
     -------
-    type
+    numpy array of bools
         Numpy array of bools flagging conditions being met. Each column
             represents one of the thresholds passed in tIx for the whole
             duration (time) of the sim (pop array's length).
     """
     flagsArray = np.empty((len(pop), len(thrs)), dtype=bool)
     for (i, dayData) in enumerate(pop):
-        totalPop = sum(dayData[tIx])
+        # Check if the pop was set to a specific value for mixed releases
+        if (refPop > 0):
+            totalPop = refPop
+        else:
+            totalPop = sum(dayData[tIx])
+        # Do the fraction comparisons
         if (totalPop > 0):
             fraction = (dayData[gIx] / totalPop)
         else:
             fraction = dayData[gIx]
-        closeFlags = [cmprOp(fraction, i) for i in thrs]
+        closeFlags = [cmprOp(fraction, i + safety) for i in thrs]
         flagsArray[i] = closeFlags
     return flagsArray
+
+
+def countConditionDays(thrsBool):
+    """Counts the number of 'true's on the thresholds bool numpy array.
+            Created to calculate the number of protection days by a genotype
+            or suppression.
+
+    Parameters
+    ----------
+    thrsBool : numpy array of bools
+        Numpy array with the met/unmet condition results
+            ('comparePopToThresholds' output).
+
+    Returns
+    -------
+    list
+        List of days where each of the conditions is met.
+
+    """
+    return list(np.count_nonzero(thrsBool, axis=0))
+
+
+def getConditionChangeDays(thrsBool):
+    """Returns the days at which the conditions depitcted by the thresholds
+        bools array changes state.
+
+    Parameters
+    ----------
+    thrsBool : numpy array of bools
+        Numpy array with the met/unmet condition results
+            ('comparePopToThresholds' output).
+    Returns
+    -------
+    list
+        List of days where each of the conditions changes.
+
+    """
+    (shp, days) = (thrsBool.shape, [])
+    for i in (range(shp[0] - 1)):
+        (a, b) = (thrsBool[i], thrsBool[i + 1])
+        change = (a ^ b)
+        if (any(change)):
+            days.append(i)
+    return days

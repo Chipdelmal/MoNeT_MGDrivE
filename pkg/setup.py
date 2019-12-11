@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'numpy', 'scipy', 'matplotlib', 'ipython',
-        'jupyter', 'pandas', 'sympy', 'basemap'
+        'jupyter', 'pandas', 'sympy'
     ],
     license='MIT',
     classifiers=[

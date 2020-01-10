@@ -98,7 +98,8 @@ def createFig(coordinates, padding, countries):
             labelleft=False
         )
     m = Basemap(
-            projection='merc', llcrnrlat=minLat-padding, urcrnrlat=maxLat+padding,
+            projection='merc',
+            llcrnrlat=minLat-padding, urcrnrlat=maxLat+padding,
             llcrnrlon=minLong-padding, urcrnrlon=maxLong+padding, lat_ts=20,
             resolution='i', ax=ax
         )
@@ -117,11 +118,17 @@ def getAlphas(popList):
 def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
     # start = 0.0
     for idx, value in enumerate(alphas):
-        m.scatter([long], [lat], latlon=True, marker=(6, 0), s=max(
-            6, 0.11*size), facecolor=colorList[idx], alpha=value)
+        m.scatter(
+                [long], [lat], latlon=True, marker=(6, 0),
+                s=max(6, 0.11 * size), facecolor=colorList[idx],
+                alpha=value
+            )
 
 
-def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries=False, skip=False):
+def generateClusterGraphs(
+            aggList, coordinates, destination, colorList, original_corners,
+            padding, dpi, countries=False, skip=False
+        ):
     time = len(aggList[0])
     if original_corners:
         fig, ax, m = createFig(original_corners, padding, countries)
@@ -139,13 +146,17 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, original
                 pops = cData[tick]
                 alphas, size = getAlphas(pops)
                 if alphas:
-                    draw_dots(m, alphas, colorList,
-                              coordinates[0][idx], coordinates[1][idx], size)
+                    draw_dots(
+                            m, alphas, colorList,
+                            coordinates[0][idx], coordinates[1][idx],
+                            size
+                        )
                 else:
                     continue
             except Exception as e:
                 return e
         else:
+            ax.axis('off')
             fig.savefig(imgFileName,
                         dpi=dpi, orientation='portrait', papertype=None,
                         transparent=True, format="png",

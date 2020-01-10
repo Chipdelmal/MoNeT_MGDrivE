@@ -121,7 +121,7 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
             6, 0.11*size), facecolor=colorList[idx], alpha=value)
 
 
-def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries = False, skip = False):
+def generateClusterGraphs(aggList, coordinates, destination, colorList, original_corners, padding, dpi, countries=False, skip=False):
     time = len(aggList[0])
     if original_corners:
         fig, ax, m = createFig(original_corners, padding, countries)
@@ -132,7 +132,7 @@ def generateClusterGraphs(aggList, coordinates, destination, colorList, original
         imgFileName = destination+'/c_'+str(tick).zfill(6)+".png"
         if skip and os.path.isfile(imgFileName):
             continue
-        
+
         for idx, cData in enumerate(aggList):
             pops = []
             try:

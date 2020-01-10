@@ -73,9 +73,7 @@ def getTimeToMin(
     return (time, popMin)
 
 
-def comparePopToThresholds(
-            pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0
-        ):
+def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0):
     """Calculates if the genotypes at a desired index meet the condition
         passed as fractions of the total population. This function was created
         to calculate where the population goes below a given threshold for

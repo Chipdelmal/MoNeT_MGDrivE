@@ -112,9 +112,8 @@ def printMinLines(
 
     Returns
     -------
-    type
-        Description of returned object.
-
+    ax
+        Returns the changed ax with the modification performed.
     """
     ax.axhline(
             y=minTuple[1], xmin=0, xmax=minTuple[0]/style['xRange'][1],

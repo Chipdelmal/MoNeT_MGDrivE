@@ -10,4 +10,4 @@ from .tracesHandler import *
 from .spatialVideos import *
 from .landscape import *
 from .experimentsHandlerAlt import *
-from plotsOverlays import *
+from .plotsOverlays import *

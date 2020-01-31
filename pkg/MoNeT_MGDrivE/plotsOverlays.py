@@ -53,21 +53,22 @@ def printVLines(ax, xCoords, width, color, alpha, lStyle):
     ----------
     ax : Matplotlib axes
         Can be obtained from a figure with: fig.get_axes()[0]
-    xCoords : type
-        Description of parameter `xCoords`.
-    width : type
-        Description of parameter `width`.
-    color : type
-        Description of parameter `color`.
-    alpha : type
-        Description of parameter `alpha`.
-    lStyle : type
-        Description of parameter `lStyle`.
+    xCoords : list
+        A list containing the xCoordinates of all the lines to print.
+    width : float
+        Line width (weight).
+    color : color
+        Color id for the lines to be drawn.
+    alpha : float
+        Alpha to apply to the lines.
+    lStyle : Matplotlib line-style
+        Matplotlib dash-line style:
+        https://matplotlib.org/gallery/lines_bars_and_markers/line_styles_reference.html
 
     Returns
     -------
     type
-        Description of returned object.
+        Returns the changed ax with the modification performed.
 
     """
     for vLine in xCoords:

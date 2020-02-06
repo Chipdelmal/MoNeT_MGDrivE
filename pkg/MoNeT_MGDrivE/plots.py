@@ -255,8 +255,7 @@ def plotNodeDataRepetitions(
             ax.plot(
                 transposed[gene],
                 linewidth=style["width"],
-                color=style["colors"][gene],
-                alpha=style["alpha"]
+                color=style["colors"][gene]
             )
     return fig
 

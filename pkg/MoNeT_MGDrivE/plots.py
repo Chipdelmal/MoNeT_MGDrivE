@@ -42,8 +42,7 @@ def plotNodeTracesOnFigure(
                 ax.plot(
                     transposed[gene],
                     linewidth=style["width"],
-                    color=style["colors"][gene],
-                    alpha=style["alpha"]
+                    color=style["colors"][gene]
                 )
 
     return fig
@@ -77,7 +76,7 @@ def plotMeanGenotypeTrace(aggData, style):
     for i in range(len(final)):
         final[i].plot(
             ax=ax, linewidth=style["width"], legend=False,
-            color=style["colors"][i], alpha=style["alpha"]
+            color=style["colors"][i]
         )
     legends = []
     for i in range(len(groups)):
@@ -314,8 +313,7 @@ def plotAllTraces(
                 ax.plot(
                     transposed[gene],
                     linewidth=style["width"],
-                    color=style["colors"][gene],
-                    alpha=style["alpha"]
+                    color=style["colors"][gene]
                 )
 
     return fig

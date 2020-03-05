@@ -30,7 +30,7 @@ def populateClusters(clusterNum, cFileName, pFileLocation, pFilePattern={}):
         for line in coordFile:
             patchCluster.append(int(line.split(',')[2].strip()))
     else:
-        patchCluster=range(clusterNum)
+        patchCluster = range(clusterNum)
 
     if 'male' in pFilePattern:
         patchFileList = sorted(glob.glob(pFileLocation+pFilePattern['male']))
@@ -177,6 +177,6 @@ def generateVideo(name, background, imageLocation, imagePattern):
             'image2', '-s', '1920x1080', '-i', imageLocation+imagePattern,
             '-vcodec', 'libx264', '-crf', '25', '-filter_complex',
             '[0:v][1:v]overlay=0:0[bg]; [bg]pad=ceil(iw/2)*2:ceil(ih/2)*2, '
-            + 'format=yuv420p[outv]', '-map', '[outv]', name]
-        )
+            + 'format=yuv420p[outv]', '-map', '[outv]', name
+        ])
     return video

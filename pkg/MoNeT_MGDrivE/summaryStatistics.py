@@ -82,7 +82,7 @@ def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0):
     Parameters
     ----------
     pop : numpy array
-        Genotypes numpy array of a signle population.
+        Genotypes numpy array of a single population.
     gIx : int
         Index of the genotype of interest.
     tIx : list of integers
@@ -116,7 +116,6 @@ def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0):
         closeFlags = [cmprOp(fraction, i) for i in thrs]
         flagsArray[i] = closeFlags
     return flagsArray
-
 
 
 def countConditionDays(thrsBool):

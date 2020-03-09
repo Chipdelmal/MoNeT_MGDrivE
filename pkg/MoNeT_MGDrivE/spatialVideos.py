@@ -20,6 +20,19 @@ COLORS = [
 
 
 def get_corners(fileName):
+    """Gets the corners of a map (coordinates file) for plotting purposes.
+
+    Parameters
+    ----------
+    fileName : fileName
+        List of coordinates to get the boundaries from (lat, lon) rows.
+
+    Returns
+    -------
+    list
+        List of minMaxLongs & minMaxLats.
+
+    """
     lats = []
     longs = []
     clusterData = open(fileName, 'r')
@@ -38,6 +51,28 @@ def get_corners(fileName):
 
 
 def createBasemapInstance(minLat, maxLat, minLon, maxLon, pad=1.5):
+    """Initializes a basemap object given the boundary box of the map and
+            padding for export.
+
+    Parameters
+    ----------
+    minLat : float
+        Minimum latitude present in the map.
+    maxLat : float
+        Maximum latitude present in the map.
+    minLon : float
+        Minimum longitude present in the map.
+    maxLon : float
+        Maximum longitude present in the map.
+    pad : float
+        White padding to leave around the map when exporting to file.
+
+    Returns
+    -------
+    basemap object
+        Map ready to be used with matplotlib for visualization.
+
+    """
     base = Basemap(
             projection='merc',
             lat_0=(maxLat - minLat)/2, lon_0=(maxLon - minLon)/2,
@@ -52,6 +87,23 @@ def createBasemapInstance(minLat, maxLat, minLon, maxLon, pad=1.5):
 def populateClustersFromList(
             cList, pFileLocation, pFilePattern={}
         ):
+    """Groups the .
+
+    Parameters
+    ----------
+    cList : list
+        List of clusters IDs sorted by appearance (from readClustersIDs).
+    pFileLocation : folder
+        Path to the folder which stores all the "ANALYZED" data.
+    pFilePattern : dictionary
+        Male and female head file patterns.
+
+    Returns
+    -------
+    list
+        Files list clustered by IDs.
+
+    """
     # Create the empty list to contain the clusters
     (clusterNum, clusters) = (len(set(cList)), [])
     for i in range(clusterNum):
@@ -75,6 +127,31 @@ def populateClustersFromList(
 
 
 def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
+    """Draws the scatter plot on top of the basemap instance according to
+            the latlongs provided, sizes and alphas.
+
+    Parameters
+    ----------
+    m : basemap object
+        Basemap instance to draw upon.
+    alphas : list
+        Calculated opacity value out of the total genotypes present in a
+            node population.
+    colorList : list
+        Description of parameter `colorList`.
+    long : float
+        Description of parameter `long`.
+    lat : float
+        Description of parameter `lat`.
+    size : list
+        List of node sizes with reference to all the other ones.
+
+    Returns
+    -------
+    basemap
+        Basemap oject with drawn populations.
+
+    """
     # start = 0.0
     for idx, value in enumerate(alphas):
         m.scatter(
@@ -82,15 +159,56 @@ def draw_dots(m, alphas, colorList, long=0, lat=0, size=60):
                 s=max(6, 0.11 * size), facecolor=colorList[idx],
                 alpha=value, linewidths=.25, edgecolors='White'
             )
+    return m
 
 
 def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
             padding, dpi, countries=False, skip=False, refPopSize=1,
-            verbose=True, background=False, timeLocation=(.5, .5),
-            colors=COLORS
+            verbose=True, background=False, timeLocation=(.5, .5)
         ):
+    """Exports the map instance to disk. This contains the scatter coordinates
+            with correct alpha and size.
+
+    Parameters
+    ----------
+    clstFile : filepath
+        "_I".
+    aggList : list
+        Output from the 'aggregateClusters' function.
+    coordinates : list
+        Output from the 'getClustersFromAggFiles' function.
+    destination : filepath
+        Path to export the map to.
+    colorList : list
+        List of RGB (0-1) colors to be used in the map (NEEDS IMPROVEMENT).
+    original_corners : list
+        Output from the 'get_corners' function.
+    padding : float
+        Size of the relief area around the map.
+    dpi : int
+        DPI of the resulting image.
+    countries : bool
+        Boolean to determine if the countries polygons are to be drawn.
+    skip : bool
+        If 'true', no file is exported if a previous export is present
+            (no overwrite), this frame would just be skipped.
+    refPopSize : float
+        Reference population to scale the size of the dots.
+    verbose : bool
+        If 'true', prints the current frame being exported in console.
+    background : NA
+        Unused.
+    timeLocation : list
+        (X, Y) coordinate of the position where the timestamp will be printed.
+
+    Returns
+    -------
+    None
+        Function exports to disk.
+
+    """
     time = len(aggList[0])
     timeMax = list(range(time))
     for tick in timeMax:
@@ -140,10 +258,27 @@ def generateClusterGraphs(
                             str(tick+1).zfill(5), str(time).zfill(5)
                     ), end='\r'
                 )
-    return
+    return None
 
 
 def createMap(clusterFile, COLORS, pad=.025):
+    """Short summary.
+
+    Parameters
+    ----------
+    clusterFile : type
+        Description of parameter `clusterFile`.
+    COLORS : type
+        Description of parameter `COLORS`.
+    pad : type
+        Description of parameter `pad`.
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
     (minLat, maxLat, minLong, maxLong) = (0, 0, 0, 0)
     (lats, longs, clusters) = ([], [], [])
     clusterData = open(clusterFile, 'r')
@@ -194,6 +329,19 @@ def createMap(clusterFile, COLORS, pad=.025):
 
 
 def getClustersFromAggFiles(coordinatesFileI):
+    """Returns the latlongs of the coordinates stored in the coordinates file.
+
+    Parameters
+    ----------
+    coordinatesFileI : filepath
+        Coordinates file "I" generated by the clusterAndAggregate routine.
+
+    Returns
+    -------
+    list
+        Latlongs of the clusters centroids.
+
+    """
     coordinates = []
     clusterFile = open(coordinatesFileI, 'r')
     for (i, line) in enumerate(clusterFile):
@@ -214,6 +362,22 @@ def getClustersFromAggFiles(coordinatesFileI):
 
 
 def readClustersIDs(filepath):
+    """Returns all the clusters IDs from a coordinates set generated by using
+            the clusterAndAggregate routines.
+
+    Parameters
+    ----------
+    filepath : file path
+        Location of the file where the coordinates, and the cluster they belong
+            to are stored (4th column).
+
+    Returns
+    -------
+    list
+        List of the clusters each coordinate belongs to (ordered by
+            appearance).
+
+    """
     with open(filepath) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         clustersList = []

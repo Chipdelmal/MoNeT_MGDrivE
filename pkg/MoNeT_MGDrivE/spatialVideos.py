@@ -11,10 +11,10 @@ from mpl_toolkits.basemap import Basemap
 PAD = .1
 COLORS = [
         plots.rescaleRGBA((47, 28, 191, 255/2.5)),    # 0: Faded navy blue
-        plots.rescaleRGBA((255, 0, 152, 255/1)),      # 1: Magenta
-        plots.rescaleRGBA((37, 216, 17, 255/6)),      # 2: Bright green
-        plots.rescaleRGBA((255, 255, 255, 255/1)),    # 3: White
-        plots.rescaleRGBA((0, 169, 255, 255/7.5)),    # 4: Cyan
+        plots.rescaleRGBA((0, 169, 255, 255/7.5)),    # 1: Cyan
+        plots.rescaleRGBA((255, 0, 152, 255/1)),      # 2: Magenta
+        plots.rescaleRGBA((37, 216, 17, 255/6)),      # 3: Bright green
+        plots.rescaleRGBA((255, 255, 255, 255/1)),    # 4: White
         plots.rescaleRGBA((0, 0, 0, 255/5))           # 5: Black
     ]
 
@@ -88,7 +88,8 @@ def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
             padding, dpi, countries=False, skip=False, refPopSize=1,
-            verbose=True, background=False, timeLocation=(.5, .5)
+            verbose=True, background=False, timeLocation=(.5, .5),
+            colors=COLORS
         ):
     time = len(aggList[0])
     timeMax = list(range(time))
@@ -169,9 +170,9 @@ def createMap(clusterFile, COLORS, pad=.025):
             llcrnrlon=minLong-pad, urcrnrlon=maxLong+pad,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[4], linewidth=5, zorder=-1)
+    m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
     m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-    m.drawcoastlines(color=COLORS[4], linewidth=.5, zorder=-1)
+    m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,

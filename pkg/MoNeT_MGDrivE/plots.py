@@ -5,6 +5,20 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE.colors as monetPlots
 
 
+def rescaleRGBA(colorsTuple, colors=255):
+    """
+    Description:
+        * Rescales a 0-255 color to 0-1
+    In:
+        * Color RGB tuple/list in 8bit
+    Out:
+        * Color RGB tuple in 0-1
+    Notes:
+        * NA
+    """
+    return [i/colors for i in colorsTuple]
+
+
 def plotNodeTracesOnFigure(
     landscapeReps,
     style,

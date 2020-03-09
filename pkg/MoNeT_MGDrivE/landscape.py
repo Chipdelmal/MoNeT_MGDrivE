@@ -195,6 +195,7 @@ def aggregateLandscapeBase(migrationMatrix, clusters):
 
 def aggregateLandscapeAltVic(migrationMatrix, clusters):
     '''
+    Faster version of the aggregation algorithm dev by Gillian
     '''
     matrix_size = len(clusters)
     num_clusters = len(set(clusters))
@@ -213,6 +214,7 @@ def aggregateLandscapeAltVic(migrationMatrix, clusters):
 
 def aggregateLandscapeAltGill(migrationMatrix, clusters):
     '''
+    Another alternative of the aggregation algorithm dev by Gillian
     '''
     num_clusters = len(set(clusters))
     aggr_matrix = np.zeros([num_clusters, num_clusters], dtype=float)

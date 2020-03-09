@@ -3,15 +3,26 @@ import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
+
 def getFileExperimentList(path, identifier):
-        if identifier:
-            return sorted(
-            glob.glob(
-                path + "/" +
-                identifier + "*.csv"
-                )
-            )
-        return []
+    """Returns the sorted experiments files list.
+
+    Parameters
+    ----------
+    path : filespath
+        Folder containing the experiment files.
+    identifier : str
+        Element to use as pattern-matching head.
+
+    Returns
+    -------
+    list
+        List of files.
+
+    """
+    if identifier:
+        return sorted(glob.glob(path + "/" + identifier + "*.csv"))
+    return []
 
 
 def readExperimentFilenames(
@@ -38,27 +49,31 @@ def readExperimentFilenames(
             the same lexicographical sorting for processing in further
             functions on the pipeline.
     """
-    defaultIdentifiers = {"male": ["M_","ADM"], "female": ["F_","AF1"]}
+    defaultIdentifiers = {"male": ["M_", "ADM"], "female": ["F_", "AF1"]}
 
     maleFiles = []
     if 'male' in sexFilenameIdentifiers:
-        maleFiles = getFileExperimentList(experimentPath, sexFilenameIdentifiers['male'])
+        maleFiles = getFileExperimentList(
+                experimentPath, sexFilenameIdentifiers['male']
+            )
         if not maleFiles:
             for i in defaultIdentifiers['male']:
-                fileList  = getFileExperimentList(experimentPath,i)
+                fileList = getFileExperimentList(experimentPath, i)
                 if fileList:
                     maleFiles = fileList
-                    break;
+                    break
 
     femaleFiles = []
     if 'female' in sexFilenameIdentifiers:
-        femaleFiles = getFileExperimentList(experimentPath, sexFilenameIdentifiers['female'])
+        femaleFiles = getFileExperimentList(
+                experimentPath, sexFilenameIdentifiers['female']
+            )
         if not femaleFiles:
             for i in defaultIdentifiers['female']:
-                fileList  = getFileExperimentList(experimentPath,i)
+                fileList = getFileExperimentList(experimentPath, i)
                 if fileList:
                     femaleFiles = fileList
-                    break;
+                    break
 
     return {"male": maleFiles, "female": femaleFiles}
 
@@ -104,12 +119,14 @@ def loadNodeData(
         if dataM.shape[0] > dataF.shape[0]:
             returnDictionary = {
                 "genotypes": genotypes,
-                "population": (np.resize(dataM, dataF.shape) + dataF)[:, skipColumns:]
+                "population":
+                    (np.resize(dataM, dataF.shape) + dataF)[:, skipColumns:]
             }
         else:
             returnDictionary = {
                 "genotypes": genotypes,
-                "population": (dataM + np.resize(dataF, dataM.shape))[:, skipColumns:]
+                "population":
+                    (dataM + np.resize(dataF, dataM.shape))[:, skipColumns:]
             }
         return returnDictionary
     elif femaleFilename is not None:

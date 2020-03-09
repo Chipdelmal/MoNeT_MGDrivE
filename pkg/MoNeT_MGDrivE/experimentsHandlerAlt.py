@@ -4,6 +4,7 @@ import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 import MoNeT_MGDrivE.experimentsHandler as expHand
 
+
 def fileReader(fileName, dtype=float, skipHeader=1, skipColumns=1):
     """
     Description:
@@ -30,16 +31,14 @@ def fileReader(fileName, dtype=float, skipHeader=1, skipColumns=1):
         if headerLen <= skipColumns:
             return np.zeros(1)
     else:
-        fLine = next(dataFile)
+        fline = next(dataFile)
         tokens = fline.split(',')
         headerLen = len(tokens)
         if headerLen <= skipColumns:
             return np.zeros(1)
         rows.append(np.array(tokens[skipColumns:], dtype=dtype))
 
-    rowLen = headerLen - skipColumns
-
-
+    # rowLen = headerLen - skipColumns
 
     previous = [0]*headerLen
     for line in dataFile:
@@ -136,6 +135,7 @@ def loadNodeDataAlt(
             Warning
         )
         return None
+
 
 def loadLandscapeDataAlt(filenames, male=True, female=True, dataType=float):
     """
@@ -315,8 +315,13 @@ def sumAggregatedLandscapeDataRepetitionsAlt(
             filenames, aggregationDictionary,
             male=male, female=female, dataType=dataType
         )
-        minShape = min([x.shape for x in loadedLandscape["landscape"]], key=itemgetter(0,1))
-        newSize = [np.resize(x,minShape) for x in loadedLandscape["landscape"]]
+        minShape = min(
+                [x.shape for x in loadedLandscape["landscape"]],
+                key=itemgetter(0, 1)
+            )
+        newSize = [
+                np.resize(x, minShape) for x in loadedLandscape["landscape"]
+            ]
         reps[i] = [np.sum(newSize, axis=0)]
     returnDict = {
         "genotypes": aggregationDictionary["genotypes"],

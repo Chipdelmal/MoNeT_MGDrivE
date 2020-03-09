@@ -21,6 +21,19 @@ def testMarkovMatrix(mat):
 
 
 def maxAlleleInLandscape(geneLandscape):
+    """Get the maximum allele frequency of a gene in a spatio-landscape.
+
+    Parameters
+    ----------
+    geneLandscape : np array
+        Array containing the info for gene-spatiotemporal landscape.
+
+    Returns
+    -------
+    float
+        Max frequency of any allele in the gene-spatioteporal landscape.
+
+    """
     genesMaxes = map(np.amax, geneLandscape)
     landscapeMax = max(genesMaxes)
     return landscapeMax
@@ -250,6 +263,24 @@ def quickSaveTraceAggData(
     filename,
     fmt="%.10d"
 ):
+    """Saves the traces aggregated data to a CSV file.
+
+    Parameters
+    ----------
+    aggData : dict
+        Dictionary containing the 'genotypes' and 'population' data for an
+            experiment.
+    filename : filepath
+        Location and filename where the file will be exported to.
+    fmt : str
+        Format for the floats to be exported.
+
+    Returns
+    -------
+    None
+        No return. Exports to disk.
+
+    """
     np.savetxt(
         filename,
         aggData["population"],
@@ -266,6 +297,26 @@ def quickSaveRepsAggData(
     fmt="%.10d",
     padNumb=5
 ):
+    """Exports all the individual traces for a landscape to CSV files.
+
+    Parameters
+    ----------
+    landscapeReps : dict
+        Dictionary containing the 'landscapes' and 'genotypes' for the
+            repetitions.
+    foldername : path
+        Path to the folder where the files will be exported.
+    fmt : str
+        Description of parameter `fmt`.
+    padNumb : int
+        Format for the floats to be exported.
+
+    Returns
+    -------
+    type
+        Description of returned object.
+
+    """
     if not os.path.exists(foldername):
         try:
             os.mkdir(foldername)

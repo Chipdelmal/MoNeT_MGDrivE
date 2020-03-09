@@ -87,7 +87,7 @@ def createBasemapInstance(minLat, maxLat, minLon, maxLon, pad=1.5):
 def populateClustersFromList(
             cList, pFileLocation, pFilePattern={}
         ):
-    """Groups the .
+    """Groups the filepaths by cluster.
 
     Parameters
     ----------

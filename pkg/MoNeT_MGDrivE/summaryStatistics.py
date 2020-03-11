@@ -160,3 +160,85 @@ def getConditionChangeDays(thrsBool):
         if (any(change)):
             days.append(i)
     return days
+
+
+def calcDaysCrosses(aggregatedNodesData, thresholds, ssPops, gIx):
+    """Gets the days at which the allele crosses the thresholds supplied.
+
+    Parameters
+    ----------
+    aggregatedNodesData : dict
+        Information for the nodes alleles data aggregated by genotypes.
+    thresholds : list
+        List of thresholds to get the timings.
+    ssPops : list
+        Steady-state populations by genotype.
+    gIx : int
+        Index of the genotype at the genotypes end of the dictionary.
+
+    Returns
+    -------
+    list
+        Times at which .
+
+    """
+    chngDays = []
+    for j in range(len(aggregatedNodesData['landscape'])):
+        nodePop = aggregatedNodesData['landscape'][j]
+        thrsBool = comparePopToThresholds(
+                nodePop, gIx, [0, 1], thresholds, refPop=ssPops[j]
+            )
+        chngDays.append(getConditionChangeDays(thrsBool))
+    return chngDays
+
+
+def getSSPopsInLandscape(aggregatedNodesData, ssDay=-1):
+    """Gets the steady-state populations in a landscape assuming that they
+            are in SS at the supplied day and that the last genotype contains
+            the sum of all the other genotypes.
+
+    Parameters
+    ----------
+    aggregatedNodesData : dict
+        Information for the nodes alleles data aggregated by genotypes.
+    ssDay : int
+        Day at which the populations are in steady-state.
+
+    Returns
+    -------
+    list
+        Steady-state populations per node (total pops as defined by the
+            last element of the genotypes arrays).
+
+    """
+    ssPops = []
+    for node in aggregatedNodesData['landscape']:
+        ssPops.append(node[ssDay - 1][-1])
+    return ssPops
+
+
+def getTimeToMinAtAllele(aggData, gIx, safety=.1):
+    """Returns the min value of the allele in a population, along with the
+        time at which this value is reached.
+
+    Parameters
+    ----------
+    aggData : dict
+        Information for the nodes alleles data aggregated by genotypes.
+    gIx : int
+        Index of the genotype at the genotypes end of the dictionary.
+    safety : float
+        Tolerance for the metric.
+
+    Returns
+    -------
+    tuple
+        Time at which the minPop is reached, and the value of the minPop.
+
+    """
+    pop = [row[gIx] for row in aggData['population']]
+    for time in range(len(pop)):
+        popMin = min(pop)
+        if np.isclose(pop[time], popMin, atol=safety):
+            break
+    return (time, popMin)

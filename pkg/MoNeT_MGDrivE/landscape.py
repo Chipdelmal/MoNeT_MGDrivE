@@ -13,7 +13,6 @@ AEDES_EXP_PARAMS = [0.01848777, 1.0e-10, math.inf]
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Kernels
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 def normalizeKernel(kernel):
     '''
     Takes a numpy array in, and returns a row-wise normalized copy.
@@ -27,8 +26,6 @@ def normalizeKernel(kernel):
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # Distances
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 def euclideanDistance(a, b):
     '''
     Calculates the Euclidean distance between two-dimensional coordinates.
@@ -72,7 +69,6 @@ def sortByDistanceToPOI(poi, landscape, distFun=euclideanDistance):
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #  Linear Kernel Functions
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 def inverseLinearStep(distance, params=[.75, 1]):
     '''
     Returns a migration estimate based on the inverse of the

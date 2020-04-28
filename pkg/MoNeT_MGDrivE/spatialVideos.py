@@ -261,7 +261,10 @@ def generateClusterGraphs(
     return None
 
 
-def createMap(clusterFile, COLORS, pad=.025):
+def createMap(
+            clusterFile, COLORS, pad=.025, original_corners=None,
+            linewidths=[5, 2, .5]
+        ):
     """Short summary.
 
     Parameters
@@ -272,7 +275,8 @@ def createMap(clusterFile, COLORS, pad=.025):
         Description of parameter `COLORS`.
     pad : type
         Description of parameter `pad`.
-
+    original_corners: list
+        Bounding box in the form [[minLon, maxLon], [minLat, maxLat]]
     Returns
     -------
     type
@@ -291,10 +295,17 @@ def createMap(clusterFile, COLORS, pad=.025):
         lats.append(lat)
         longs.append(long)
         clusters.append(cluster)
-
-    (minLat, maxLat, minLong, maxLong) = (
-            min(lats), max(lats), min(longs), max(longs)
-        )
+    # Calculate bounding box
+    if original_corners is None:
+        (minLat, maxLat, minLong, maxLong) = (
+                    min(lats), max(lats), min(longs), max(longs)
+                )
+    else:
+        (minLat, maxLat, minLong, maxLong) = (
+                    original_corners[1][0], original_corners[1][1],
+                    original_corners[0][0], original_corners[0][1]
+                )
+    # Calculate clusters
     (minCluster, maxCluster) = (min(clusters), max(clusters))
 
     fig = plt.figure(figsize=(5, 5))
@@ -305,9 +316,9 @@ def createMap(clusterFile, COLORS, pad=.025):
             llcrnrlon=minLong-pad, urcrnrlon=maxLong+pad,
             lat_ts=20, resolution='i', ax=ax
         )
-    m.drawcoastlines(color=COLORS[1], linewidth=5, zorder=-1)
-    m.drawcoastlines(color=COLORS[0], linewidth=2, zorder=-1)
-    m.drawcoastlines(color=COLORS[1], linewidth=.5, zorder=-1)
+    m.drawcoastlines(color=COLORS[1], linewidth=linewidths[0], zorder=-1)
+    m.drawcoastlines(color=COLORS[0], linewidth=linewidths[1], zorder=-1)
+    m.drawcoastlines(color=COLORS[1], linewidth=linewidths[2], zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,

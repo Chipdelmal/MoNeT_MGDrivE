@@ -166,7 +166,8 @@ def generateClusterGraphs(
             clstFile,
             aggList, coordinates, destination, colorList, original_corners,
             padding, dpi, countries=False, skip=False, refPopSize=1,
-            verbose=True, background=False, timeLocation=(.5, .5)
+            verbose=True, background=False, timeLocation=(.5, .5),
+            linewidths=None
         ):
     """Exports the map instance to disk. This contains the scatter coordinates
             with correct alpha and size.
@@ -218,7 +219,10 @@ def generateClusterGraphs(
 
         for idx, cData in enumerate(aggList):
             if idx == 0:
-                (fig, ax, m) = createMap(clstFile, COLORS, pad=.025)
+                (fig, ax, m) = createMap(
+                        clstFile, COLORS, pad=.025,
+                        original_corners=original_corners
+                    )
             pops = []
             try:
                 pops = cData[tick]
@@ -262,8 +266,8 @@ def generateClusterGraphs(
 
 
 def createMap(
-            clusterFile, COLORS, pad=.025, original_corners=None,
-            linewidths=[5, 2, .5]
+            clusterFile, COLORS, pad=.025,
+            original_corners=None, linewidths=[5, 2, .5]
         ):
     """Short summary.
 

@@ -267,7 +267,7 @@ def generateClusterGraphs(
 
 def createMap(
             clusterFile, COLORS, pad=.025,
-            original_corners=None, linewidths=[5, 2, .5]
+            original_corners=None, linewidths=[20, 10, 2]
         ):
     """Short summary.
 
@@ -322,7 +322,7 @@ def createMap(
         )
     m.drawcoastlines(color=COLORS[1], linewidth=linewidths[0], zorder=-1)
     m.drawcoastlines(color=COLORS[0], linewidth=linewidths[1], zorder=-1)
-    m.drawcoastlines(color=COLORS[1], linewidth=linewidths[2], zorder=-1)
+    m.drawcoastlines(color=COLORS[4], linewidth=linewidths[2], zorder=-1)
     # m.fillcontinents(color=COLORS[3], lake_color='aqua')
     m.scatter(
             longs, lats, latlon=True, alpha=.1, marker='x', s=1,

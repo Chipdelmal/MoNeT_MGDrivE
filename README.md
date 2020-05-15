@@ -33,9 +33,8 @@ For the full commit history of the repository, and examples of use, please visit
 ##  Authors
 
 * __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/).
-* __Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
 * __MGDrivE Team__: Sean L. Wu, Jared Bennett
-* __Former Dev__: Sabrina Wong
+* __Former Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen, Sabrina Wong
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)
 
 

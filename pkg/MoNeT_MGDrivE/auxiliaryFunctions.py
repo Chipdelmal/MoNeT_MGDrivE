@@ -363,6 +363,20 @@ def makeFolder(path):
 
 
 def writeListToCSV(fileName, inList, header=None):
+    """Exports a list into a CSV file.
+
+    Parameters
+    ----------
+    fileName: string
+        Full path of the file to be created.
+    inList: list
+        List to export to file.
+    header: If not None, specifies the header to add to the file.
+
+    Returns
+    -------
+    NA
+    """
     with open(fileName, 'w', newline='') as myfile:
         wr = csv.writer(myfile)
         if header is not None:

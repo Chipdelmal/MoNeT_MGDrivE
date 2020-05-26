@@ -362,6 +362,22 @@ def makeFolder(path):
                 )
 
 
+def makeFolders(pathsList):
+    """Crates a folders in the specified directories.
+
+    Parameters
+    ----------
+    path : list
+        List of paths of the folders than need to be created.
+
+    Returns
+    -------
+    NA
+    """
+    for fldr in pathsList:
+        makeFolder(fldr)
+
+
 def writeListToCSV(fileName, inList, header=None):
     """Exports a list into a CSV file.
 

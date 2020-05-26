@@ -3,7 +3,7 @@
 
 
 import os
-# import csv
+import csv
 import math
 import numpy as np
 
@@ -360,3 +360,12 @@ def makeFolder(path):
             raise OSError(
                     "Can't create destination directory (%s)!" % (path)
                 )
+
+
+def writeListToCSV(fileName, inList, header=None):
+    with open(fileName, 'w', newline='') as myfile:
+        wr = csv.writer(myfile)
+        if header is not None:
+            wr.writerow(header)
+        for row in inList:
+            wr.writerow(row)

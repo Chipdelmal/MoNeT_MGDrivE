@@ -679,3 +679,25 @@ def normalizeLandscapeDataRepetitions(
         landscapes[i] = [normalizePopulationInNode(node, totalPopIx=totalPopIx, lociiScaler=lociiScaler) for node in land]
     landscapeReps['landscapes'] = landscapes
     return landscapeReps
+
+
+def loadSummedMeanResponse(aFiles, GDICT, MALE, FEMALE):
+    """Loads the ANALYZED files, aggregates them with a gene-dictionary,
+        and returns the summed population.
+
+    Args:
+        aFiles (dict): Files list of the analyzed files (separated by male
+            and female)
+        GDICT (dict): Genotypes aggregation dictionary
+        MALE (bool): Switch to count males
+        FEMALE (bool): Switch to count females
+
+    Returns:
+        aggData: Landscape data aggregated in genotype and spatially into one
+            node.
+    """
+    landData = loadLandscapeData(aFiles, male=MALE, female=FEMALE)
+    # print('\t Aggregating mean response...'+aux.PADC, end='\r')
+    aggDataM = aggregateGenotypesInLandscape(landData, GDICT)
+    aggDataM['landscape'] = sum(aggDataM['landscape'])
+    return aggDataM

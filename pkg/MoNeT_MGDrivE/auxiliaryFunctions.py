@@ -401,7 +401,7 @@ def writeListToCSV(fileName, inList, header=None):
             wr.writerow(row)
 
 
-def lenAndDigits(collection):
+def lenAndDigits(coltn):
     """Returns the length of a list and the number of digits for z-padding
     Args:
         collection (list): Collection of elements with the "len" method
@@ -409,6 +409,6 @@ def lenAndDigits(collection):
     Returns:
         tuple: (number of elements in the collection, required digits)
     """
-    length = len(collection)
-    digs = len(str(length))
-    return (length, digs)
+    clen = len(coltn)
+    digs = len(str(clen))
+    return (clen, digs)

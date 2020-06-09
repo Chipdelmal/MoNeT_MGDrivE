@@ -242,3 +242,125 @@ def getTimeToMinAtAllele(aggData, gIx, safety=.1):
         if np.isclose(pop[time], popMin, atol=safety):
             break
     return (time, popMin)
+
+
+###############################################################################
+# Flexible time to threshold statistics
+###############################################################################
+def comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt):
+    """
+    Gets a ratio population (as obtained from getPopRatio) and returns the
+        array of flags where the condition is met.
+    Args:
+        ratioOI (np.array): Calculated by getPopRatio.
+        thresholds (list): List of ratios to use as thresholds.
+        cmprOp(function): Operation to compare against (less than, greater
+            than, etcetera).
+    Returns:
+        np.array: An array of the flags where the condition is met (the
+            dimensions correspond to the number of days in the simulation,
+            and the number of thresholds provided in the input list).
+
+    """
+    flagsArray = np.empty((len(ratioOI), len(thresholds)), dtype=bool)
+    for (i, dayData) in enumerate(ratioOI):
+        closeFlags = [cmprOp(dayData, i) for i in thresholds]
+        flagsArray[i] = closeFlags
+    return flagsArray
+
+
+def getPopRatio(prbPop, refPop, gIx):
+    """
+    Calculates the ratio between a probe and reference population and returns
+        the result at a genotype of interest.
+    Args:
+        prbPop (np.array): Probe population
+        refPop (np.array): Reference population
+        gIx (int): Index of the genotype of interest's location
+    Returns:
+        list: Ratio at the genotype of interest
+
+    """
+    (a, b) = (prbPop, refPop)
+    ratio = np.divide(a, b, out=np.zeros_like(a), where=b != 0)
+    ratioOI = [row[gIx] for row in ratio]
+    return ratioOI
+
+
+def trueIndices(boolList):
+    """
+    Returns the positions where True is found.
+    Args:
+        boolsList (list): List of booleans to process
+    Returns:
+        list: List of positions where True is present
+
+    """
+    trueIx = [i for (i, x) in enumerate(boolList) if x == 1]
+    if len(trueIx) > 0:
+        return trueIx
+    else:
+        return [np.nan]
+
+
+def thresholdMet(thsArray):
+    """
+
+    Args:
+        thsArray ():
+    Returns:
+        type: description
+
+    """
+    thsNum = len(thsArray[0])
+    thrsMet = [None] * thsNum
+    for col in range(thsNum):
+        boolCol = [i[col] for i in thsArray]
+        daysAbove = trueIndices(boolCol)
+        thrsMet[col] = daysAbove
+    return thrsMet
+
+
+def calcMeanTTI(meanPrb, meanRef, thresholds, gIx):
+    """
+
+    Args:
+        meanPrb ():
+        meanRef ():
+        meanThresholds ():
+        gIx ():
+    Returns:
+        type: description
+
+    """
+    ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
+    thsArray = comparePopToThresh(ratioOI, thresholds)
+    thsDays = thresholdMet(thsArray)
+    ttiAn = [i[0] for i in thsDays]
+    return ttiAn
+
+
+def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+    """
+
+    Args:
+        srpPrb ():
+        meanRef ():
+        thresholds ():
+        gIx ():
+        quantile ():
+    Returns:
+        type: description
+
+    """
+    prb = srpPrb['landscapes']
+    smpNum = len(prb)
+    ttiArr = np.empty((smpNum, len(thresholds)))
+    for s in range(smpNum):
+        refPop = meanRef['population']
+        ratioOI = getPopRatio(prb[s], refPop, gIx)
+        thsArray = comparePopToThresh(ratioOI, thresholds)
+        thsDays = thresholdMet(thsArray)
+        ttiArr[s] = [i[0] for i in thsDays]
+    quant = np.nanquantile(ttiArr, quantile, axis=0)
+    return quant

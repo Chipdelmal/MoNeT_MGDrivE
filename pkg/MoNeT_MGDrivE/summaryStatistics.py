@@ -307,7 +307,7 @@ def thresholdMet(thsArray):
     """
 
     Args:
-        thsArray ():
+        thsArray (np.array):
     Returns:
         type: description
 
@@ -321,34 +321,40 @@ def thresholdMet(thsArray):
     return thrsMet
 
 
-def calcMeanTTI(meanPrb, meanRef, thresholds, gIx):
+def calcMeanTTI(meanPrb, meanRef, thresholds, gIx, cmprOp=op.lt):
     """
-
+    Calculates the mean time to introgression for the mean response of two
+        populations.
     Args:
-        meanPrb ():
-        meanRef ():
-        meanThresholds ():
-        gIx ():
+        meanPrb (np.array): Mean population of the probe population
+        meanRef (np.array): Mean population of the reference population
+        thresholds (list): List of ratios to use as thresholds.
+        gIx (int): Index of the genotype of interest's location
+        cmprOp(function): Operation to compare against (less than, greater
+            than, etcetera).
     Returns:
         type: description
 
     """
     ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
-    thsArray = comparePopToThresh(ratioOI, thresholds)
+    thsArray = comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
     thsDays = thresholdMet(thsArray)
     ttiAn = [i[0] for i in thsDays]
     return ttiAn
 
 
-def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
+def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95, cmprOp=op.lt):
     """
-
+    Calculates the mean time to introgression for the quantile response of two
+        populations.
     Args:
-        srpPrb ():
-        meanRef ():
-        thresholds ():
-        gIx ():
-        quantile ():
+        srpPrb (dict): SRP population of the probe population.
+        meanRef (np.array): Mean population of the reference population
+        thresholds (list): List of ratios to use as thresholds.
+        gIx (int): Index of the genotype of interest's location
+        quantile (float): Quantile for the thresholds calculation
+        cmprOp(function): Operation to compare against (less than, greater
+            than, etcetera).
     Returns:
         type: description
 
@@ -359,7 +365,7 @@ def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95):
     for s in range(smpNum):
         refPop = meanRef['population']
         ratioOI = getPopRatio(prb[s], refPop, gIx)
-        thsArray = comparePopToThresh(ratioOI, thresholds)
+        thsArray = comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
         thsDays = thresholdMet(thsArray)
         ttiArr[s] = [i[0] for i in thsDays]
     quant = np.nanquantile(ttiArr, quantile, axis=0)

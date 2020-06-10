@@ -278,7 +278,7 @@ def getPopRatio(prbPop, refPop, gIx):
         refPop (np.array): Reference population
         gIx (int): Index of the genotype of interest's location
     Returns:
-        list: Ratio at the genotype of interest
+        list: Ratio at the genotype of interest.
 
     """
     (a, b) = (prbPop, refPop)
@@ -291,9 +291,9 @@ def trueIndices(boolList):
     """
     Returns the positions where True is found.
     Args:
-        boolsList (list): List of booleans to process
+        boolsList (list): List of booleans to process.
     Returns:
-        list: List of positions where True is present
+        list: List of positions where True is present.
 
     """
     trueIx = [i for (i, x) in enumerate(boolList) if x == 1]
@@ -305,12 +305,13 @@ def trueIndices(boolList):
 
 def thresholdMet(thsArray):
     """
-
+    Returns the days in which the condition is met in the thresholds array
+        (where True is present).
     Args:
-        thsArray (np.array):
+        thsArray (np.array): Bool array of thresholds where a given condition
+            is met (output form the comparePopToThresh function).
     Returns:
-        type: description
-
+        list: List of days where the condition is met (True positions).
     """
     thsNum = len(thsArray[0])
     thrsMet = [None] * thsNum

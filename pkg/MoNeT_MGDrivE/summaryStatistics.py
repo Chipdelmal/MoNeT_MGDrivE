@@ -340,6 +340,7 @@ def calcMeanTTI(meanPrb, meanRef, thresholds, gIx, cmprOp=op.lt):
     ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
     thsArray = comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
     thsDays = thresholdMet(thsArray)
+    # Extracting the time to first cross (modify for other metrics)
     ttiAn = [i[0] for i in thsDays]
     return ttiAn
 
@@ -357,8 +358,8 @@ def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95, cmprOp=op.lt):
         cmprOp(function): Operation to compare against (less than, greater
             than, etcetera).
     Returns:
-        type: description
-
+        type: Returns the time at which the condition is met at a given
+            quantile level.
     """
     prb = srpPrb['landscapes']
     smpNum = len(prb)
@@ -368,6 +369,7 @@ def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95, cmprOp=op.lt):
         ratioOI = getPopRatio(prb[s], refPop, gIx)
         thsArray = comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
         thsDays = thresholdMet(thsArray)
+        # Extracting the time to first cross (modify for other metrics)
         ttiArr[s] = [i[0] for i in thsDays]
     quant = np.nanquantile(ttiArr, quantile, axis=0)
     return quant

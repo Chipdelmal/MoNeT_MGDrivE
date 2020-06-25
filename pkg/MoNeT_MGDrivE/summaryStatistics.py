@@ -73,49 +73,49 @@ def getTimeToMin(
     return (time, popMin)
 
 
-def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0):
-    """Calculates if the genotypes at a desired index meet the condition
-        passed as fractions of the total population. This function was created
-        to calculate where the population goes below a given threshold for
-        times of suppression.
-
-    Parameters
-    ----------
-    pop : numpy array
-        Genotypes numpy array of a single population.
-    gIx : int
-        Index of the genotype of interest.
-    tIx : list of integers
-        List of the genotypes for the 'total population' calculation (for
-            fractions to be computed).
-    thrs : list of floats (0 to 1)
-        List of the thresholds to compare the population fraction against.
-    cmprOp : operator
-        Comparsion to be perfomed between pop and thrs
-            (https://docs.python.org/3/library/operator.html).
-
-    Returns
-    -------
-    numpy array of bools
-        Numpy array of bools flagging conditions being met. Each column
-            represents one of the thresholds passed in tIx for the whole
-            duration (time) of the sim (pop array's length).
-    """
-    flagsArray = np.empty((len(pop), len(thrs)), dtype=bool)
-    for (i, dayData) in enumerate(pop):
-        # Check if the pop was set to a specific value for mixed releases
-        if (refPop > 0):
-            totalPop = refPop
-        else:
-            totalPop = sum(dayData[tIx])
-        # Do the fraction comparisons
-        if (totalPop > 0):
-            fraction = (dayData[gIx] / totalPop)
-        else:
-            fraction = dayData[gIx]
-        closeFlags = [cmprOp(fraction, i) for i in thrs]
-        flagsArray[i] = closeFlags
-    return flagsArray
+# def comparePopToThresholds(pop, gIx, tIx, thrs, cmprOp=op.lt, refPop=0):
+#     """Calculates if the genotypes at a desired index meet the condition
+#         passed as fractions of the total population. This function was created
+#         to calculate where the population goes below a given threshold for
+#         times of suppression.
+#
+#     Parameters
+#     ----------
+#     pop : numpy array
+#         Genotypes numpy array of a single population.
+#     gIx : int
+#         Index of the genotype of interest.
+#     tIx : list of integers
+#         List of the genotypes for the 'total population' calculation (for
+#             fractions to be computed).
+#     thrs : list of floats (0 to 1)
+#         List of the thresholds to compare the population fraction against.
+#     cmprOp : operator
+#         Comparsion to be perfomed between pop and thrs
+#             (https://docs.python.org/3/library/operator.html).
+#
+#     Returns
+#     -------
+#     numpy array of bools
+#         Numpy array of bools flagging conditions being met. Each column
+#             represents one of the thresholds passed in tIx for the whole
+#             duration (time) of the sim (pop array's length).
+#     """
+#     flagsArray = np.empty((len(pop), len(thrs)), dtype=bool)
+#     for (i, dayData) in enumerate(pop):
+#         # Check if the pop was set to a specific value for mixed releases
+#         if (refPop > 0):
+#             totalPop = refPop
+#         else:
+#             totalPop = sum(dayData[tIx])
+#         # Do the fraction comparisons
+#         if (totalPop > 0):
+#             fraction = (dayData[gIx] / totalPop)
+#         else:
+#             fraction = dayData[gIx]
+#         closeFlags = [cmprOp(fraction, i) for i in thrs]
+#         flagsArray[i] = closeFlags
+#     return flagsArray
 
 
 def countConditionDays(thrsBool):
@@ -391,7 +391,7 @@ def calcMeanWOP(meanPrb, meanRef, thresholds, gIx):
             quantile level.
     """
     ratioOI = getPopRatio(meanPrb['population'], meanRef['population'], gIx)
-    thsArray = comparePopToThresholds(ratioOI, thresholds)
+    thsArray = comparePopToThresh(ratioOI, thresholds)
     thsDays = thresholdMet(thsArray)
     ttiAn = [len(i) for i in thsDays]
     return ttiAn
@@ -419,7 +419,7 @@ def calcQuantWOP(srpPrb, meanRef, thresholds, gIx, quantile=.95):
     for s in range(smpNum):
         refPop = meanRef['population']
         ratioOI = getPopRatio(prb[s], refPop, gIx)
-        thsArray = comparePopToThresholds(ratioOI, thresholds)
+        thsArray = comparePopToThresh(ratioOI, thresholds, cmprOp=op.lt)
         thsDays = thresholdMet(thsArray)
         ttiArr[s] = [len(i) for i in thsDays]
     quant = np.nanquantile(ttiArr, quantile, axis=0)

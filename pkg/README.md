@@ -7,19 +7,11 @@ It is also meant to serve as a platform to ensure the reproducibility of results
 
 ##  Project Status
 
-Out code is currently under beta testing by the gene-drive [data analysis team](https://chipdelmal.github.io/MoNeT/Berkeley.html): Biyonka Liang, Gillian Chu, Maya Shen. As well as under intense development by the [dev team](https://chipdelmal.github.io/MoNeT/PythonModule.html): [Héctor M. Sánchez C.](https://chipdelmal.github.io/), Víctor Ferman, and Sarafina Smith.
-
-For some examples of how this package is being currently used, please follow this [link](https://chipdelmal.github.io/MoNeT/Berkeley.html).
+Our code has been used and tested in several [MGDrivE](https://marshalllab.github.io/MGDrivE/) publications. For some examples of how this package is being currently used, please follow this [link](https://chipdelmal.github.io/MoNeT/Berkeley.html).
 
 <hr>
 
 ##  Installation
-
-It is highly recommended to [download](https://anaconda.org/chipdelmal/MoNeT/files) and install our [anaconda environment](https://anaconda.org/chipdelmal/monet):
-
-```bash
-conda env create -f MoNeT.yml -n MoNeT
-```
 
 To install from pypi with pip:
 
@@ -27,23 +19,18 @@ To install from pypi with pip:
 pip install MoNeT-MGDrivE
 ```
 
-Alternatively, the package can be downloaded, and installed with:
-
-```bash
-pip install .
-```
-
 Make sure to have the following dependencies installed:
 
 * [Numpy](http://www.numpy.org/)
 * [Matplotlib](https://matplotlib.org/)
 * [Pandas](https://pandas.pydata.org/)
+* [Basemap](https://matplotlib.org/basemap/)
 
 <hr>
 
 ##  Authors
 
-* __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/).
-* __Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
-* __Former Dev__: Sabrina Wong
+* __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/)
+* __Dev__: Chris De León, Priscilla Zhang
+* __Former Dev__: Sabrina Wong, Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)

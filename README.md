@@ -15,12 +15,6 @@ To install the package from the [pypi version](https://pypi.org/project/MoNeT-MG
 pip install MoNeT_MGDrivE
 ```
 
-It is also recommended to install the **conda** environment included in this repository:
-
-```bash
-conda env create -f MoNeT.yml -n MoNeT
-```
-
 
 ##  Important Information
 
@@ -32,10 +26,11 @@ For the full commit history of the repository, and examples of use, please visit
 
 ##  Authors
 
-* __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/).
-* __MGDrivE Team__: Sean L. Wu, Jared Bennett
-* __Former Dev__: Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen, Sabrina Wong
+* __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/)
+* __Dev__: Chris De León, Priscilla Zhang
+* __Former Dev__: Sarafina Smith, Víctor Ferman, Gillian Chu, Maya Shen, Biyonka Liang, Sabrina Wong
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)
+
 
 
 <img src="./img/berkeley.jpg" height="20px">  <img src="./img/UCD.jpg" height="20px">  <img src="./img/UCI.png" height="20px">  <img src="./img/UCLA.png" height="20px">  <img src="./img/UCR.jpg" height="20px">  <img src="./img/UCSD.png" height="20px">  <img src="./img/JPL.png" height="20px">  <img src="./img/DARPA.jpg" height="20px">  <img src="./img/IGI.png" height="20px">  <img src="./img/nvidia.jpg" height="20px">  <img src="./img/UCIMI.png" height="20px">

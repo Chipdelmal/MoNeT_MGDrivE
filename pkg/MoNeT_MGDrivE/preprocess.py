@@ -46,7 +46,8 @@ def preProcessSubLandscape(
         fLandReps = agg.filterAggregateGarbageByIndex(
                 landReps, nodesAggLst[nodeAggIx]
             )
-        pkl.dump(fLandReps, fName+'_rep', compression=cmpr)
+        if REP:
+            pkl.dump(fLandReps, fName+'_rep', compression=cmpr)
     if SRP:
         fRepsSum = [sum(i) for i in fLandReps['landscapes']]
         fRepsDict = {
@@ -90,7 +91,7 @@ def preProcessLandscape(
     files = exp.readExperimentFilenames(pathMean)
     filesList = [agg.filterFilesByIndex(files, ix) for ix in nodesAggLst]
     landReps = None
-    if REP:
+    if REP or SRP:
         landReps = exp.loadAndAggregateLandscapeDataRepetitions(
                 dirsTraces, drive, MF[0], MF[1]
             )

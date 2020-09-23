@@ -15,3 +15,4 @@ from .plotsOverlays import *
 from .aggregateSpatial import *
 from .terminal import *
 from .preprocess import *
+from .dataAnalysis import *

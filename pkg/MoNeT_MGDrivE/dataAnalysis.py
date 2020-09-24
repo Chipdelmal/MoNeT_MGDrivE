@@ -64,3 +64,11 @@ def filterDFWithID(df, xpid):
     filters = [df[i[0]] == i[1] for i in xpidz]
     filter = list(map(all, zip(*filters)))
     return df[filter]
+
+
+def loadDFFromSummary(fName):
+    df = pd.read_csv(fName)
+    header = list(df.columns)
+    indRan = sum([i[0] == 'i' for i in header])
+    headerInd = header[:indRan]
+    return (df, header, headerInd)

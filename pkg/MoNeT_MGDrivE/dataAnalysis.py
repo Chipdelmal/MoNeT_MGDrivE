@@ -8,6 +8,17 @@ import MoNeT_MGDrivE.summaryStatistics as sstat
 
 
 def getPopRepsRatios(base, trace, gIx):
+    """
+    Given a baseline population (mean) and the traces of an experiment (reps)
+        this function calculates the fraction (repRto) of a given genotype
+        index (gIx).
+    Args:
+        base (sum): Mean pop array
+        trace (srp): Repetitions pop array
+        gIx (int): Genotype index
+    Returns:
+        np.array: Fractions array.
+    """
     (basePop, tracePops) = (base['population'], trace['landscapes'])
     ratioReps = [sstat.getPopRatio(trace, basePop, gIx) for trace in tracePops]
     ratioArr = np.asarray(ratioReps)
@@ -15,6 +26,15 @@ def getPopRepsRatios(base, trace, gIx):
 
 
 def compRatioToThreshold(repsRatios, thld, cmprOp=op.lt):
+    """
+    Given a population fraction, this function performs the comparison
+        against a threshold and returns the bool array.
+    Args:
+        repsRatios (np.array): Fraction repetitions array (x: time, y: rep)
+        thiS (float): Threshold to make the introgression comparison (0 to 1)
+    Returns:
+        np.array: bool array with info of days in which the comparison is true.
+    """
     thresholdArray = np.apply_along_axis(cmprOp, 0, repsRatios, thld)
     return thresholdArray
 
@@ -69,6 +89,15 @@ def calcWOP(repRto, thwS):
 
 
 def calcMinMax(repRto):
+    """
+    Given a population fraction, this function calculates minimum/maximum
+        fractions and the days at which they happen.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        thwS (float): Threshold to make the outrogression comparison (0 to 1)
+    Returns:
+        tuple: Min/max times and values.
+    """
     (mni, mxi) = (repRto.min(axis=1), repRto.max(axis=1))
     mnx = np.asarray([np.where(repRto[i] == mni[i])[0][0] for i in range(len(mni))])
     mxx = np.asarray([np.where(repRto[i] == mxi[i])[0][0] for i in range(len(mxi))])
@@ -76,6 +105,14 @@ def calcMinMax(repRto):
 
 
 def getRatioAtTime(repRto, ttpS):
+    """
+    Given a population fraction, returns the populations at a given time.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        ttpS (int): Day at which we want to probe the population
+    Returns:
+        np.array: Population values.
+    """
     return np.asarray([repRto[:, ttp] for ttp in ttpS])
 
 

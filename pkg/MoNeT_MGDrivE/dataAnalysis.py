@@ -20,12 +20,32 @@ def compRatioToThreshold(repsRatios, thld, cmprOp=op.lt):
 
 
 def calcTTI(repRto, thiS):
+    """
+    Given a population fraction, this function calculates the time it takes
+        for the system to go below a given threshold.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        thiS (float): Threshold to make the introgression comparison (0 to 1)
+    Returns:
+        list: Times at which each of the repetitions goes below the given
+                threshold (first time it breaks it).
+    """
     thiSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thiS]
     ttiS = [np.argmax(thiBool == 1, axis=1) for thiBool in thiSBool]
     return ttiS
 
 
 def calcTTO(repRto, thoS):
+    """
+    Given a population fraction, this function calculates the time it takes
+        for the system to go above a given threshold.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        thoS (float): Threshold to make the outrogression comparison (0 to 1)
+    Returns:
+        list: Times at which each of the repetitions goes above the given
+                threshold (last time it breaks it).
+    """
     (reps, days) = repRto.shape
     thoSBool = [compRatioToThreshold(repRto, i, op.gt) for i in thoS]
     ttoS = [np.subtract(days, np.argmin(np.flip(thoBool), axis=1)) for thoBool in thoSBool]
@@ -33,6 +53,16 @@ def calcTTO(repRto, thoS):
 
 
 def calcWOP(repRto, thwS):
+    """
+    Given a population fraction, this function calculates number of days in
+        which the repetition is below a given threshold (window of protection).
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        thwS (float): Threshold to make the outrogression comparison (0 to 1)
+    Returns:
+        list: Sum of the total of days the threshold is met (not the same as
+            TTO-TTI for time-varying population sizes).
+    """
     thwSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thwS]
     wopS = [np.sum(thwBool, axis=1) for thwBool in thwSBool]
     return wopS

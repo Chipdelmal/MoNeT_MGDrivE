@@ -30,7 +30,7 @@ def getFileExperimentList(path, identifier):
 
 def readExperimentFilenames(
     experimentPath,
-    sexFilenameIdentifiers={"male": "ADM", "female": "AF1"}
+    sexFilenameIdentifiers={"male": "M", "female": "F"}
 ):
     """
     Description:

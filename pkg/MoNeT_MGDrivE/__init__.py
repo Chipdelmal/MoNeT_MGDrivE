@@ -16,3 +16,4 @@ from .aggregateSpatial import *
 from .terminal import *
 from .preprocess import *
 from .dataAnalysis import *
+from .genes import *

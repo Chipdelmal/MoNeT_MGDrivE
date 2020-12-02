@@ -1,5 +1,14 @@
 from matplotlib.colors import LinearSegmentedColormap
 
+
+def addHexOpacity(colors, alpha='1A'):
+    return [c+alpha for c in colors]
+
+
+def replaceHexOpacity(colors, alpha='FF'):
+    return [i[:-2]+alpha for i in colors]
+
+
 # Define 5 colormaps ranging from transparent to opaque.
 cdict1 = {
     'red':   ((0.0, 1.0, 1.0), (1.0, 1.0, 1.0)),

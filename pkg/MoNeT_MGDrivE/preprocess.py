@@ -3,6 +3,7 @@ import compress_pickle as pkl
 import MoNeT_MGDrivE.aggregateSpatial as agg
 import MoNeT_MGDrivE.experimentsHandler as exp
 import MoNeT_MGDrivE.auxiliaryFunctions as aux
+import MoNeT_MGDrivE.terminal as ter
 
 
 def preProcessSubLandscape(
@@ -140,8 +141,7 @@ def preProcess(
         None
     """
     # Setup paths -------------------------------------------------------------
-    strInt = str(exIx+1).zfill(len(str(expNum)))
-    print('* Analyzing ({}/{})'.format(strInt, str(expNum)), end='\r')
+    ter.printProgress(exIx+1, expNum, nodeDigits)
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
     if not((expName in outExpNames) and (OVW)):

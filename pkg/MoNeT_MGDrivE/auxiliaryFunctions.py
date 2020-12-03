@@ -8,6 +8,11 @@ import math
 import numpy as np
 
 
+def divideListInChunks(l, n): 
+    for i in range(0, len(l), n):  
+        yield l[i:i + n] 
+
+
 def testMarkovMatrix(mat):
     '''
     Tests that the matrix behaves according to Markov properties (all

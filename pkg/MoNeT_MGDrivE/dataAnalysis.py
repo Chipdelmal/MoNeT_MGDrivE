@@ -166,9 +166,21 @@ def filterDFWithID(df, xpid):
     return df[filter]
 
 
+
+def loadDFFromFiles(fName, IND_RAN):
+    df = pd.read_csv(fName[0])
+    for filename in fName:
+        df = df.append(pd.read_csv(filename))
+    header = list(df.columns)
+    headerInd = header[:IND_RAN]
+    return (df, header, headerInd)
+
+
 def loadDFFromSummary(fName):
     df = pd.read_csv(fName)
     header = list(df.columns)
     indRan = sum([i[0] == 'i' for i in header])
     headerInd = header[:indRan]
     return (df, header, headerInd)
+
+

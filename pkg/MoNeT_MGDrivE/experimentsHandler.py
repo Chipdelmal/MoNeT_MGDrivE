@@ -4,6 +4,14 @@ import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 
+def getExpPaths(PATH_DATA, mean='ANALYZED', reps='TRACE'):
+    (expDirsMean, expDirsTrac) = (
+            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
+            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACE/')
+        )
+    expDirsMean.sort()
+    expDirsTrac.sort()
+    return (expDirsMean, expDirsTrac)
 
 
 

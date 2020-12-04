@@ -14,6 +14,26 @@ def getExpPaths(PATH_DATA, mean='ANALYZED', reps='TRACE'):
     return (expDirsMean, expDirsTrac)
 
 
+def getFilteredFiles(filterGlobPattern, unfilteredGlobPattern):
+    filterSet = set(glob.glob(filterGlobPattern))
+    fullSet = set(glob.glob(unfilteredGlobPattern))
+    filteredList = sorted(list(fullSet - filterSet))
+    return filteredList
+
+
+def getFilteredTupledFiles(
+    filterGlobPattern, 
+    unfilteredGlobPattern, 
+    tyTag=['sum', 'rep']
+):
+    fLists = list(zip(*[getFilteredFiles(
+                filterGlobPattern.format(tp),
+                unfilteredGlobPattern.format(tp)) for tp in tyTag]
+            ))
+    return fLists
+
+
+
 
 def getFileExperimentList(path, identifier):
     """Returns the sorted experiments files list.

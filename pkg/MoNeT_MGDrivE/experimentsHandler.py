@@ -33,8 +33,6 @@ def getFilteredTupledFiles(
     return fLists
 
 
-
-
 def getFileExperimentList(path, identifier):
     """Returns the sorted experiments files list.
 
@@ -58,7 +56,7 @@ def getFileExperimentList(path, identifier):
 
 def readExperimentFilenames(
     experimentPath,
-    sexFilenameIdentifiers={"male": "M", "female": "F"}
+    sexFilenameIdentifiers={"male": "M_", "female": "F_"}
 ):
     """
     Description:

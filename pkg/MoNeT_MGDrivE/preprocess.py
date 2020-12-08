@@ -63,7 +63,8 @@ def preProcessLandscape(
             pathMean, pathTraces, expName, drive, prePath='./',
             nodesAggLst=[[0]], analysisOI='HLT', fNameFmt='{}/{}-{}_',
             MF=(True, True), cmpr='bz2', nodeDigits=4,
-            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True,
+            sexFilenameIdentifiers={"male": "M_", "female": "F_"}
         ):
     """
     Preprocesses a subset of the landscape
@@ -89,7 +90,9 @@ def preProcessLandscape(
         None
     """
     dirsTraces = aux.listDirectoriesWithPathWithinAPath(pathTraces)
-    files = exp.readExperimentFilenames(pathMean)
+    files = exp.readExperimentFilenames(
+        pathMean, sexFilenameIdentifiers=sexFilenameIdentifiers
+    )
     filesList = [agg.filterFilesByIndex(files, ix) for ix in nodesAggLst]
     landReps = None
     if REP or SRP:
@@ -102,7 +105,7 @@ def preProcessLandscape(
                     pop, landReps, fName, drive,
                     nodesAggLst, nodeAggIx,
                     MF=MF, cmpr=cmpr,
-                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
+                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP,
                 )
     return None
 
@@ -113,7 +116,8 @@ def preProcess(
             nodesAggLst=[[0]], outExpNames={},
             fNameFmt='{}/{}-{}_', OVW=True,
             MF=(True, True), cmpr='bz2', nodeDigits=4,
-            SUM=True, AGG=True, SPA=True, REP=True, SRP=True
+            SUM=True, AGG=True, SPA=True, REP=True, SRP=True,
+            sexFilenameIdentifiers={"male": "M_", "female": "F_"}
         ):
     """
     Preprocesses a subset of the landscape
@@ -150,6 +154,7 @@ def preProcess(
                     pathMean, pathTraces, expName, drive, prePath,
                     analysisOI=analysisOI, nodesAggLst=nodesAggLst,
                     fNameFmt=fNameFmt, MF=MF, cmpr=cmpr, nodeDigits=nodeDigits,
-                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP
+                    SUM=SUM, AGG=AGG, SPA=SPA, REP=REP, SRP=SRP,
+                    sexFilenameIdentifiers=sexFilenameIdentifiers
                 )
     return None

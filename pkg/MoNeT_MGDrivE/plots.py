@@ -465,7 +465,7 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 
 
-def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0], wop=False):
+def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0], wop=0, wopPrint=True):
     figArr = plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
@@ -482,7 +482,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
 
-    if wop != False:
+    if  wopPrint:
         axTemp.text(
             0.975, 0.06, int(wop),
             verticalalignment='top', horizontalalignment='right',

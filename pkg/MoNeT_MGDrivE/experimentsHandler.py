@@ -6,8 +6,8 @@ import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 def getExpPaths(PATH_DATA, mean='ANALYZED', reps='TRACE'):
     (expDirsMean, expDirsTrac) = (
-            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + 'ANALYZED/'),
-            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + 'TRACE/')
+            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + mean),
+            auxFun.listDirectoriesWithPathWithinAPath(PATH_DATA + reps)
         )
     expDirsMean.sort()
     expDirsTrac.sort()

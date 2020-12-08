@@ -97,7 +97,8 @@ def preProcessLandscape(
     landReps = None
     if REP or SRP:
         landReps = exp.loadAndAggregateLandscapeDataRepetitions(
-                dirsTraces, drive, MF[0], MF[1]
+                dirsTraces, drive, MF[0], MF[1],
+                sexFilenameIdentifiers=sexFilenameIdentifiers
             )
     for (nodeAggIx, pop) in enumerate(filesList):
         fName = fNameFmt + str(nodeAggIx).zfill(nodeDigits)

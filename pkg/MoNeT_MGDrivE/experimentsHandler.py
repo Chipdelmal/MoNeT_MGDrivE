@@ -484,7 +484,8 @@ def loadAndAggregateLandscapeDataRepetitions(
     aggregationDictionary,
     male=True,
     female=True,
-    dataType=float
+    dataType=float,
+    sexFilenameIdentifiers={"male": "M_", "female": "F_"}
 ):
     """
     Description:
@@ -507,7 +508,9 @@ def loadAndAggregateLandscapeDataRepetitions(
     pathsNumber = len(paths)
     landscapes = [None] * pathsNumber
     for i in range(0, pathsNumber):
-        filenames = readExperimentFilenames(paths[i])
+        filenames = readExperimentFilenames(
+            paths[i], sexFilenameIdentifiers=sexFilenameIdentifiers
+        )
         loadedLandscape = loadAndAggregateLandscapeData(
             filenames, aggregationDictionary,
             male=male, female=female, dataType=dataType

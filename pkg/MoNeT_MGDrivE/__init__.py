@@ -7,8 +7,8 @@ from .factorialSensitivity import *
 from .plots import *
 from .summaryStatistics import *
 from .tracesHandler import *
-from .spatialVideos import *
-from .spatialVideosLegacy import *
+# from .spatialVideos import *
+# from .spatialVideosLegacy import *
 from .landscape import *
 from .experimentsHandlerAlt import *
 from .plotsOverlays import *

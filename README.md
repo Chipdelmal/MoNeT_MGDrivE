@@ -18,7 +18,7 @@ pip install MoNeT_MGDrivE
 
 ##  Important Information
 
-For the full commit history of the repository, and examples of use, please visit: https://github.com/Chipdelmal/MoNeT.
+For the full commit history of the repository, and examples of use, please visit: https://github.com/Chipdelmal/MoNeT and https://github.com/Chipdelmal/MoNeT2.
 
 <img src="./img/banner.png" width="100%">
 

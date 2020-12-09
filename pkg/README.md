@@ -19,13 +19,6 @@ To install from pypi with pip:
 pip install MoNeT-MGDrivE
 ```
 
-Make sure to have the following dependencies installed:
-
-* [Numpy](http://www.numpy.org/)
-* [Matplotlib](https://matplotlib.org/)
-* [Pandas](https://pandas.pydata.org/)
-* [Basemap](https://matplotlib.org/basemap/)
-
 <hr>
 
 ##  Authors

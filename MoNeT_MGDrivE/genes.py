@@ -40,4 +40,5 @@ def carrierFrequencies(genesDict, genotypes, invert=False):
         geneSets = [list(i) for i in (gPos - oPos, oPos, gPos | oPos)]
     else:
         geneSets = [list(i) for i in (gPos, oPos - gPos, gPos | oPos)]
+    gKeys.append('Total')
     return (gKeys, geneSets)

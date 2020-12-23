@@ -3,23 +3,26 @@ channels:
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
-  - ca-certificates=2020.1.1=0
+  - ca-certificates=2020.12.8=h06a4308_0
   - cffi=1.14.0=py38he30daa8_1
   - chardet=3.0.4=py38_1003
   - conda=4.8.3=py38_0
   - conda-package-handling=1.6.1=py38h7b6447c_0
   - cryptography=2.9.2=py38h1ba5d50_0
   - idna=2.9=py_1
+  - importlib-metadata=2.0.0=py_1
   - ld_impl_linux-64=2.33.1=h53a641e_7
   - libedit=3.1.20181209=hc058e9b_0
   - libffi=3.3=he6710b0_1
   - libgcc-ng=9.1.0=hdf63c60_0
   - libstdcxx-ng=9.1.0=hdf63c60_0
   - ncurses=6.2=he6710b0_1
-  - openssl=1.1.1g=h7b6447c_0
+  - openssl=1.1.1i=h27cfd23_0
   - pip=20.0.2=py38_3
+  - pycodestyle=2.6.0=py_0
   - pycosat=0.6.3=py38h7b6447c_1
   - pycparser=2.20=py_0
+  - pyflakes=2.2.0=py_0
   - pyopenssl=19.1.0=py38_0
   - pysocks=1.7.1=py38_0
   - python=3.8.3=hcff3b4d_0
@@ -35,6 +38,7 @@ dependencies:
   - wheel=0.34.2=py38_0
   - xz=5.2.5=h7b6447c_0
   - yaml=0.1.7=had09818_2
+  - zipp=3.4.0=pyhd3eb1b0_0
   - zlib=1.2.11=h7b6447c_3
   - pip:
     - absl-py==0.10.0
@@ -148,9 +152,7 @@ dependencies:
     - pyaml==20.4.0
     - pyasn1==0.4.8
     - pyasn1-modules==0.2.8
-    - pycodestyle==2.6.0
     - pydocstyle==5.1.1
-    - pyflakes==2.2.0
     - pyglet==1.5.11
     - pygments==2.7.1
     - pygsp==0.5.1

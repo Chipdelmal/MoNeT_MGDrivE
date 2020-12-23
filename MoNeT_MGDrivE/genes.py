@@ -30,15 +30,21 @@ def geneFrequencies(genesDict, genotypes):
     return (gKeys, geneAggs)
 
 
-def carrierFrequencies(genesDict, genotypes, invert=False):
+def carrierFrequencies(genesDict, genotypes, invert=False, autoTotal=True):
     gKeys = list(genesDict.keys())
     genes = [genesDict[i] for i in gKeys]
     (gPos, oPos) = [
         set(aggregateGeneAppearances(genotypes, i)) for i in genes
     ]
-    if invert:
-        geneSets = [list(i) for i in (gPos - oPos, oPos, gPos | oPos)]
+    if autoTotal:
+        if invert:
+            geneSets = [list(i) for i in (gPos - oPos, oPos, gPos | oPos)]
+        else:
+            geneSets = [list(i) for i in (gPos, oPos - gPos, gPos | oPos)]
+        gKeys.append('Total')
     else:
-        geneSets = [list(i) for i in (gPos, oPos - gPos, gPos | oPos)]
-    gKeys.append('Total')
+        if invert:
+            geneSets = [list(i) for i in (gPos - oPos, oPos)]
+        else:
+            geneSets = [list(i) for i in (gPos, oPos - gPos)]
     return (gKeys, geneSets)

@@ -484,7 +484,7 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
 
     if  wopPrint:
         axTemp.text(
-            0.975, 0.06, int(wop),
+            0.95, 0.1, int(wop),
             verticalalignment='top', horizontalalignment='right',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=15

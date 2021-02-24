@@ -149,7 +149,7 @@ def preProcess(
     ter.printProgress(exIx+1, expNum, nodeDigits)
     (pathMean, pathTraces) = (expDirsMean[exIx], expDirsTrac[exIx]+'/')
     expName = pathMean.split('/')[-1]
-    if not((expName in outExpNames) and (OVW)):
+    if (OVW) or (not (expName in outExpNames)):
         fNameFmt = '{}/{}-{}_'.format(prePath, expName, analysisOI)
         preProcessLandscape(
                     pathMean, pathTraces, expName, drive, prePath,

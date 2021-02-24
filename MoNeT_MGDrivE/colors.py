@@ -69,6 +69,8 @@ COLWN = ['#0eeb10', '#8338EC', '#0C4887']
 (COLEM, COLHM, COLTM, COLWM) = [generateAlphaColorMapFromColorArray(COLWO) for i in (COLEO, COLHO, COLTO, COLWO)]
 
 
+[i/255 for i in (131, 56, 236)]
+
 # #############################################################################
 # Color Palette for Heatmaps
 # #############################################################################
@@ -96,6 +98,12 @@ cdict = {
         'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.06, 0.06))
     }
 cmapW = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.5, 0.5)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.2, 0.2)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.9, 0.9))
+    }
+cmapP = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
 
 
 # Define 5 colormaps ranging from transparent to opaque.

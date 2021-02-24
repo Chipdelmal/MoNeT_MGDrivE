@@ -477,18 +477,11 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
     axTemp.axes.yaxis.set_visible(False)
     axTemp.xaxis.set_tick_params(width=1)
     axTemp.yaxis.set_tick_params(width=1)
+    axTemp.set_axis_off()
     axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
     axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
-
-    if  wopPrint:
-        axTemp.text(
-            0.95, 0.1, int(wop),
-            verticalalignment='top', horizontalalignment='right',
-            transform=axTemp.transAxes,
-            color='#00000055', fontsize=15
-        )
 
     days = tS['landscapes'][0].shape[0]
     if (vLines[0] > 0) and (vLines[1] <= days) and (wop > 0) and (vLines[0] < vLines[1]):
@@ -506,12 +499,21 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
         )
     for vline in vLines[2:]:
         axTemp.axvline(vline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
+
+    if  wopPrint:
+        axTemp.text(
+            0.975, 0.2, int(wop),
+            verticalalignment='bottom', horizontalalignment='right',
+            transform=axTemp.transAxes,
+            color='#00000055', fontsize=15
+        )
+
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
             dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
             orientation='portrait', papertype=None, format='png',
-            transparent=True, bbox_inches='tight', pad_inches=0.05
+            transparent=True, bbox_inches='tight', pad_inches=0
         )
     plt.close('all')
     return True

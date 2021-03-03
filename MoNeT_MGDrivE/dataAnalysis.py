@@ -149,12 +149,31 @@ def getRatioAtTime(repRto, ttpS):
     return np.asarray([repRto[:, ttp] for ttp in ttpS])
 
 
+def calcPOE(repRto, finalDay=-1, thresholds=(.025, .975)):
+    (reps, days) = repRto.shape
+    if finalDay == -1:
+        fD = -1
+    else:
+        fD = finalDay
+    fR = [rep[fD] for rep in repRto]
+    (loTh, hiTh) = (
+        [j < thresholds[0] for j in fR],
+        [j > thresholds[1] for j in fR]
+    )
+    (pLo, pHi) = (sum(loTh)/reps, sum(hiTh)/reps)
+    return (pLo, pHi)
+
+
 def initDFsForDA(
             fPaths, header, thiS, thoS, thwS, ttpS,
-            peak=['min', 'minx', 'max', 'maxx']
+            peak=['min', 'minx', 'max', 'maxx'],
+            poe=['POE', 'POF'], POE=False
         ):
     fNum = len(fPaths)
-    heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
+    if POE:
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak, poe)]
+    else:
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
     DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
     return DFEmpty
 

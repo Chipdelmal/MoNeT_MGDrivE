@@ -465,8 +465,11 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 
 
-def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0], wop=0, wopPrint=True):
-    figArr = plotNodeTraces(tS, STYLE)
+def exportTracesPlot(
+    tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0], 
+    wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False
+):
+    figArr = monet.plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
@@ -502,11 +505,26 @@ def exportTracesPlot(tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[
 
     if  wopPrint:
         axTemp.text(
-            0.975, 0.2, int(wop),
-            verticalalignment='bottom', horizontalalignment='right',
+            0.7, 0.05, 'WOP: '+str(int(wop)),
+            verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=15
+            color='#00000055', fontsize=12.5
         )
+    if cptPrint:
+        axTemp.text(
+            0.7, 0.1, 'CPT: {:.3f}'.format(cpt),
+            verticalalignment='bottom', horizontalalignment='left',
+            transform=axTemp.transAxes,
+            color='#00000055', fontsize=12.5
+        )     
+    
+    if poePrint:
+        axTemp.text(
+            0.7, 0.15, 'POE: {:.3f}'.format(poe),
+            verticalalignment='bottom', horizontalalignment='left',
+            transform=axTemp.transAxes,
+            color='#00000055', fontsize=12.5
+        )        
 
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(

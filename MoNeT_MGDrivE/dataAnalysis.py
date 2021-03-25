@@ -150,6 +150,17 @@ def getRatioAtTime(repRto, ttpS):
 
 
 def calcPOE(repRto, finalDay=-1, thresholds=(.025, .975)):
+    """
+    Given a population fraction, returns the probability of 
+        elimination/replacement.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+        finalDay (int): Day at which the elimination is probed
+        thresholds (float, float): Low and high thresholds to count as 
+            elimination
+    Returns:
+        (float, float): Elimination probabilities (low and high)
+    """
     (reps, days) = repRto.shape
     if finalDay == -1:
         fD = -1
@@ -164,14 +175,56 @@ def calcPOE(repRto, finalDay=-1, thresholds=(.025, .975)):
     return (pLo, pHi)
 
 
+def calcCPT(repRto):
+    """
+    Given a population fraction, returns cumulative amount of mosquitoes divided
+        by time.
+    Args:
+        repRto (np.array): Fraction repetitions array (x: time, y: rep)
+    Returns:
+        float: Cumulative potential disease-transmitting mosquitoes.
+    """
+    return [np.sum(i)/repRto.shape[1] for i in repRto]
+
+
+def moving_average(x, w):
+    return np.convolve(x, np.ones(w), 'full') / w
+
+
+def smoothDerivative(tSeries, smoothing=10):
+    smooth = moving_average(tSeries, smoothing)
+    gradient = np.gradient(smooth)
+    return gradient
+
+
+def popDerivative(tSeries, smoothing=10, magnitude=.01):
+    gradient = smoothDerivative(tSeries, smoothing)
+    zero_crossings = np.where(np.diff(np.sign(gradient)))[0]
+    mag = [True if abs(x) > magnitude else False for x in gradient]
+    return sum([a & b for (a,b) in zip(mag, zero_crossings)])
+
+
+def calcDER(repRto, smoothing=10, magnitude=.01):
+    return [popDerivative(i, smoothing, magnitude) for i in repRto]
+
+
 def initDFsForDA(
             fPaths, header, thiS, thoS, thwS, ttpS,
             peak=['min', 'minx', 'max', 'maxx'],
-            poe=['POE', 'POF'], POE=False
+            POE=False, poe=['POE', 'POF'],
+            CPT=False, cpt=['CPT'], der=['DER']
         ):
     fNum = len(fPaths)
-    if POE:
+    if (POE and not CPT):
         heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak, poe)]
+    elif (CPT and not POE): 
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak, cpt)]
+    elif (POE and CPT):
+        heads = [
+            list(header)+i for i in (
+                thiS, thoS, thwS, ttpS, peak, poe, cpt, der
+            )
+        ]
     else:
         heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
     DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]

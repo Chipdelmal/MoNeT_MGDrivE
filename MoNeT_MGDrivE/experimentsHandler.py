@@ -1,7 +1,21 @@
+
+import re
 import glob
 import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
+
+
+def getXpId(pFile, idIx):
+    splitXpId = re.split('_|-', pFile.split('/')[-1].split('.')[-2])
+    xpId = [int(splitXpId[i]) for i in idIx]
+    return xpId
+
+
+def splitExpNames(PATH_OUT, ext='bz'):
+    out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.'+ext)]
+    return sorted(list(set(out)))
+
 
 
 def getExpPaths(PATH_DATA, mean='ANALYZED/', reps='TRACE/'):

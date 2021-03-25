@@ -529,9 +529,9 @@ def exportTracesPlot(
     axTemp.tick_params(color=(0, 0, 0, 0.5))
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
-            dpi=STYLE['dpi'], facecolor=None, edgecolor='w',
+            dpi=STYLE['dpi'], facecolor='w', edgecolor='w',
             orientation='portrait', format='png',
-            transparent=True, bbox_inches='tight', pad_inches=0
+            transparent=False, bbox_inches='tight', pad_inches=0
         )
     plt.close('all')
     return True

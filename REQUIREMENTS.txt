@@ -4,7 +4,10 @@
 _libgcc_mutex=0.1=main
 altair=3.2.0=py37_0
 asn1crypto=1.2.0=py37_0
+<<<<<<< HEAD
+=======
 astroid=2.4.2=py37_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 attrs=19.3.0=py_0
 backcall=0.1.0=pypi_0
 basemap=1.2.0=py37h705c2d8_0
@@ -13,9 +16,15 @@ bleach=3.1.0=pypi_0
 boost-cpp=1.70.0=ha2d47e9_1
 branca=0.3.1=py_0
 bzip2=1.0.8=h516909a_1
+<<<<<<< HEAD
+ca-certificates=2019.11.28=hecc5488_0
+cairo=1.14.12=h8948797_3
+certifi=2019.11.28=py37_0
+=======
 ca-certificates=2020.12.8=h06a4308_0
 cairo=1.14.12=h8948797_3
 certifi=2020.12.5=py37h06a4308_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 cffi=1.13.2=py37h8022711_0
 chardet=3.0.4=py37_1003
 click=7.0=py_0
@@ -32,7 +41,10 @@ descartes=1.1.0=py_3
 entrypoints=0.3=py37_1000
 expat=2.2.6=he6710b0_0
 fiona=1.7.12=py37h3f37509_0
+<<<<<<< HEAD
+=======
 flake8=3.8.4=py_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 folium=0.10.0=py_0
 fontconfig=2.13.0=h9420a91_0
 freetype=2.10.0=he983fc9_1
@@ -51,13 +63,19 @@ hdf4=4.2.13=hf30be14_1003
 hdf5=1.8.18=h525d4c3_0
 icu=58.2=hf484d3e_1000
 idna=2.8=py37_1000
+<<<<<<< HEAD
+=======
 importlib-metadata=2.0.0=py_1
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 importlib_metadata=0.23=py37_0
 ipykernel=5.1.3=pypi_0
 ipython=7.9.0=pypi_0
 ipython-genutils=0.2.0=pypi_0
 ipywidgets=7.5.1=pypi_0
+<<<<<<< HEAD
+=======
 isort=5.6.4=py_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 jedi=0.15.1=pypi_0
 jinja2=2.10.3=py_0
 joblib=0.14.0=py_0
@@ -71,7 +89,10 @@ jupyter-core=4.6.1=pypi_0
 kealib=1.4.7=h5472223_5
 kiwisolver=1.1.0=py37hc9558a2_0
 krb5=1.16.1=hc83ff2d_6
+<<<<<<< HEAD
+=======
 lazy-object-proxy=1.4.3=py37h27cfd23_2
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 libblas=3.8.0=14_openblas
 libcblas=3.8.0=14_openblas
 libcurl=7.61.0=h1ad7b7a_0
@@ -99,9 +120,14 @@ libxml2=2.9.9=hea5a465_1
 lz4-c=1.8.3=he1b5a44_1001
 markupsafe=1.1.1=py37h516909a_0
 matplotlib=3.1.1=py37h5429711_0
+<<<<<<< HEAD
+mistune=0.8.4=pypi_0
+monet-mgdrive=0.7.0.1=dev_0
+=======
 mccabe=0.6.1=py37_1
 mistune=0.8.4=pypi_0
 monet-mgdrive=0.7.0.2=pypi_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 more-itertools=7.2.0=py_0
 mpmath=1.1.0=pypi_0
 munch=2.5.0=py_0
@@ -113,7 +139,11 @@ notebook=6.0.2=pypi_0
 numpy=1.17.3=py37h95a1406_0
 opencv-python=4.4.0.44=pypi_0
 openjpeg=2.3.1=h21c5421_1
+<<<<<<< HEAD
+openssl=1.0.2u=h516909a_0
+=======
 openssl=1.0.2u=h7b6447c_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 osmnx=0.8.2=py_0
 pandas=0.25.3=py37hb3f55d8_0
 pandocfilters=1.4.2=pypi_0
@@ -131,11 +161,16 @@ prometheus-client=0.7.1=pypi_0
 prompt-toolkit=2.0.10=pypi_0
 pthread-stubs=0.4=h14c3975_1001
 ptyprocess=0.6.0=pypi_0
+<<<<<<< HEAD
+pycparser=2.19=py37_1
+pygments=2.4.2=pypi_0
+=======
 pycodestyle=2.6.0=py_0
 pycparser=2.19=py37_1
 pyflakes=2.2.0=py_0
 pygments=2.4.2=pypi_0
 pylint=2.6.0=py37_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 pyopenssl=19.0.0=py37_0
 pyparsing=2.4.5=py_0
 pyproj=1.9.5.1=py37h7b21b82_1
@@ -167,18 +202,27 @@ terminado=0.8.3=pypi_0
 testpath=0.4.4=pypi_0
 threadpoolctl=2.1.0=pypi_0
 tk=8.6.8=hbc83047_0
+<<<<<<< HEAD
+toolz=0.10.0=py_0
+tornado=6.0.3=py37h516909a_0
+traitlets=4.3.3=pypi_0
+=======
 toml=0.10.1=py_0
 toolz=0.10.0=py_0
 tornado=6.0.3=py37h516909a_0
 traitlets=4.3.3=pypi_0
 typed-ast=1.4.1=py37h7b6447c_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 urllib3=1.25.6=py37_0
 vincent=0.4.4=py_1
 wcwidth=0.1.7=pypi_0
 webencodings=0.5.1=pypi_0
 wheel=0.33.6=py37_0
 widgetsnbextension=3.5.1=pypi_0
+<<<<<<< HEAD
+=======
 wrapt=1.11.2=py37h7b6447c_0
+>>>>>>> f92647d448d02906dbd0a5cb901d055708c51079
 xerces-c=3.2.2=hea5cb30_1003
 xorg-libxau=1.0.9=h14c3975_0
 xorg-libxdmcp=1.1.3=h516909a_0

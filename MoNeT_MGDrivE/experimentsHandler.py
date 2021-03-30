@@ -13,7 +13,7 @@ def getXpId(pFile, idIx):
 
 
 def splitExpNames(PATH_OUT, ext='bz'):
-    out = [i.split('/')[-1].split('-')[0] for i in glob(PATH_OUT+'*.'+ext)]
+    out = [i.split('/')[-1].split('-')[0] for i in glob.glob(PATH_OUT+'*.'+ext)]
     return sorted(list(set(out)))
 
 

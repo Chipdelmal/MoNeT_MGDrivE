@@ -4,6 +4,7 @@ import glob
 import numpy as np
 import warnings as warnings
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
+from numba import jit
 
 
 def getXpId(pFile, idIx):

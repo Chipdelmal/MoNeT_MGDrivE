@@ -1,9 +1,12 @@
 import numpy as np
 import pandas as pd
+from os import path
+import compress_pickle as pkl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import MoNeT_MGDrivE.colors as monetPlots
-
+import MoNeT_MGDrivE.terminal as ter
+import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
 
 def rescaleRGBA(colorsTuple, colors=255):
     """
@@ -561,7 +564,7 @@ def exportTracesPlotVideo(
     #     spine.set_edgecolor('#B1C0DD77')
 
     days = tS['landscapes'][0].shape[0]
-    axTemp.axvspan(vLines[0], vLines[1], alpha=.5, facecolor='#ffffff', zorder=5)
+    axTemp.axvspan(vLines[0], vLines[1], alpha=.6, facecolor='#ffffff', zorder=5)
     axTemp.axvline(vLines[0], alpha=0.25, ls='--', lw=1, color='#B1C0DD', zorder=10)
 
     axTemp.tick_params(color=(0, 0, 0, 0.5))
@@ -577,3 +580,16 @@ def exportTracesPlotVideo(
 
 def getAxisRange(x):
     return (min(x), max(x))
+
+
+def exportTracesPlotWrapper(
+        expIx, fLists, STYLE, PT_IMG, 
+        vLines=[0, 0], hLines=[0]
+    ):
+    (xpNum, digs) = auxFun.lenAndDigits(fLists)
+    ter.printProgress(expIx+1, xpNum, digs)
+    (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
+    name = path.splitext(fLists[expIx][0].split('/')[-1])[0][:-4]
+    # Export plots --------------------------------------------------------
+    exportTracesPlot(repDta, name, STYLE, PT_IMG, wopPrint=False)
+    return True

@@ -7,6 +7,8 @@ import matplotlib.patches as mpatches
 import MoNeT_MGDrivE.colors as monetPlots
 import MoNeT_MGDrivE.terminal as ter
 import MoNeT_MGDrivE.auxiliaryFunctions as auxFun
+import MoNeT_MGDrivE.experimentsHandler as expHan
+import MoNeT_MGDrivE.dataAnalysis as dataA
 
 def rescaleRGBA(colorsTuple, colors=255):
     """
@@ -583,13 +585,50 @@ def getAxisRange(x):
 
 
 def exportPreTracesPlotWrapper(
-        expIx, fLists, STYLE, PT_IMG, 
-        vLines=[0, 0], hLines=[0]
+        expIx, fLists, STYLE, PT_IMG,
+        xpNum=0, digs=3, vLines=[0, 0], hLines=[0]
     ):
-    (xpNum, digs) = auxFun.lenAndDigits(fLists)
     ter.printProgress(expIx+1, xpNum, digs)
     (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
     name = path.splitext(fLists[expIx][0].split('/')[-1])[0][:-4]
     # Export plots --------------------------------------------------------
     exportTracesPlot(repDta, name, STYLE, PT_IMG, wopPrint=False)
+    return True
+
+
+def exportPstTracesPlotWrapper(
+        exIx, repFiles, xpidIx, 
+        dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT,
+        STABLE_T, THS, QNT, STYLE, PT_IMG, 
+        xpsNum=0, digs=3, popScaler=1.5, aspect=1,
+        wopPrint=True, cptPrint=True, poePrint=True
+    ):
+    padi = str(exIx+1).zfill(digs)
+    fmtStr = '{}+ File: {}/{}'
+    print(fmtStr.format(ter.CBBL, padi, len(repFiles), ter.CEND), end='\r')
+    repFile = repFiles[exIx]
+    (repDta, xpid) = (
+            pkl.load(repFile), expHan.getXpId(repFile, xpidIx)
+        )
+    xpRow = [
+        dataA.filterDFWithID(j, xpid, max=len(xpidIx)) for j in (
+            dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT
+        )
+    ]
+    (tti, tto, wop) = [float(row[THS]) for row in xpRow[:3]]
+    (mnf, mnd, poe, cpt) = (
+        float(xpRow[3]['min']), float(xpRow[3]['minx']), 
+        float(xpRow[4]['POE']), float(xpRow[5]['CPT'])
+    )
+    # Traces ------------------------------------------------------------------
+    pop = repDta['landscapes'][0][STABLE_T][-1]
+    STYLE['yRange'] = (0,  pop*popScaler)
+    STYLE['aspect'] = scaleAspect(aspect, STYLE)
+    exportTracesPlot(
+        repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
+        vLines=[tti, tto, mnd], hLines=[mnf*pop], 
+        wop=wop, wopPrint=wopPrint, 
+        cpt=cpt, cptPrint=cptPrint,
+        poe=poe, poePrint=poePrint
+    )
     return True

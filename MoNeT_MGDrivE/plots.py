@@ -510,14 +510,14 @@ def exportTracesPlot(
 
     if  wopPrint:
         axTemp.text(
-            0.7, 0.05, 'WOP: '+str(int(wop)),
+            0.7, 1-0.1, 'WOP: '+str(int(wop)),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5
         )
     if cptPrint:
         axTemp.text(
-            0.7, 0.1, 'CPT: {:.3f}'.format(cpt),
+            0.7, 1-0.15, 'CPT: {:.3f}'.format(cpt),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5
@@ -525,7 +525,7 @@ def exportTracesPlot(
     
     if poePrint:
         axTemp.text(
-            0.7, 0.15, 'POE: {:.3f}'.format(poe),
+            0.7, 1-0.2, 'POE: {:.3f}'.format(poe),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5

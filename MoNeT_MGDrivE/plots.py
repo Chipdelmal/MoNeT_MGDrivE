@@ -471,7 +471,8 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 
 def exportTracesPlot(
-    tS, nS, STYLE, PATH_IMG, append='', vLines=[0, 0], hLines=[0], 
+    tS, nS, STYLE, PATH_IMG, append='', 
+    vLines=[0, 0], hLines=[0], labelPos=(.7, .9),
     wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False
 ):
     figArr = plotNodeTraces(tS, STYLE)
@@ -510,14 +511,14 @@ def exportTracesPlot(
 
     if  wopPrint:
         axTemp.text(
-            0.7, 1-0.1, 'WOP: '+str(int(wop)),
+            labelPos[0], labelPos[1], 'WOP: '+str(int(wop)),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5
         )
     if cptPrint:
         axTemp.text(
-            0.7, 1-0.15, 'CPT: {:.3f}'.format(cpt),
+            labelPos[0], labelPos[1]-.05, 'CPT: {:.3f}'.format(cpt),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5
@@ -525,7 +526,7 @@ def exportTracesPlot(
     
     if poePrint:
         axTemp.text(
-            0.7, 1-0.2, 'POE: {:.3f}'.format(poe),
+            labelPos[0], labelPos[1]-.1, 'POE: {:.3f}'.format(poe),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=12.5
@@ -600,8 +601,9 @@ def exportPstTracesPlotWrapper(
         exIx, repFiles, xpidIx, 
         dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT,
         STABLE_T, THS, QNT, STYLE, PT_IMG, 
-        xpsNum=0, digs=3, popScaler=1.5, aspect=1,
-        wopPrint=True, cptPrint=True, poePrint=True
+        labelPos=(.7, .9), xpsNum=0, digs=3, popScaler=1.5, aspect=1,
+        wopPrint=True, cptPrint=True, poePrint=True,
+        
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -626,7 +628,7 @@ def exportPstTracesPlotWrapper(
     STYLE['aspect'] = scaleAspect(aspect, STYLE)
     exportTracesPlot(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
-        vLines=[tti, tto, mnd], hLines=[mnf*pop], 
+        vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint

@@ -582,7 +582,7 @@ def getAxisRange(x):
     return (min(x), max(x))
 
 
-def exportTracesPlotWrapper(
+def exportPreTracesPlotWrapper(
         expIx, fLists, STYLE, PT_IMG, 
         vLines=[0, 0], hLines=[0]
     ):

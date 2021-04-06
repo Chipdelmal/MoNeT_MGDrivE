@@ -644,7 +644,7 @@ def exportPstTracesPlotWrapper(
     exportTracesPlot(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
         vLines=[tti, tto, mnd], hLines=[mnf*pop], 
-        labelPos=labelPos, border=border, borderColor=borderColor
+        labelPos=labelPos, border=border, borderColor=borderColor,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint

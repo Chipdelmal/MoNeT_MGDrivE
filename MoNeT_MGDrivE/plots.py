@@ -473,7 +473,7 @@ def exportGeneLegend(labels, colors, filename, dpi):
 def exportTracesPlot(
     tS, nS, STYLE, PATH_IMG, append='', 
     vLines=[0, 0], hLines=[0], labelPos=(.7, .9), 
-    border=True, borderColor='#322E2D', borderWidth=1,
+    border=True, borderColor='#8184a7AA', borderWidth=2,
     wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False
 ):
     figArr = plotNodeTraces(tS, STYLE)
@@ -555,7 +555,7 @@ def exportTracesPlot(
 
 def exportTracesPlotVideo(
     tS, nS, STYLE, PATH_IMG, 
-    border=True, borderColor='#322E2D', borderWidth=1,
+    border=True, borderColor='#8184a7AA', borderWidth=2,
     vLines=[0, 0]
 ):
     figArr = plotNodeTraces(tS, STYLE)

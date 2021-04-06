@@ -12,7 +12,7 @@ PADL = '' + 75 * '-' + ''
 def printExperimentHead(PATH_I, PATH_O, time, title):
     # print(monet.PAD)
     (cred, cwht, cend) = (CRED, CWHT, CEND)
-    print(cwht + '* ['+ str(time) + '] ' + 'MoNeT ' + title + cend)
+    print(cwht + cwht + '* ['+ str(time) + '] ' + 'MoNeT ' + title + cend)
     # print(monet.PAD)
     print('{}* I: {}{}'.format(cred, PATH_I, cend))
     print('{}* O: {}{}'.format(cred, PATH_O, cend))

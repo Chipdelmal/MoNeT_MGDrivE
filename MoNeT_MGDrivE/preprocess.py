@@ -117,7 +117,7 @@ def preProcess(
             nodesAggLst=[[0]], outExpNames={},
             fNameFmt='{}/{}-{}_', OVW=True,
             MF=(True, True), cmpr='bz2', nodeDigits=4,
-            SUM=True, AGG=True, SPA=True, REP=True, SRP=True,
+            SUM=True, AGG=False, SPA=False, REP=False, SRP=True,
             sexFilenameIdentifiers={"male": "M_", "female": "F_"}
         ):
     """

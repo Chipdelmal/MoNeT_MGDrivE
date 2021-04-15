@@ -472,15 +472,19 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 def exportTracesPlot(
     tS, nS, STYLE, PATH_IMG, append='', 
-    vLines=[0, 0], hLines=[0], labelPos=(.7, .9), 
-    border=True, borderColor='#8184a7AA', borderWidth=2,
+    vLines=[0, 0], hLines=[0], labelPos=(.7, .9), autoAspect=False,
+    border=True, borderColor='#8184a7AA', borderWidth=2, popScaler=1,
     wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False
 ):
     figArr = plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
-    axTemp.set_aspect(aspect=STYLE["aspect"])
+    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1] * popScaler)
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    if autoAspect:
+        axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
+    else:
+        axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.axes.xaxis.set_ticklabels([])
     axTemp.axes.yaxis.set_ticklabels([])
     axTemp.axes.xaxis.set_visible(False)
@@ -555,14 +559,19 @@ def exportTracesPlot(
 
 def exportTracesPlotVideo(
     tS, nS, STYLE, PATH_IMG, 
-    border=True, borderColor='#8184a7AA', borderWidth=2,
-    vLines=[0, 0]
+    border=True, borderColor='#8184a7AA', borderWidth=2, autoAspect=False,
+    vLines=[0, 0], popScaler=1
 ):
     figArr = plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
+    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1] * popScaler)
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    if autoAspect:
+        axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
+    else:
+        axTemp.set_aspect(aspect=STYLE["aspect"])
     axTemp.axes.xaxis.set_ticklabels([])
     axTemp.axes.yaxis.set_ticklabels([])
     axTemp.axes.xaxis.set_visible(False)
@@ -606,15 +615,15 @@ def getAxisRange(x):
 
 def exportPreTracesPlotWrapper(
         expIx, fLists, STYLE, PT_IMG,
-        border=True, borderColor='#322E2D', borderWidth=1,
-        xpNum=0, digs=3, vLines=[0, 0], hLines=[0]
+        border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
+        xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1
     ):
     ter.printProgress(expIx+1, xpNum, digs)
     (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
     name = path.splitext(fLists[expIx][0].split('/')[-1])[0][:-4]
     # Export plots --------------------------------------------------------
     exportTracesPlot(
-        repDta, name, STYLE, PT_IMG, wopPrint=False, 
+        repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth
     )
     return True
@@ -624,9 +633,9 @@ def exportPstTracesPlotWrapper(
         exIx, repFiles, xpidIx, 
         dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT,
         STABLE_T, THS, QNT, STYLE, PT_IMG, 
-        border=True, borderColor='#322E2D', borderWidth=1,
+        border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
         labelPos=(.7, .9), xpsNum=0, digs=3, 
-        popScaler=1.5, aspect=1,
+        popScaler=1, aspect=1,
         wopPrint=True, cptPrint=True, poePrint=True,
     ):
     padi = str(exIx+1).zfill(digs)
@@ -649,11 +658,11 @@ def exportPstTracesPlotWrapper(
     # Traces ------------------------------------------------------------------
     pop = repDta['landscapes'][0][STABLE_T][-1]
     STYLE['yRange'] = (0,  pop*popScaler)
-    STYLE['aspect'] = scaleAspect(aspect, STYLE)
     exportTracesPlot(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
         vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos, 
         border=border, borderColor=borderColor, borderWidth=borderWidth,
+        autoAspect=autoAspect, popScaler=popScaler,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint

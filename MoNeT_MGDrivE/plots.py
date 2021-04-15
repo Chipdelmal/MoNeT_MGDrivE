@@ -519,14 +519,14 @@ def exportTracesPlot(
             labelPos[0], labelPos[1], 'WOP: '+str(int(wop)),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=12.5
+            color='#00000055', fontsize=7.5
         )
     if cptPrint:
         axTemp.text(
             labelPos[0], labelPos[1]-.05, 'CPT: {:.3f}'.format(cpt),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=12.5
+            color='#00000055', fontsize=7.5
         )     
     
     if poePrint:
@@ -534,7 +534,7 @@ def exportTracesPlot(
             labelPos[0], labelPos[1]-.1, 'POE: {:.3f}'.format(poe),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=12.5
+            color='#00000055', fontsize=7.5
         )        
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
     axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
@@ -633,9 +633,9 @@ def exportPstTracesPlotWrapper(
         exIx, repFiles, xpidIx, 
         dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT,
         STABLE_T, THS, QNT, STYLE, PT_IMG, 
-        border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
+        border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.7, .9), xpsNum=0, digs=3, 
-        popScaler=1, aspect=1,
+        autoAspect=False, popScaler=1,
         wopPrint=True, cptPrint=True, poePrint=True,
     ):
     padi = str(exIx+1).zfill(digs)
@@ -657,12 +657,12 @@ def exportPstTracesPlotWrapper(
     )
     # Traces ------------------------------------------------------------------
     pop = repDta['landscapes'][0][STABLE_T][-1]
-    STYLE['yRange'] = (0,  pop*popScaler)
+    # STYLE['yRange'] = (0,  pop*popScaler)
     exportTracesPlot(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
         vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos, 
         border=border, borderColor=borderColor, borderWidth=borderWidth,
-        autoAspect=autoAspect, popScaler=popScaler,
+        autoAspect=autoAspect, popScaler=1,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint

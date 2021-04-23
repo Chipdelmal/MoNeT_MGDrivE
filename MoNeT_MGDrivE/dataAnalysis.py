@@ -16,7 +16,7 @@ def calcResponseSurface(
     iX, iY, dZ,
     scalers=(1, 1, 1), mthd='linear',
     xAxis='linear', yAxis='linear',
-    xLogMin=1e-10, yLogMin=1e-10
+    xLogMin=1e-10, yLogMin=1e-10,
     DXY=(5000, 5000)
 ):
     (xN, yN, zN) = (

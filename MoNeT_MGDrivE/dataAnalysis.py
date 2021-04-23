@@ -15,6 +15,8 @@ def axisRange(x):
 def calcResponseSurface(
     iX, iY, dZ,
     scalers=(1, 1, 1), mthd='linear',
+    xAxis='linear', yAxis='linear',
+    xLogMin=1e-10, yLogMin=1e-10
     DXY=(5000, 5000)
 ):
     (xN, yN, zN) = (
@@ -23,10 +25,23 @@ def calcResponseSurface(
             np.array([float(i / scalers[2]) for i in dZ])
         )
     (xRan, yRan, zRan) = (axisRange(i) for i in (xN, yN, zN))
-    (xi, yi) = (
-            np.linspace(xRan[0], xRan[1], DXY[0]),
-            np.linspace(yRan[0], yRan[1], DXY[1])
-        )
+    # X-Axis scale ------------------------------------------------------------
+    if xAxis=='linear':
+        xi=np.linspace(xRan[0], xRan[1], DXY[0])
+    elif xAxis=='log':
+        xLo = xRan[0]
+        if xRan[0] == 0:
+            xLo = xLogMin
+        xi=np.geomspace(xLo, xRan[1], ngdx)
+    # Y-Axis scale ------------------------------------------------------------
+    if yAxis=='linear':
+        yi=np.linspace(xRan[0], xRan[1], DXY[0])
+    elif yAxis=='log':
+        yLo = xRan[0]
+        if yRan[0] == 0:
+            yLo = yLogMin
+        yi=np.geomspace(yLo, yRan[1], ngdy)
+    # Grid --------------------------------------------------------------------
     zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
     # Return variables
     ranges = (xRan, yRan, zRan)

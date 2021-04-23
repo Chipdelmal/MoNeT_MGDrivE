@@ -32,15 +32,15 @@ def calcResponseSurface(
         xLo = xRan[0]
         if xRan[0] == 0:
             xLo = xLogMin
-        xi=np.geomspace(xLo, xRan[1], ngdx)
+        xi=np.geomspace(xLo, xRan[1], DXY[0])
     # Y-Axis scale ------------------------------------------------------------
     if yAxis=='linear':
-        yi=np.linspace(xRan[0], xRan[1], DXY[0])
+        yi=np.linspace(xRan[0], xRan[1], DXY[1])
     elif yAxis=='log':
         yLo = xRan[0]
         if yRan[0] == 0:
             yLo = yLogMin
-        yi=np.geomspace(yLo, yRan[1], ngdy)
+        yi=np.geomspace(yLo, yRan[1], DXY[1])
     # Grid --------------------------------------------------------------------
     zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
     # Return variables

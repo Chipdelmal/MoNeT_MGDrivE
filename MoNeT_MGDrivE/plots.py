@@ -440,6 +440,11 @@ def exportLegend(legend, filename="legend.png", dpi=500):
             fig.dpi_scale_trans.inverted()
         )
     fig.savefig(filename, dpi=dpi, bbox_inches=bbox)
+    plt.clf()
+    plt.cla() 
+    plt.close('all')
+    plt.gcf()
+    return None
 
 
 def exportGeneLegend(labels, colors, filename, dpi):
@@ -466,7 +471,11 @@ def exportGeneLegend(labels, colors, filename, dpi):
     handles = [f("s", colors[i]) for i in range(len(labels))]
     legend = plt.legend(handles, labels, loc=3, framealpha=1, frameon=False)
     exportLegend(legend, filename=filename, dpi=dpi)
+    plt.clf()
+    plt.cla() 
     plt.close('all')
+    plt.gcf()
+    return None
 
 
 
@@ -553,8 +562,11 @@ def exportTracesPlot(
             orientation='portrait', format='png',
             transparent=False, bbox_inches='tight', pad_inches=pad
         )
+    plt.clf()
+    plt.cla() 
     plt.close('all')
-    return True
+    plt.gcf()
+    return None
 
 
 def exportTracesPlotVideo(
@@ -605,8 +617,11 @@ def exportTracesPlotVideo(
             orientation='portrait', format='png',
             transparent=False, bbox_inches='tight', pad_inches=0
         )
+    plt.clf()
+    plt.cla() 
     plt.close('all')
-    return True
+    plt.gcf()
+    return None
 
 
 def getAxisRange(x):
@@ -626,7 +641,7 @@ def exportPreTracesPlotWrapper(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth
     )
-    return True
+    return None
 
 
 def exportPstTracesPlotWrapper(
@@ -667,4 +682,4 @@ def exportPstTracesPlotWrapper(
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint
     )
-    return True
+    return None

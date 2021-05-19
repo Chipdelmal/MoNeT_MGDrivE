@@ -116,7 +116,10 @@ def calcTTO(repRto, thoS):
     """
     (reps, days) = repRto.shape
     thoSBool = [compRatioToThreshold(repRto, i, op.gt) for i in thoS]
-    ttoS = [np.subtract(days, np.argmin(np.flip(thoBool), axis=1)) for thoBool in thoSBool]
+    ttoS = [
+        np.subtract(days, np.argmin(np.flip(thoBool), axis=1)) 
+        for thoBool in thoSBool
+    ]
     return ttoS
 
 

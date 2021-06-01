@@ -51,7 +51,8 @@ def exportPreTracesParallel(
     name = path.splitext(repFilePath.split('/')[-1])[0][:-4]
     pts.exportTracesPlot(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
-        border=border, borderColor=borderColor, borderWidth=borderWidth
+        border=border, borderColor=borderColor, borderWidth=borderWidth,
+        vLines=vLines
     )
     return None
 
@@ -65,7 +66,7 @@ def exportPstTracesParallel(
         border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.7, .9), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
-        wopPrint=True, cptPrint=True, poePrint=True,
+        wopPrint=True, cptPrint=True, poePrint=True
     ):
     (ix, repFile, tti, tto, wop, mnf, mnd, poe, cpt) = exIx
     repDta = pkl.load(repFile)
@@ -91,7 +92,7 @@ def exportPstTracesParallel(
 ###############################################################################
 # PstFraction Updates
 ###############################################################################
-def pstFractionParallel(exIx, PT_OUT, baseFiles, meanFiles, traceFiles):
+def pstFractionParallel(exIx, PT_OUT):
     (_, bFile, mFile, tFile) = exIx
     # Load data ---------------------------------------------------------------
     (base, trace) = [pkl.load(file) for file in (bFile, tFile)]

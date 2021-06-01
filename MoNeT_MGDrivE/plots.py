@@ -392,7 +392,7 @@ def quickSaveFigure(
     """
     fig.savefig(
         path, dpi=dpi, facecolor=None,
-        edgecolor='w', orientation='portrait', papertype=None,
+        orientation='portrait', 
         format=format, transparent=True, bbox_inches='tight',
         pad_inches=0
     )
@@ -483,8 +483,15 @@ def exportTracesPlot(
     tS, nS, STYLE, PATH_IMG, append='', 
     vLines=[0, 0], hLines=[0], labelPos=(.7, .9), autoAspect=False,
     border=True, borderColor='#8184a7AA', borderWidth=2, popScaler=1,
-    wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False
+    wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False,
+    transparent=False
 ):
+    if transparent:
+        plt.rcParams.update({
+            "figure.facecolor":  (1.0, 0.0, 0.0, 0.0),
+            "axes.facecolor":    (0.0, 1.0, 0.0, 0.0),
+            "savefig.facecolor": (0.0, 0.0, 1.0, 0.0),
+        })
     figArr = plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1] * popScaler)
@@ -558,9 +565,9 @@ def exportTracesPlot(
         pad = 0
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
-            dpi=STYLE['dpi'], facecolor='w', edgecolor='w',
-            orientation='portrait', format='png',
-            transparent=False, bbox_inches='tight', pad_inches=pad
+            dpi=STYLE['dpi'], facecolor=None,
+            orientation='portrait', format='png', 
+            transparent=transparent, bbox_inches='tight', pad_inches=pad
         )
     plt.clf()
     plt.cla() 
@@ -572,8 +579,15 @@ def exportTracesPlot(
 def exportTracesPlotVideo(
     tS, nS, STYLE, PATH_IMG, 
     border=True, borderColor='#8184a7AA', borderWidth=2, autoAspect=False,
-    vLines=[0, 0], popScaler=1
+    vLines=[0, 0], popScaler=1,
+    transparent=False
 ):
+    if transparent:
+        plt.rcParams.update({
+            "figure.facecolor":  (1.0, 0.0, 0.0, 0.0),
+            "axes.facecolor":    (0.0, 1.0, 0.0, 0.0),
+            "savefig.facecolor": (0.0, 0.0, 1.0, 0.0),
+        })
     figArr = plotNodeTraces(tS, STYLE)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
@@ -613,9 +627,9 @@ def exportTracesPlotVideo(
         pad = 0
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
-            dpi=STYLE['dpi'], facecolor='w', edgecolor='w',
-            orientation='portrait', format='png',
-            transparent=False, bbox_inches='tight', pad_inches=0
+            dpi=STYLE['dpi'], facecolor=None,
+            orientation='portrait', format='png', 
+            transparent=transparent, bbox_inches='tight', pad_inches=0
         )
     plt.clf()
     plt.cla() 
@@ -631,7 +645,8 @@ def getAxisRange(x):
 def exportPreTracesPlotWrapper(
         expIx, fLists, STYLE, PT_IMG,
         border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
-        xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1
+        xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1,
+        transparent=False
     ):
     ter.printProgress(expIx+1, xpNum, digs)
     (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
@@ -639,7 +654,8 @@ def exportPreTracesPlotWrapper(
     # Export plots --------------------------------------------------------
     exportTracesPlot(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
-        border=border, borderColor=borderColor, borderWidth=borderWidth
+        border=border, borderColor=borderColor, borderWidth=borderWidth,
+        transparent=transparent, vLines=vLines, hLines=hLines
     )
     return None
 
@@ -652,6 +668,7 @@ def exportPstTracesPlotWrapper(
         labelPos=(.7, .9), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
         wopPrint=True, cptPrint=True, poePrint=True,
+        transparent=False
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -677,9 +694,10 @@ def exportPstTracesPlotWrapper(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
         vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos, 
         border=border, borderColor=borderColor, borderWidth=borderWidth,
-        autoAspect=autoAspect, popScaler=1,
+        autoAspect=autoAspect, popScaler=popScaler,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
-        poe=poe, poePrint=poePrint
+        poe=poe, poePrint=poePrint,
+        transparent=transparent
     )
     return None

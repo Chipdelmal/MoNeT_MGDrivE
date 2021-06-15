@@ -9,7 +9,7 @@ import MoNeT_MGDrivE.summaryStatistics as sstat
 
 
 def axisRange(x):
-    return (min(x), max(x))
+    return [min(x), max(x)]
 
 
 def calcResponseSurface(
@@ -20,27 +20,25 @@ def calcResponseSurface(
     DXY=(5000, 5000)
 ):
     (xN, yN, zN) = (
-            np.array([float(i / scalers[0]) for i in iX]),
-            np.array([float(i / scalers[1]) for i in iY]),
-            np.array([float(i / scalers[2]) for i in dZ])
+            np.array([float(i/scalers[0]) for i in iX]),
+            np.array([float(i/scalers[1]) for i in iY]),
+            np.array([float(i/scalers[2]) for i in dZ])
         )
     (xRan, yRan, zRan) = (axisRange(i) for i in (xN, yN, zN))
     # X-Axis scale ------------------------------------------------------------
     if xAxis=='linear':
-        xi=np.linspace(xRan[0], xRan[1], DXY[0])
+        xi = np.linspace(xRan[0], xRan[1], DXY[0])
     elif xAxis=='log':
-        xLo = xRan[0]
         if xRan[0] == 0:
-            xLo = xLogMin
-        xi=np.geomspace(xLo, xRan[1], DXY[0])
+            xRan[0] = xLogMin
+        xi = np.geomspace(xRan[0], xRan[1], DXY[0])
     # Y-Axis scale ------------------------------------------------------------
     if yAxis=='linear':
-        yi=np.linspace(xRan[0], xRan[1], DXY[1])
+        yi = np.linspace(yRan[0], yRan[1], DXY[1])
     elif yAxis=='log':
-        yLo = xRan[0]
         if yRan[0] == 0:
-            yLo = yLogMin
-        yi=np.geomspace(yLo, yRan[1], DXY[1])
+            yRan[0] =  yLogMin
+        yi = np.geomspace(yRan[0], yRan[1], DXY[1])
     # Grid --------------------------------------------------------------------
     zi = griddata((xN, yN), zN, (xi[None, :], yi[:, None]), method=mthd)
     # Return variables

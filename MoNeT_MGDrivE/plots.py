@@ -481,9 +481,12 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 def exportTracesPlot(
     tS, nS, STYLE, PATH_IMG, append='', 
-    vLines=[0, 0], hLines=[0], labelPos=(.7, .9), autoAspect=False,
+    vLines=[0, 0], hLines=[0], labelPos=(.7, .95), autoAspect=False,
     border=True, borderColor='#8184a7AA', borderWidth=2, popScaler=1,
-    wop=0, wopPrint=True, cpt=0, cptPrint=False, poe=0, poePrint=False,
+    wop=0, wopPrint=True, 
+    cpt=0, cptPrint=False, 
+    poe=0, poePrint=False,
+    mnf=0, mnfPrint=False,
     transparent=False
 ):
     if transparent:
@@ -543,8 +546,7 @@ def exportTracesPlot(
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
-        )     
-    
+        )    
     if poePrint:
         axTemp.text(
             labelPos[0], labelPos[1]-.1, 'POE: {:.3f}'.format(poe),
@@ -552,6 +554,14 @@ def exportTracesPlot(
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
         )        
+    if minPrint:
+        axTemp.text(
+            labelPos[0], labelPos[1]-.15, 'MIN: {:.3f}'.format(mnf),
+            verticalalignment='bottom', horizontalalignment='left',
+            transform=axTemp.transAxes,
+            color='#00000055', fontsize=7.5
+        )     
+
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
     axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
     # extent = axTemp.get_tightbbox(figArr[0]).transformed(figArr[0].dpi_scale_trans.inverted())
@@ -667,7 +677,7 @@ def exportPstTracesPlotWrapper(
         border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.7, .9), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
-        wopPrint=True, cptPrint=True, poePrint=True,
+        wopPrint=True, cptPrint=True, poePrint=True, mnfPrint=True,
         transparent=False
     ):
     padi = str(exIx+1).zfill(digs)
@@ -698,6 +708,7 @@ def exportPstTracesPlotWrapper(
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint,
+        mnf=mnf, mnfPrint=mnfPrint,
         transparent=transparent
     )
     return None

@@ -675,7 +675,7 @@ def exportPstTracesPlotWrapper(
         dfTTI, dfTTO, dfWOP, dfMNX, dfPOE, dfCPT,
         STABLE_T, THS, QNT, STYLE, PT_IMG, 
         border=True, borderColor='#322E2D', borderWidth=1, 
-        labelPos=(.7, .9), xpsNum=0, digs=3, 
+        labelPos=(.75, .95), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
         wopPrint=True, 
         cptPrint=True, 

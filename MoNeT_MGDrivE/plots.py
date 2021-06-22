@@ -532,7 +532,7 @@ def exportTracesPlot(
         )
     for vline in vLines[2:]:
         axTemp.axvline(vline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
-
+    # Print metrics -----------------------------------------------------------
     if  wopPrint:
         axTemp.text(
             labelPos[0], labelPos[1], 'WOP: '+str(int(wop)),
@@ -554,14 +554,14 @@ def exportTracesPlot(
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
         )        
-    if minPrint:
+    if mnfPrint:
         axTemp.text(
             labelPos[0], labelPos[1]-.15, 'MIN: {:.3f}'.format(mnf),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
         )     
-
+    # --------------------------------------------------------------------------
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
     axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
     # extent = axTemp.get_tightbbox(figArr[0]).transformed(figArr[0].dpi_scale_trans.inverted())
@@ -677,7 +677,10 @@ def exportPstTracesPlotWrapper(
         border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.7, .9), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
-        wopPrint=True, cptPrint=True, poePrint=True, mnfPrint=True,
+        wopPrint=True, 
+        cptPrint=True, 
+        poePrint=True, 
+        mnfPrint=True,
         transparent=False
     ):
     padi = str(exIx+1).zfill(digs)

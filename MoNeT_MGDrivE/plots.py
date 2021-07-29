@@ -527,9 +527,8 @@ def exportTracesPlot(
         axTemp.axvline(vLines[0], alpha=0.75, ls='-.', lw=.35, color='#FF1A4B', zorder=0)
         axTemp.axvline(vLines[1], alpha=0.75, ls='-.', lw=.35, color='#FF1A4B', zorder=0)
 
-    axTemp.axhline(
-            hLines, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000'
-        )
+    for hline in hLines:
+        axTemp.axhline(hline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
     for vline in vLines[2:]:
         axTemp.axvline(vline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
     # Print metrics -----------------------------------------------------------

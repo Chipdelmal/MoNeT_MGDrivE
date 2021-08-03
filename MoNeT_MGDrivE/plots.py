@@ -541,21 +541,21 @@ def exportTracesPlot(
         )
     if cptPrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.05, 'CPT: {:.3f}'.format(cpt),
+            labelPos[0], labelPos[1]-.1, 'CPT: {:.3f}'.format(cpt),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
         )    
     if poePrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.1, 'POE: {:.3f}'.format(poe),
+            labelPos[0], labelPos[1]-.2, 'POE: {:.3f}'.format(poe),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5
         )        
     if mnfPrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.15, 'MIN: {:.3f}'.format(mnf),
+            labelPos[0], labelPos[1]-.3, 'MIN: {:.3f}'.format(mnf),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=7.5

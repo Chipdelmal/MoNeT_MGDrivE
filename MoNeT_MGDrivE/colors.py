@@ -1,5 +1,6 @@
 
 import matplotlib
+import matplotlib.colors as mcolors
 from matplotlib.colors import LinearSegmentedColormap
 
 
@@ -54,6 +55,11 @@ def generateAlphaColorMapFromColorArray(
     return cmapsList
 
 
+def colorPaletteFromHexList(clist):
+    c = mcolors.ColorConverter().to_rgb
+    clrs = [c(i) for i in clist]
+    rvb = mcolors.LinearSegmentedColormap.from_list("", clrs)
+    return rvb
 
 ###############################################################################
 # Colors

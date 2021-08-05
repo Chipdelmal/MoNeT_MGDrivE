@@ -511,6 +511,7 @@ def exportTracesPlot(
         axTemp.axes.yaxis.set_visible(False)
         # axTemp.xaxis.set_tick_params(width=0)
         # axTemp.yaxis.set_tick_params(width=0)
+        axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
         axTemp.set_axis_off()
     axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
     axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
@@ -563,7 +564,6 @@ def exportTracesPlot(
         )     
     # --------------------------------------------------------------------------
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
-    axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
     # extent = axTemp.get_tightbbox(figArr[0]).transformed(figArr[0].dpi_scale_trans.inverted())
     if border:
         axTemp.set_axis_on()

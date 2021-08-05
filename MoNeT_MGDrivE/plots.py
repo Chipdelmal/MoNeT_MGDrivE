@@ -487,7 +487,7 @@ def exportTracesPlot(
     cpt=0, cptPrint=False, 
     poe=0, poePrint=False,
     mnf=0, mnfPrint=False,
-    transparent=False
+    transparent=False, ticksHide=True
 ):
     if transparent:
         plt.rcParams.update({
@@ -504,15 +504,16 @@ def exportTracesPlot(
         axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
     else:
         axTemp.set_aspect(aspect=STYLE["aspect"])
-    axTemp.axes.xaxis.set_ticklabels([])
-    axTemp.axes.yaxis.set_ticklabels([])
-    axTemp.axes.xaxis.set_visible(False)
-    axTemp.axes.yaxis.set_visible(False)
-    # axTemp.xaxis.set_tick_params(width=0)
-    # axTemp.yaxis.set_tick_params(width=0)
-    axTemp.set_axis_off()
-    # axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
-    # axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
+    if ticksHide:
+        axTemp.axes.xaxis.set_ticklabels([])
+        axTemp.axes.yaxis.set_ticklabels([])
+        axTemp.axes.xaxis.set_visible(False)
+        axTemp.axes.yaxis.set_visible(False)
+        # axTemp.xaxis.set_tick_params(width=0)
+        # axTemp.yaxis.set_tick_params(width=0)
+        axTemp.set_axis_off()
+    axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
+    axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
 
@@ -589,7 +590,7 @@ def exportTracesPlotVideo(
     tS, nS, STYLE, PATH_IMG, 
     border=True, borderColor='#8184a7AA', borderWidth=2, autoAspect=False,
     vLines=[0, 0], popScaler=1,
-    transparent=False
+    transparent=False, ticksHide=True
 ):
     if transparent:
         plt.rcParams.update({
@@ -607,13 +608,14 @@ def exportTracesPlotVideo(
         axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
     else:
         axTemp.set_aspect(aspect=STYLE["aspect"])
-    axTemp.axes.xaxis.set_ticklabels([])
-    axTemp.axes.yaxis.set_ticklabels([])
-    axTemp.axes.xaxis.set_visible(False)
-    axTemp.axes.yaxis.set_visible(False)
-    axTemp.xaxis.set_tick_params(width=2)
-    axTemp.yaxis.set_tick_params(width=2)
-    axTemp.set_axis_off()
+    if ticksHide:
+        axTemp.axes.xaxis.set_ticklabels([])
+        axTemp.axes.yaxis.set_ticklabels([])
+        axTemp.axes.xaxis.set_visible(False)
+        axTemp.axes.yaxis.set_visible(False)
+        axTemp.xaxis.set_tick_params(width=2)
+        axTemp.yaxis.set_tick_params(width=2)
+        axTemp.set_axis_off()
     axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
     axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
@@ -655,7 +657,7 @@ def exportPreTracesPlotWrapper(
         expIx, fLists, STYLE, PT_IMG,
         border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
         xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1,
-        transparent=False
+        transparent=False, ticksHide=True
     ):
     ter.printProgress(expIx+1, xpNum, digs)
     (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
@@ -664,7 +666,8 @@ def exportPreTracesPlotWrapper(
     exportTracesPlot(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth,
-        transparent=transparent, vLines=vLines, hLines=hLines
+        transparent=transparent, vLines=vLines, hLines=hLines, 
+        ticksHide=ticksHide
     )
     return None
 
@@ -676,11 +679,10 @@ def exportPstTracesPlotWrapper(
         border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.75, .95), xpsNum=0, digs=3, 
         autoAspect=False, popScaler=1,
-        wopPrint=True, 
-        cptPrint=True, 
-        poePrint=True, 
-        mnfPrint=True,
-        transparent=False
+        wopPrint=True, cptPrint=True, 
+        poePrint=True, mnfPrint=True,
+        transparent=False, 
+        ticksHide=True
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -711,6 +713,6 @@ def exportPstTracesPlotWrapper(
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint,
         mnf=mnf, mnfPrint=mnfPrint,
-        transparent=transparent
+        transparent=transparent, ticksHide=ticksHide
     )
     return None

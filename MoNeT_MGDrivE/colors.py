@@ -110,6 +110,13 @@ cdict = {
         'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.9, 0.9))
     }
 cmapP = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+cdict = {
+        'red':      ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.5, 0.5)),
+        'green':    ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.2, 0.2)),
+        'blue':     ((0.0, 1.0, 1.0), (0.1, 1.0, 1.0), (1.0, 0.9, 0.9))
+    }
+cmapP = matplotlib.colors.LinearSegmentedColormap('cmapK', cdict, 256)
+
 
 
 # Define 5 colormaps ranging from transparent to opaque.
@@ -161,4 +168,15 @@ cmaps = [light_blue1, red1, purple1, pink1, dark_blue1]
 
 
 
-
+# #############################################################################
+# Color Palettes for trace curves
+# #############################################################################
+clistPurple = [
+    '#000000', '#03045e', '#6247aa', '#815ac0', '#c19ee0', '#d6e3f8'
+]
+CL_PURPLE = colorPaletteFromHexList(clistPurple)
+clistRWB = [
+    '#fe1d23', '#fe576f', '#fdcbff', '#d6e3f8', 
+    '#aacbff', '#00affe', '#013af4', '#0000ee'
+]
+CL_RWB = colorPaletteFromHexList(clistRWB)

@@ -24,6 +24,5 @@ pip install MoNeT-MGDrivE
 ##  Authors
 
 * __Lead__: [Héctor M. Sánchez C](https://chipdelmal.github.io/)
-* __Dev__: Chris De León, Priscilla Zhang
-* __Former Dev__: Sabrina Wong, Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
+* __Former Dev__: Chris De León, Priscilla Zhang, Sabrina Wong, Sarafina Smith, Víctor Ferman, Biyonka Liang, Gillian Chu, Maya Shen
 * __PI__: [John M. Marshall](https://www.marshalllab.com/)

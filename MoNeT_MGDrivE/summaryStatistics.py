@@ -345,7 +345,10 @@ def calcMeanTTI(meanPrb, meanRef, thresholds, gIx, cmprOp=op.lt):
     return ttiAn
 
 
-def calcQuantTTI(srpPrb, meanRef, thresholds, gIx, quantile=.95, cmprOp=op.lt):
+def calcQuantTTI(
+        srpPrb, meanRef, thresholds, gIx, 
+        quantile=.95, cmprOp=op.lt
+    ):
     """
     Calculates the mean time to introgression for the quantile response of two
         populations.

@@ -80,7 +80,7 @@ def compRatioToThreshold(repsRatios, thld, cmprOp=op.lt):
     return thresholdArray
 
 
-def calcTTI(repRto, thiS, clipValue=None):
+def calcTTI(repRto, thiS, clipValue=None, sampRate=1):
     """
     Given a population fraction, this function calculates the time it takes
         for the system to go below a given threshold.
@@ -97,11 +97,13 @@ def calcTTI(repRto, thiS, clipValue=None):
         days = clipValue
     thiSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thiS]
     ttiS = [np.argmax(thiBool == 1, axis=1) for thiBool in thiSBool]
-    clipped = [[x if x > 0 else days for x in i] for i in ttiS]
+    clipped = [
+        [(x*sampRate) if (x>0) else (days*sampRate) for x in i] for i in ttiS
+    ]
     return clipped
 
 
-def calcTTO(repRto, thoS):
+def calcTTO(repRto, thoS, sampRate=1):
     """
     Given a population fraction, this function calculates the time it takes
         for the system to go above a given threshold.
@@ -115,13 +117,13 @@ def calcTTO(repRto, thoS):
     (reps, days) = repRto.shape
     thoSBool = [compRatioToThreshold(repRto, i, op.gt) for i in thoS]
     ttoS = [
-        np.subtract(days, np.argmin(np.flip(thoBool), axis=1)) 
+        np.subtract(days*sampRate, np.argmin(np.flip(thoBool), axis=1)*sampRate) 
         for thoBool in thoSBool
     ]
     return ttoS
 
 
-def calcWOP(repRto, thwS):
+def calcWOP(repRto, thwS, sampRate=1):
     """
     Given a population fraction, this function calculates number of days in
         which the repetition is below a given threshold (window of protection).
@@ -133,7 +135,7 @@ def calcWOP(repRto, thwS):
             TTO-TTI for time-varying population sizes).
     """
     thwSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thwS]
-    wopS = [np.sum(thwBool, axis=1) for thwBool in thwSBool]
+    wopS = [(np.sum(thwBool, axis=1)*sampRate) for thwBool in thwSBool]
     return wopS
 
 
@@ -153,7 +155,7 @@ def calcMinMax(repRto):
     return ((mni, mnx), (mxi, mxx), (1-mni, mnx), (1-mxi, mxx))
 
 
-def getRatioAtTime(repRto, ttpS):
+def getRatioAtTime(repRto, ttpS, sampRate=1):
     """
     Given a population fraction, returns the populations at a given time.
     Args:
@@ -162,7 +164,8 @@ def getRatioAtTime(repRto, ttpS):
     Returns:
         np.array: Population values.
     """
-    return np.asarray([repRto[:, ttp] for ttp in ttpS])
+    scaledTime = [round(i/sampRate) for i in ttpS]
+    return np.asarray([repRto[:, ttp] for ttp in scaledTime])
 
 
 def calcPOE(repRto, finalDay=-1, thresholds=(.025, .975)):

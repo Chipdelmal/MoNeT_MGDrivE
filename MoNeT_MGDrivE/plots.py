@@ -279,8 +279,8 @@ def plotNodeDataRepetitions(
 
 
 def plotNodeTraces(
-    srpData,
-    style
+    srpData, style,
+    sampRate=1
 ):
     """
     Description:
@@ -298,13 +298,15 @@ def plotNodeTraces(
     probeNode = srpData['landscapes']
     repsNumber = len(probeNode)
     genesNumber = len(probeNode[0][0])
-    fig, ax = plt.subplots()
+    (fig, ax) = plt.subplots()
     ax.set_aspect(aspect=style["aspect"])
     for j in range(0, repsNumber):
         transposed = probeNode[j].T
         for gene in range(0, genesNumber):
+            gData = transposed[gene]
+            tData = np.arange(0, gData.shape[0]*sampRate, sampRate)
             ax.plot(
-                transposed[gene],
+                tData, gData,
                 linewidth=style["width"],
                 color=style["colors"][gene]
             )
@@ -487,7 +489,7 @@ def exportTracesPlot(
     cpt=0, cptPrint=False, 
     poe=0, poePrint=False,
     mnf=0, mnfPrint=False,
-    transparent=False, ticksHide=True
+    transparent=False, ticksHide=True, sampRate=1
 ):
     if transparent:
         plt.rcParams.update({
@@ -495,9 +497,9 @@ def exportTracesPlot(
             "axes.facecolor":    (0.0, 1.0, 0.0, 0.0),
             "savefig.facecolor": (0.0, 0.0, 1.0, 0.0),
         })
-    figArr = plotNodeTraces(tS, STYLE)
+    figArr = plotNodeTraces(tS, STYLE, sampRate=sampRate)
     axTemp = figArr[0].get_axes()[0]
-    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1] * popScaler)
+    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1]*popScaler)
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
     if autoAspect:
@@ -590,7 +592,7 @@ def exportTracesPlotVideo(
     tS, nS, STYLE, PATH_IMG, 
     border=True, borderColor='#8184a7AA', borderWidth=2, autoAspect=False,
     vLines=[0, 0], popScaler=1,
-    transparent=False, ticksHide=True
+    transparent=False, ticksHide=True, sampRate=1
 ):
     if transparent:
         plt.rcParams.update({
@@ -598,7 +600,7 @@ def exportTracesPlotVideo(
             "axes.facecolor":    (0.0, 1.0, 0.0, 0.0),
             "savefig.facecolor": (0.0, 0.0, 1.0, 0.0),
         })
-    figArr = plotNodeTraces(tS, STYLE)
+    figArr = plotNodeTraces(tS, STYLE, sampRate=1)
     axTemp = figArr[0].get_axes()[0]
     axTemp.set_aspect(aspect=STYLE["aspect"])
     STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1] * popScaler)
@@ -657,7 +659,7 @@ def exportPreTracesPlotWrapper(
         expIx, fLists, STYLE, PT_IMG,
         border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
         xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1,
-        transparent=False, ticksHide=True
+        transparent=False, ticksHide=True, sampRate=1
     ):
     ter.printProgress(expIx+1, xpNum, digs)
     (_, repDta) = [pkl.load(file) for file in (fLists[expIx])]
@@ -667,7 +669,7 @@ def exportPreTracesPlotWrapper(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth,
         transparent=transparent, vLines=vLines, hLines=hLines, 
-        ticksHide=ticksHide
+        ticksHide=ticksHide, sampRate=1
     )
     return None
 
@@ -682,7 +684,7 @@ def exportPstTracesPlotWrapper(
         wopPrint=True, cptPrint=True, 
         poePrint=True, mnfPrint=True,
         transparent=False, 
-        ticksHide=True
+        ticksHide=True, sampRate=1
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -713,6 +715,6 @@ def exportPstTracesPlotWrapper(
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint,
         mnf=mnf, mnfPrint=mnfPrint,
-        transparent=transparent, ticksHide=ticksHide
+        transparent=transparent, ticksHide=ticksHide, sampRate=sampRate
     )
     return None

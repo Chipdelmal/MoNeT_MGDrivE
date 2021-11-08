@@ -8,6 +8,17 @@ import math
 import numpy as np
 
 
+def flatten_list(_2d_list):
+    flat_list = []
+    for element in _2d_list:
+        if type(element) is list:
+            for item in element:
+                flat_list.append(item)
+        else:
+            flat_list.append(element)
+    return flat_list
+    
+
 def divideListInChunks(l, n): 
     for i in range(0, len(l), n):  
         yield l[i:i + n] 

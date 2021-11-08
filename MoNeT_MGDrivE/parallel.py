@@ -108,14 +108,14 @@ def pstFractionParallel(exIx, PT_OUT):
 # PstProcess Updates
 ###############################################################################
 def calcMetrics(
-        repRto, sampRate=1,
+        repRto, sampRate=1, offset=0,
         thi=.25, tho=.25, thw=.25, tap=50, thp=(.025, .975),
         finalDay=-1
     ):
     (minS, maxS, _, _) = monet.calcMinMax(repRto)
     mtrRep = {
-        'TTI': monet.calcTTI(repRto, thi, sampRate=sampRate),
-        'TTO': monet.calcTTO(repRto, tho, sampRate=sampRate),
+        'TTI': monet.calcTTI(repRto, thi, sampRate=sampRate, offset=offset),
+        'TTO': monet.calcTTO(repRto, tho, sampRate=sampRate, offset=offset),
         'WOP': monet.calcWOP(repRto, thw, sampRate=sampRate),
         'MIN': minS, 'MAX': maxS,
         'RAP': monet.getRatioAtTime(repRto, tap, sampRate=sampRate),

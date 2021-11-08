@@ -23,7 +23,7 @@ python=python
 pip=pip
 tests=.
 version:=$(shell $(python) version.py)
-sdist_name:=PlotMAPQ-$(version).tar.gz
+sdist_name:=MoNeT_MGDrivE-$(version).tar.gz
 
 develop:
 	$(pip) install -e .

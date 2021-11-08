@@ -80,7 +80,7 @@ def compRatioToThreshold(repsRatios, thld, cmprOp=op.lt):
     return thresholdArray
 
 
-def calcTTI(repRto, thiS, clipValue=None, sampRate=1):
+def calcTTI(repRto, thiS, clipValue=None, sampRate=1, offset=0):
     """
     Given a population fraction, this function calculates the time it takes
         for the system to go below a given threshold.
@@ -98,12 +98,14 @@ def calcTTI(repRto, thiS, clipValue=None, sampRate=1):
     thiSBool = [compRatioToThreshold(repRto, i, op.lt) for i in thiS]
     ttiS = [np.argmax(thiBool == 1, axis=1) for thiBool in thiSBool]
     clipped = [
-        [(x*sampRate) if (x>0) else (days*sampRate) for x in i] for i in ttiS
+        [(x*sampRate-offset) if (x>0) else (days*sampRate) for x in i] 
+        for i in ttiS
     ]
+    # off = [[(x-offset) for x in i] for i in ttiS]
     return clipped
 
 
-def calcTTO(repRto, thoS, sampRate=1):
+def calcTTO(repRto, thoS, sampRate=1, offset=0):
     """
     Given a population fraction, this function calculates the time it takes
         for the system to go above a given threshold.

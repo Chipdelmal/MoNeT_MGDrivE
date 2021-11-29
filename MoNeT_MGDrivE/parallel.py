@@ -112,13 +112,13 @@ def calcMetrics(
         thi=.25, tho=.25, thw=.25, tap=50, thp=(.025, .975),
         finalDay=-1
     ):
-    (minS, maxS, _, _) = monet.calcMinMax(repRto)
+    (minS, maxS, _, _) = dat.calcMinMax(repRto)
     mtrRep = {
-        'TTI': monet.calcTTI(repRto, thi, sampRate=sampRate, offset=offset),
-        'TTO': monet.calcTTO(repRto, tho, sampRate=sampRate, offset=offset),
-        'WOP': monet.calcWOP(repRto, thw, sampRate=sampRate),
+        'TTI': dat.calcTTI(repRto, thi, sampRate=sampRate, offset=offset),
+        'TTO': dat.calcTTO(repRto, tho, sampRate=sampRate, offset=offset),
+        'WOP': dat.calcWOP(repRto, thw, sampRate=sampRate),
         'MIN': minS, 'MAX': maxS,
-        'RAP': monet.getRatioAtTime(repRto, tap, sampRate=sampRate),
+        'RAP': dat.getRatioAtTime(repRto, tap, sampRate=sampRate),
         'POE': dat.calcPOE(repRto, finalDay=finalDay, thresholds=thp),
         'CPT': dat.calcCPT(repRto)
     }
@@ -151,7 +151,7 @@ def calcMtrQnts(mtrsReps, qnt=0.5):
 
 
 def pstProcessParallel(
-        exIx, header, xpidIx, sampRate=1,
+        exIx, header, xpidIx, sampRate=1, offset=0,
         thi=.25, tho=.25, thw=.25, tap=50, thp=(.025, .975),
         finalDay=-1, qnt=0.5, POE=True, CPT=True,
         DF_SORT=['TTI', 'TTO', 'WOP', 'RAP', 'MIN', 'POE', 'CPT']

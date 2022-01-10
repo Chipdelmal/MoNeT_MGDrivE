@@ -18,3 +18,4 @@ from .preprocess import *
 from .dataAnalysis import *
 from .genes import *
 from .parallel import *
+from .mailAlert import *

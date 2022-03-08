@@ -493,7 +493,8 @@ def exportTracesPlot(
     cpt=0, cptPrint=False, 
     poe=0, poePrint=False,
     mnf=0, mnfPrint=False,
-    transparent=False, ticksHide=True, sampRate=1
+    transparent=False, ticksHide=True, sampRate=1,
+    fontsize=5, labelspacing=.1
 ):
     if transparent:
         plt.rcParams.update({
@@ -542,31 +543,31 @@ def exportTracesPlot(
     # Print metrics -----------------------------------------------------------
     if  wopPrint:
         axTemp.text(
-            labelPos[0], labelPos[1], 'WOP: '+str(int(wop)),
+            labelPos[0], labelPos[1]-labelspacing*0, 'WOP: '+str(int(wop)),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=7.5
+            color='#00000055', fontsize=fontsize
         )
     if cptPrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.1, 'CPT: {:.3f}'.format(cpt),
+            labelPos[0], labelPos[1]-labelspacing*1, 'CPT: {:.3f}'.format(cpt),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=7.5
+            color='#00000055', fontsize=fontsize
         )    
     if poePrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.2, 'POE: {:.3f}'.format(poe),
+            labelPos[0], labelPos[1]-labelspacing*2, 'POE: {:.3f}'.format(poe),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=7.5
+            color='#00000055', fontsize=fontsize
         )        
     if mnfPrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-.3, 'MIN: {:.3f}'.format(mnf),
+            labelPos[0], labelPos[1]-labelspacing*3, 'MIN: {:.3f}'.format(mnf),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
-            color='#00000055', fontsize=7.5
+            color='#00000055', fontsize=fontsize
         )     
     # --------------------------------------------------------------------------
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
@@ -688,7 +689,8 @@ def exportPstTracesPlotWrapper(
         wopPrint=True, cptPrint=True, 
         poePrint=True, mnfPrint=True,
         transparent=False, 
-        ticksHide=True, sampRate=1
+        ticksHide=True, sampRate=1,
+        fontsize=5, labelspacing=.1
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -719,6 +721,7 @@ def exportPstTracesPlotWrapper(
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint,
         mnf=mnf, mnfPrint=mnfPrint,
-        transparent=transparent, ticksHide=ticksHide, sampRate=sampRate
+        transparent=transparent, ticksHide=ticksHide, sampRate=sampRate,
+        fontsize=fontsize, labelspacing=labelspacing
     )
     return None

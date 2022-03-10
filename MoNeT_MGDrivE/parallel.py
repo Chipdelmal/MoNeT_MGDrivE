@@ -1,6 +1,7 @@
 
 import numpy as np
 from os import path
+import matplotlib
 import compress_pickle as pkl
 # import MoNeT_MGDrivE as monet
 import MoNeT_MGDrivE.plots as pts
@@ -11,6 +12,7 @@ import MoNeT_MGDrivE.auxiliaryFunctions as aux
 import MoNeT_MGDrivE.experimentsHandler as exp
 
 
+matplotlib.rcParams['font.family'] = 'monospace'
 ###############################################################################
 # PreProcess
 ###############################################################################

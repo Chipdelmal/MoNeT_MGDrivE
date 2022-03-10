@@ -44,7 +44,7 @@ def exportPreTracesParallel(
             exIx, STYLE, PT_IMG,
             border=True, borderColor='#322E2D', borderWidth=1, autoAspect=False,
             xpNum=0, digs=3, vLines=[0, 0], hLines=[0], popScaler=1,
-            transparent=True
+            transparent=True, sampRate=1
         ):
     ter.printProgress(exIx[0], xpNum, digs)
     repFilePath = exIx[1][1]
@@ -53,7 +53,7 @@ def exportPreTracesParallel(
     pts.exportTracesPlot(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth,
-        vLines=vLines, transparent=transparent
+        vLines=vLines, transparent=transparent, sampRate=sampRate
     )
     return None
 

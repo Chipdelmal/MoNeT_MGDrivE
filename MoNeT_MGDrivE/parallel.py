@@ -1,6 +1,7 @@
 
 import numpy as np
 from os import path
+import matplotlib
 import compress_pickle as pkl
 # import MoNeT_MGDrivE as monet
 import MoNeT_MGDrivE.plots as pts
@@ -11,6 +12,7 @@ import MoNeT_MGDrivE.auxiliaryFunctions as aux
 import MoNeT_MGDrivE.experimentsHandler as exp
 
 
+matplotlib.rcParams['font.family'] = 'monospace'
 ###############################################################################
 # PreProcess
 ###############################################################################
@@ -66,7 +68,7 @@ def exportPstTracesParallel(
         STABLE_T, THS, QNT, STYLE, PT_IMG, 
         border=True, borderColor='#322E2D', borderWidth=1, 
         labelPos=(.7, .9), xpsNum=0, digs=3, 
-        autoAspect=False, popScaler=1,
+        autoAspect=False, popScaler=1, labelspacing=0.1,
         wopPrint=True, cptPrint=True, poePrint=True
     ):
     (ix, repFile, tti, tto, wop, mnf, mnd, poe, cpt) = exIx
@@ -82,7 +84,7 @@ def exportPstTracesParallel(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
         vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos, 
         border=border, borderColor=borderColor, borderWidth=borderWidth,
-        autoAspect=autoAspect, popScaler=1,
+        autoAspect=autoAspect, popScaler=1, labelspacing=labelspacing,
         wop=wop, wopPrint=wopPrint, 
         cpt=cpt, cptPrint=cptPrint,
         poe=poe, poePrint=poePrint

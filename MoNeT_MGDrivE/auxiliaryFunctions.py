@@ -374,8 +374,8 @@ def makeFolder(path):
             os.mkdir(path)
         except OSError:
             raise OSError(
-                    "Can't create destination directory (%s)!" % (path)
-                )
+                "Can't create destination directory (%s)!" % (path)
+            )
 
 
 def makeFolders(pathsList):

@@ -674,7 +674,7 @@ def exportPreTracesPlotWrapper(
         repDta, name, STYLE, PT_IMG, wopPrint=False, autoAspect=autoAspect,
         border=border, borderColor=borderColor, borderWidth=borderWidth,
         transparent=transparent, vLines=vLines, hLines=hLines, 
-        ticksHide=ticksHide, sampRate=1
+        ticksHide=ticksHide, sampRate=sampRate
     )
     return None
 

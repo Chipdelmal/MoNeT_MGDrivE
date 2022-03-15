@@ -528,18 +528,18 @@ def exportTracesPlot(
     days = tS['landscapes'][0].shape[0]*sampRate
     if (vLines[0] > 0) and (vLines[1] <= days) and (wop > 0) and (vLines[0] < vLines[1]):
         axTemp.axvspan(vLines[0], vLines[1], alpha=0.15, facecolor='#3687ff', zorder=0)
-        axTemp.axvline(vLines[0], alpha=0.75, ls='-.', lw=.35, color='#3687ff', zorder=0)
-        axTemp.axvline(vLines[1], alpha=0.75, ls='-.', lw=.35, color='#3687ff', zorder=0)
+        axTemp.axvline(vLines[0], alpha=0.75, ls='-', lw=.1, color='#3687ff', zorder=0)
+        axTemp.axvline(vLines[1], alpha=0.75, ls='-', lw=.1, color='#3687ff', zorder=0)
 
     if (vLines[0] > 0) and (vLines[1] <= days) and (wop > 0) and (vLines[0] > vLines[1]):
         axTemp.axvspan(vLines[0], vLines[1], alpha=0.15, facecolor='#FF5277', zorder=0)
-        axTemp.axvline(vLines[0], alpha=0.75, ls='-.', lw=.35, color='#FF1A4B', zorder=0)
-        axTemp.axvline(vLines[1], alpha=0.75, ls='-.', lw=.35, color='#FF1A4B', zorder=0)
+        axTemp.axvline(vLines[0], alpha=0.75, ls='-', lw=.1, color='#FF1A4B', zorder=0)
+        axTemp.axvline(vLines[1], alpha=0.75, ls='-', lw=.1, color='#FF1A4B', zorder=0)
 
     for hline in hLines:
-        axTemp.axhline(hline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
+        axTemp.axhline(hline, alpha=.25, zorder=10, ls='-', lw=.2, color='#000000')
     for vline in vLines[2:]:
-        axTemp.axvline(vline, alpha=.25, zorder=10, ls='--', lw=.35, color='#000000')
+        axTemp.axvline(vline, alpha=.25, zorder=10, ls='-', lw=.2, color='#000000')
     # Print metrics -----------------------------------------------------------
     if  wopPrint:
         axTemp.text(
@@ -554,21 +554,21 @@ def exportTracesPlot(
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=fontsize
-        )    
-    if poePrint:
-        axTemp.text(
-            labelPos[0], labelPos[1]-labelspacing*2, 'POE: {:.3f}'.format(poe),
-            verticalalignment='bottom', horizontalalignment='left',
-            transform=axTemp.transAxes,
-            color='#00000055', fontsize=fontsize
-        )        
+        )         
     if mnfPrint:
         axTemp.text(
-            labelPos[0], labelPos[1]-labelspacing*3, 'MIN: {:.3f}'.format(mnf),
+            labelPos[0], labelPos[1]-labelspacing*2, 'MIN: {:.3f}'.format(mnf),
             verticalalignment='bottom', horizontalalignment='left',
             transform=axTemp.transAxes,
             color='#00000055', fontsize=fontsize
         )     
+    if poePrint:
+        axTemp.text(
+            labelPos[0], labelPos[1]-labelspacing*3, 'POE: {:.3f}'.format(poe),
+            verticalalignment='bottom', horizontalalignment='left',
+            transform=axTemp.transAxes,
+            color='#00000055', fontsize=fontsize
+        ) 
     # --------------------------------------------------------------------------
     #axTemp.tick_params(color=(0, 0, 0, 0.5))
     # extent = axTemp.get_tightbbox(figArr[0]).transformed(figArr[0].dpi_scale_trans.inverted())
@@ -690,7 +690,8 @@ def exportPstTracesPlotWrapper(
         poePrint=True, mnfPrint=True,
         transparent=False, 
         ticksHide=True, sampRate=1,
-        fontsize=5, labelspacing=.1
+        fontsize=5, labelspacing=.1, 
+        vlines=[], hlines=[]
     ):
     padi = str(exIx+1).zfill(digs)
     fmtStr = '{}+ File: {}/{}'
@@ -714,7 +715,7 @@ def exportPstTracesPlotWrapper(
     # STYLE['yRange'] = (0,  pop*popScaler)
     exportTracesPlot(
         repDta, repFile.split('/')[-1][:-6]+str(QNT), STYLE, PT_IMG,
-        vLines=[tti, tto, mnd], hLines=[mnf*pop], labelPos=labelPos, 
+        vLines=[tti, tto, mnd]+vlines, hLines=[mnf*pop]+hlines, labelPos=labelPos, 
         border=border, borderColor=borderColor, borderWidth=borderWidth,
         autoAspect=autoAspect, popScaler=popScaler,
         wop=wop, wopPrint=wopPrint, 

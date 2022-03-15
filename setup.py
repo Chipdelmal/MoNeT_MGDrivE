@@ -24,7 +24,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         'numpy', 'scipy', 'matplotlib', 'ipython',
-        'jupyter', 'pandas', 'sympy', 'compress-pickle'
+        'jupyter', 'pandas', 'sympy', 'compress-pickle',
+        'joblib', 'more-itertools'
     ],
     license='MIT',
     classifiers=[

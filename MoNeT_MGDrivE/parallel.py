@@ -202,6 +202,71 @@ def pstProcessParallel(
         df.to_csv(pth, index=False)
     return None
 
+
+def pstProcessParallelML(
+        exIx, header, xpidIx, maxReps, sampRate=1, offset=0,
+        thi=.25, tho=.25, thw=.25, tap=50, thp=(.025, .975),
+        finalDay=-1, qnt=0.5, CPT=True,
+        DF_SORT=['TTI', 'TTO', 'WOP', 'MIN', 'MAX', 'CPT']
+    ):
+    (outPaths, fPaths) = exIx
+    (fNum, digs) = aux.lenAndDigits(fPaths)
+    ###########################################################################
+    # Setup dataframes
+    ###########################################################################
+    outDFs = dat.initDFsForML(fPaths, header, thi, tho, thw, tap, maxReps)[:-1]
+    ###########################################################################
+    # Iterate through experiments
+    ###########################################################################
+    fmtStr = '{}+ File: {}/{}'
+    rowWrite = 0
+    for (i, fPath) in enumerate(fPaths):
+        repRto = np.load(fPath)
+        print(
+            fmtStr.format(ter.CBBL, str(i+1).zfill(digs), fNum, ter.CEND), 
+            end='\r'
+        )
+        #######################################################################
+        # Calculate Metrics
+        #######################################################################
+        mtrsReps = calcMetrics(repRto, thi=thi, tho=tho, thw=thw, tap=tap)
+        #######################################################################
+        # Reshapes
+        #######################################################################
+        mtrsNames = list(mtrsReps.keys())
+        mtrsDict = {
+            'TTI': np.asarray(mtrsReps['TTI']).T,
+            'TTO': np.asarray(mtrsReps['TTO']).T,
+            'WOP': np.asarray(mtrsReps['WOP']).T,
+            'CPT': np.asarray([mtrsReps['CPT']]).T,
+            'MIN': np.asarray(mtrsReps['MIN']).T,
+            'MAX': np.asarray(mtrsReps['MAX']).T
+        }
+        repsNum = np.asarray(mtrsReps['CPT']).T.shape[0]
+        #######################################################################
+        # Update in Dataframes
+        #######################################################################
+        xpid = exp.getXpId(fPath, xpidIx)
+        for repIx in range(repsNum):
+            mtrs = [mtrsDict[k][repIx] for k in DF_SORT]
+            updates = [xpid + mt.tolist() for mt in mtrs]
+            outDFs[0].iloc[rowWrite] = updates[0] # TTI
+            outDFs[1].iloc[rowWrite] = updates[1] # TTO
+            outDFs[2].iloc[rowWrite] = updates[2] # WOP
+            outDFs[4].iloc[rowWrite] = updates[3][:-2]+updates[3][-2:]+updates[4][-2:] # MIN/MAX
+            outDFs[6].iloc[rowWrite] = updates[5] # CPT
+            rowWrite = rowWrite + 1
+    ###########################################################################
+    # Export Data
+    ###########################################################################
+    outDFs[0].loc[~(outDFs[0]==0).all(axis=1)].to_csv(outPaths[0], index=False)
+    outDFs[1].loc[~(outDFs[0]==0).all(axis=1)].to_csv(outPaths[1], index=False)
+    outDFs[2].loc[~(outDFs[0]==0).all(axis=1)].to_csv(outPaths[2], index=False)
+    outDFs[4].loc[~(outDFs[0]==0).all(axis=1)].to_csv(outPaths[4], index=False)
+    outDFs[6].loc[~(outDFs[0]==0).all(axis=1)].to_csv(outPaths[6], index=False)
+    return None
+
+
 ###############################################################################
 # Auxiliary
 ###############################################################################
@@ -210,3 +275,4 @@ def chunks(l, n):
     for i in range(n):
         si = (d+1)*(i if i < r else r) + d*(0 if i < r else i - r)
         yield l[si:si+(d+1 if i < r else d)]
+        

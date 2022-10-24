@@ -520,8 +520,8 @@ def exportTracesPlot(
         # axTemp.yaxis.set_tick_params(width=0)
         axTemp.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
         axTemp.set_axis_off()
-    axTemp.xaxis.set_ticks(np.arange(0, STYLE['xRange'][1], 365))
-    axTemp.yaxis.set_ticks(np.arange(0, STYLE['yRange'][1], STYLE['yRange'][1]/4))
+    axTemp.xaxis.set_ticks(np.arange(STYLE['xRange'][0], STYLE['xRange'][1], 365))
+    axTemp.yaxis.set_ticks(np.arange(STYLE['yRange'][0], STYLE['yRange'][1], STYLE['yRange'][1]/4))
     axTemp.grid(which='major', axis='y', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
     axTemp.grid(which='major', axis='x', lw=.5, ls='-', alpha=0.0, color=(0, 0, 0))
 
@@ -580,6 +580,7 @@ def exportTracesPlot(
             axTemp.spines[axis].set_linewidth(borderWidth)
     else:
         pad = 0
+    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
             dpi=STYLE['dpi'], facecolor=None,

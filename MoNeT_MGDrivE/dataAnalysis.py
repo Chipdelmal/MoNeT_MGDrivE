@@ -251,6 +251,29 @@ def initDFsForDA(
     DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
     return DFEmpty
 
+def initDFsForML(
+            fPaths, header, thiS, thoS, thwS, ttpS, maxReps,
+            peak=['min', 'minx', 'max', 'maxx'],
+            POE=True, poe=['POE', 'POF'],
+            CPT=True, cpt=['CPT'], der=['DER']
+        ):
+    fNum = len(fPaths)*maxReps
+    if (POE and not CPT):
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak, poe)]
+    elif (CPT and not POE): 
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak, cpt)]
+    elif (POE and CPT):
+        heads = [
+            list(header)+i for i in (
+                thiS, thoS, thwS, ttpS, peak, poe, cpt, der
+            )
+        ]
+    else:
+        heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
+    DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
+    return DFEmpty
+
+
 
 def filterDFWithID(df, xpid, max=7):
     xpidz = list(zip(list(df.columns)[:max], xpid))

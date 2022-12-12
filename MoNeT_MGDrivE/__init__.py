@@ -19,3 +19,4 @@ from .dataAnalysis import *
 from .genes import *
 from .parallel import *
 from .mailAlert import *
+from mlModels import *

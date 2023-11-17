@@ -59,7 +59,7 @@ def plotPDPICE(
         pdpice, figAx=None,
         PDP=True, ICE=True, 
         YLIM=None, TITLE=None, 
-        pdpKwargs={'color': '#a3cef155', 'ls': '-', 'lw': 0.15},
+        pdpKwargs={'color': '#a0c4ff55', 'ls': '-', 'lw': 0.15},
         iceKwargs={'color': '#ef476fff', 'ls': ':', 'lw': 3}
     ):
     if figAx:

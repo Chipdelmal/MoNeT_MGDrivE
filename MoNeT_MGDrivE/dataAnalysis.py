@@ -248,7 +248,7 @@ def initDFsForDA(
         ]
     else:
         heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
-    DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
+    DFEmpty = [pd.DataFrame(0, index=range(fNum), columns=h) for h in heads]
     return DFEmpty
 
 def initDFsForML(
@@ -270,7 +270,7 @@ def initDFsForML(
         ]
     else:
         heads = [list(header)+i for i in (thiS, thoS, thwS, ttpS, peak)]
-    DFEmpty = [pd.DataFrame(int(0), index=range(fNum), columns=h) for h in heads]
+    DFEmpty = [pd.DataFrame(0, index=range(fNum), columns=h) for h in heads]
     return DFEmpty
 
 

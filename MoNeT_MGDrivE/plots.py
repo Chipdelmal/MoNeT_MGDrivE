@@ -486,16 +486,16 @@ def exportGeneLegend(labels, colors, filename, dpi):
 
 
 def exportTracesPlot(
-    tS, nS, STYLE, PATH_IMG, append='', 
-    vLines=[0, 0], hLines=[0], labelPos=(.7, .95), autoAspect=False,
-    border=True, borderColor='#8184a7AA', borderWidth=2, popScaler=1,
-    wop=0, wopPrint=True, 
-    cpt=0, cptPrint=False, 
-    poe=0, poePrint=False,
-    mnf=0, mnfPrint=False,
-    transparent=False, ticksHide=True, sampRate=1,
-    fontsize=5, labelspacing=.1
-):
+        tS, nS, STYLE, PATH_IMG, append='', 
+        vLines=[0, 0], hLines=[0], labelPos=(.7, .95), autoAspect=False,
+        border=True, borderColor='#8184a7AA', borderWidth=2, popScaler=1,
+        wop=0, wopPrint=True, 
+        cpt=0, cptPrint=False, 
+        poe=0, poePrint=False,
+        mnf=0, mnfPrint=False,
+        transparent=False, ticksHide=True, sampRate=1,
+        fontsize=5, labelspacing=.1
+    ):
     if transparent:
         plt.rcParams.update({
             "figure.facecolor":  (1.0, 0.0, 0.0, 0.0),
@@ -504,13 +504,7 @@ def exportTracesPlot(
         })
     figArr = plotNodeTraces(tS, STYLE, sampRate=sampRate)
     axTemp = figArr[0].get_axes()[0]
-    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1]*popScaler)
-    axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
-    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
-    if autoAspect:
-        axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
-    else:
-        axTemp.set_aspect(aspect=STYLE["aspect"])
+
     if ticksHide:
         axTemp.axes.xaxis.set_ticklabels([])
         axTemp.axes.yaxis.set_ticklabels([])
@@ -580,7 +574,15 @@ def exportTracesPlot(
             axTemp.spines[axis].set_linewidth(borderWidth)
     else:
         pad = 0
+        
+    STYLE['yRange'] = (STYLE['yRange'][0], STYLE['yRange'][1]*popScaler)
     axTemp.set_xlim(STYLE['xRange'][0], STYLE['xRange'][1])
+    axTemp.set_ylim(STYLE['yRange'][0], STYLE['yRange'][1])
+    if autoAspect:
+        axTemp.set_aspect(aspect=scaleAspect(STYLE["aspect"], STYLE))
+    else:
+        axTemp.set_aspect(aspect=STYLE["aspect"])
+        
     figArr[0].savefig(
             "{}/{}.png".format(PATH_IMG, nS),
             dpi=STYLE['dpi'], facecolor=None,
